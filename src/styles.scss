@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+
+$light: #e6ecf0;
+$medium: #f4f4f4;
+$grey: #646464;
+$dark: #3c3b3b;
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: $medium;
+  color: $grey;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Raleway", sans-serif;
+  color: $dark;
+  font-weight: bold;
+}
