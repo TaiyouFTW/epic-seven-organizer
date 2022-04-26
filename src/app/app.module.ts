@@ -7,20 +7,27 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoadingComponent } from './_shared/components/loading/loading.component';
 import { MaterialModule } from './_shared/modules/material.module';
 import { FontawesomeModule } from './_shared/modules/fontawesome.module';
-import { MaskPhoneDirective } from './_shared/directives/mask-phone.directive';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingInterceptor } from './_shared/interceptors/loading.interceptor';
 import { ErrorInterceptor } from './_shared/interceptors/error.interceptor';
-import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './error/error.component';
+import { OrderByPipe } from './_shared/pipes/order-by.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OrganizerComponent } from './organizer/organizer.component';
+import { AddHeroComponent } from './organizer/add-hero/add-hero.component';
+import { PortraitComponent } from './_shared/components/portrait/portrait.component';
+import { LayoutComponent } from './_shared/components/layout/layout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoadingComponent,
-    MaskPhoneDirective,
-    HomeComponent,
-    ErrorComponent
+    ErrorComponent,
+    OrderByPipe,
+    OrganizerComponent,
+    AddHeroComponent,
+    PortraitComponent,
+    LayoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +35,9 @@ import { ErrorComponent } from './error/error.component';
     BrowserAnimationsModule,
     MaterialModule,
     FontawesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
