@@ -1,0 +1,48 @@
+.cdk-drag-preview {
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-top-width: 1px;
+    border-style: solid;
+    border-bottom-color: rgba(0, 0, 0, 0.12);
+    border-top-color: rgba(0, 0, 0, 0.12);
+}
+
+.mat-column-bars,
+.mat-column-image,
+.mat-column-element,
+.mat-column-role {
+    flex: 0 0 5%;
+}
+
+.hero-card {
+    width: 100%;
+    height: 140px;
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.hero {
+    width: 59.5px;
+    height: 59.5px;
+}
+
+.hero:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.4375rem;
+    height: 1.375rem;
+    background: url("./../../assets/images/icon_spr.png") no-repeat;
+    background-size: 14.375rem auto;
+    z-index: 1;
+    margin-bottom: -10px;
+}
+
+.hero-card-shadow {
+    box-shadow: none;
+    transition: box-shadow 0.2s ease-in-out;
+}
+.hero-card-shadow:hover {
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
+}

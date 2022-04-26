@@ -1,0 +1,20 @@
+<div class="container-fluid pt-3">
+    <div class="row">
+        <div class="col-12">
+            <app-add-hero [heroes]="allHeroes" (heroEvent)="addBuildedHeroes($event)"></app-add-hero>
+        </div>
+    </div>
+
+    <mat-divider class="my-5"></mat-divider>
+
+    <div class="row mt-4">
+        <div class="col-2 mb-3" *ngFor="let hero of heroes">
+            <div class="hero-card position-relative border rounded-3 hero-card-shadow pointer">
+                <div class="d-flex flex-column align-items-center justify-content-center my-3">
+                    <app-portrait [heroCode]="hero.code" [name]="hero.name" [role]="hero.jobCode" [element]="hero.attributeCode" [grade]="hero.grade"></app-portrait>
+                    <p class="text-uppercase fw-bold my-2">{{hero.name}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
