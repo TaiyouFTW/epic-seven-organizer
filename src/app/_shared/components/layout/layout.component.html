@@ -11,18 +11,20 @@
 </mat-toolbar>
 
 <mat-sidenav-container>
-    <mat-sidenav #drawer class="sidenav" [mode]="'side'" [fixedInViewport]="true" [fixedTopGap]="55" opened>
+    <mat-sidenav #drawer class="sidenav" [mode]="(isHandset$ | async) ? 'over' : 'side'" [fixedInViewport]="true" [fixedTopGap]="55" [opened]="!(isHandset$ | async)">
         <aside>
             <mat-nav-list class="d-flex align-items-start flex-column h-100 p-0 nav-list">
                 <a mat-list-item routerLink="/" [routerLinkActive]="['is-active']">
                     <span class="px-5">Characters</span>
+                </a>
+                <a mat-list-item routerLink="/inventory" [routerLinkActive]="['is-active']">
+                    <span class="px-5">Inventory</span>
                 </a>
             </mat-nav-list>
         </aside>
     </mat-sidenav>
 
     <mat-sidenav-content>
-
         <main>
             <router-outlet></router-outlet>
         </main>

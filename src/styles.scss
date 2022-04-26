@@ -71,11 +71,13 @@ h6 {
 
 .mat-drawer-side {
   background-color: var(--background-aside) !important;
+  border-top: 1px solid var(--border) !important;
   border-right: 1px solid var(--border) !important;
   color: var(--text) !important;
 }
 
 .mat-drawer-container {
+  min-height: calc(100vh - 56px);
   background-color: var(--background) !important;
   color: var(--text) !important;
 }
