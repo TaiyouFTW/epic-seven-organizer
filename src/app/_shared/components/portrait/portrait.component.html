@@ -1,0 +1,4 @@
+<div class="position-relative hero-portrait" [class.mini-portrait]="miniPortrait" [ngClass]="[role != undefined && element != undefined ? 'hero-portrait-group' : '', role != undefined ? role : '', element != undefined ? element : '']">
+    <img class="portrait" [class.mini-portrait]="miniPortrait" [src]="heroCode ? imgUrl + heroCode + '_s.png' : './../../../assets/images/unknown.png'" alt="{{name}}" (error)="onError($event)">
+    <img class="frame" [class.d-none]="miniPortrait" src="./../../../assets/images/frame.png">
+</div>
