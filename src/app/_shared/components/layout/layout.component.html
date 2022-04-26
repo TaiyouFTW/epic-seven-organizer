@@ -2,7 +2,7 @@
     <button mat-icon-button (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
     </button>
-    <span class="example-spacer"></span>
+    <span class="spacer"></span>
     <button mat-icon-button (click)="changeTheme(colorTheme == 'light' ? 'dark': 'light')">
         <span [ngClass]="colorTheme == 'light' ? 'moon' : 'sun'">
             <fa-icon [icon]="['fas', colorTheme == 'light' ? 'moon' : 'sun']" [fixedWidth]="true"></fa-icon>
@@ -15,19 +15,8 @@
         <aside>
             <mat-nav-list class="d-flex align-items-start flex-column h-100 p-0 nav-list">
                 <a mat-list-item routerLink="/" [routerLinkActive]="['is-active']">
-                    <span class="px-5">Início</span>
+                    <span class="px-5">Characters</span>
                 </a>
-                <a mat-list-item [routerLinkActive]="['.mat-flat-button']">
-                    <span class="px-5">Sobre</span>
-                </a>
-                <a mat-list-item [routerLinkActive]="['.mat-flat-button']">
-                    <span class="px-5">Serviços</span>
-                </a>
-                <a mat-list-item [routerLinkActive]="['.mat-flat-button']">
-                    <span class="px-5">Equipe</span>
-                </a>
-                <div class="flex-grow-1"></div>
-
             </mat-nav-list>
         </aside>
     </mat-sidenav>
