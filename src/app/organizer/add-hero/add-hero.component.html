@@ -1,0 +1,54 @@
+<form [formGroup]="form" #formGroupDirective class="container-fluid" (ngSubmit)="add()">
+    <div class="row">
+        <div class="col-2 d-flex justify-content-center">
+            <app-portrait [heroCode]="f['autocomplete'].value ? f['autocomplete'].value.code : ''"></app-portrait>
+        </div>
+        <div class="col-10">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-3">
+                        <mat-form-field appearance="fill" class="w-100">
+                            <mat-label>Hero List</mat-label>
+                            <input type="text" placeholder="Select one" matInput formControlName="autocomplete" [matAutocomplete]="auto" [errorStateMatcher]="matcher" class="w-100" (change)="changeHero()">
+                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="getPortraitName" class="w-100">
+                                <mat-option *ngFor="let hero of filteredHeroes | async | orderBy:'name'" [value]="hero">
+                                    <div class="d-inline-flex">
+                                        <app-portrait [heroCode]="hero.code" [miniPortrait]="true"></app-portrait>
+                                        <span class="ms-3">{{hero.name}}</span>
+                                    </div>
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-error *ngIf="f['autocomplete'].invalid && submitted">You must select a hero</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-2">
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>Level</mat-label>
+                            <mat-select formControlName="level" [errorStateMatcher]="matcher">
+                                <mat-option [value]="level" *ngFor="let level of [50, 60]">{{level}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="f['level'].invalid && submitted">Level is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-4">
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>Build Status</mat-label>
+                            <mat-select formControlName="build" [errorStateMatcher]="matcher">
+                                <mat-option class="text-success" value="Excelent">Excelent</mat-option>
+                                <mat-option class="text-info" value="Good">Good</mat-option>
+                                <mat-option class="text-danger" value="In Progress">In Progress</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="f['build'].invalid && submitted">A build status is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <button type="submit" class="d-block w-100" mat-flat-button color="primary">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
