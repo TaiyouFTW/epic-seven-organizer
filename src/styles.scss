@@ -12,6 +12,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
   background-color: $medium;
   color: $grey;
 }
@@ -25,4 +26,54 @@ h6 {
   font-family: "Raleway", sans-serif;
   color: $dark;
   font-weight: bold;
+}
+
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #b4b4b4;
+  }
+  ::-webkit-scrollbar-thumb:window-inactive {
+    background: #b4b4b4;
+  }
+}
+
+.icon {
+  width: 25px;
+  height: auto;
+}
+
+.portrait {
+  width: 35px;
+  height: auto;
+}
+
+.selected {
+  height: 59.5px;
+  width: auto;
+}
+
+.mat-cell,
+.mat-footer-cell {
+  color: $grey;
+}
+
+.mat-table,
+.mat-paginator,
+.mat-paginator-page-size .mat-select-trigger {
+  background: $medium;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.mat-drawer-container {
+  background-color: inherit;
+  color: inherit;
 }
