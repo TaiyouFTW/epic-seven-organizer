@@ -1,7 +1,21 @@
-.mat-drawer-container {
-    background-color: inherit;
+@import "./../../../../colors.scss";
+
+.sun {
+    color: #ffd740;
 }
 
-// .nav-list {
-//     width: 250px;
-// }
+.moon {
+    color: #673ab7;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.is-active {
+    color: white !important;
+    background-color: #673ab7;
+    &:hover {
+        background-color: #673ab7 !important;
+    }
+}

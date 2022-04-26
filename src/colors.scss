@@ -1,0 +1,30 @@
+$background-light: #f6f8fa;
+$background-dark: #1c2128;
+$background-aside-light: #ffffff;
+$background-aside-dark: #22272e;
+$text-light: #24292f;
+$text-dark: #adbac7;
+$border-light: #d8dee4;
+$border-dark: #373e47;
+$header-light: #24292f;
+$header-dark: #2d333b;
+$header-text-light: #ffffff;
+$header-text-dark: #cdd9e5;
+
+html[data-theme="light"] {
+    --background: #{$background-light};
+    --background-aside: #{$background-aside-light};
+    --text: #{$text-light};
+    --border: #{$border-light};
+    --header: #{$header-light};
+    --header-text: #{$header-text-light};
+}
+
+html[data-theme="dark"] {
+    --background: #{$background-dark};
+    --background-aside: #{$background-aside-dark};
+    --text: #{$text-dark};
+    --border: #{$border-dark};
+    --header: #{$header-dark};
+    --header-text: #{$header-text-dark};
+}

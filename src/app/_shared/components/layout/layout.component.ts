@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-layout',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  constructor() { }
+  colorTheme: string = 'light';
+
+  constructor(private renderer: Renderer2, private configService: ConfigService) {
+    this.changeTheme(this.configService.currentThemePreferenceValue);
+  }
 
   ngOnInit(): void {
   }
 
+  changeTheme(theme: string) {
+    this.colorTheme = theme;
+    this.renderer.setAttribute(document.documentElement, 'data-theme', this.colorTheme);
+    this.configService.themePreferences(this.colorTheme);
+  }
 }

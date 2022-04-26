@@ -1,9 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
-$light: #e6ecf0;
-$medium: #f4f4f4;
-$grey: #646464;
-$dark: #3c3b3b;
+@import "./colors.scss";
 
 html,
 body {
@@ -13,8 +9,8 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 14px;
-  background-color: $medium;
-  color: $grey;
+  background-color: var(--background);
+  color: var(--text);
 }
 
 h1,
@@ -24,7 +20,7 @@ h4,
 h5,
 h6 {
   font-family: "Raleway", sans-serif;
-  color: $dark;
+  color: var(--text);
   font-weight: bold;
 }
 
@@ -58,22 +54,47 @@ h6 {
   width: auto;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .mat-cell,
 .mat-footer-cell {
-  color: $grey;
+  color: var(--text) !important;
 }
 
 .mat-table,
 .mat-paginator,
 .mat-paginator-page-size .mat-select-trigger {
-  background: $medium;
+  background: var(--text) !important;
 }
 
-.pointer {
-  cursor: pointer;
+.mat-drawer-side {
+  background-color: var(--background-aside) !important;
+  border-right: 1px solid var(--border) !important;
+  color: var(--text) !important;
 }
 
 .mat-drawer-container {
-  background-color: inherit;
-  color: inherit;
+  background-color: var(--background) !important;
+  color: var(--text) !important;
+}
+
+.mat-list-base .mat-list-item {
+  color: var(--text) !important;
+}
+
+.mat-divider {
+  border-top-color: var(--border) !important;
+}
+
+.mat-toolbar {
+  background-color: var(--header) !important;
+  color: var(--header-text) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.mat-toolbar,
+.toolbar-single-row {
+  height: 56px !important;
 }

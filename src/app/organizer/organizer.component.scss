@@ -1,3 +1,5 @@
+@import "./../../colors.scss";
+
 .cdk-drag-preview {
     border-width: 0;
     border-bottom-width: 1px;
@@ -17,7 +19,8 @@
 .hero-card {
     width: 100%;
     height: 140px;
-    background: rgba(0, 0, 0, 0.04);
+    background: var(--background-aside);
+    border: 1px solid var(--border);
 }
 
 .hero {
