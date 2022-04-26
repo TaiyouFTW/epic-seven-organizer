@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: ''
+  url: 'https://epic7.smilegatemegaport.com/guide/'
 };
 
 /*
