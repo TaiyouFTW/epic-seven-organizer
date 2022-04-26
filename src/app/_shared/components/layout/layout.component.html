@@ -1,0 +1,25 @@
+<main>
+    <mat-sidenav-container>
+        <mat-sidenav #drawer class="sidenav border-0" [mode]="'side'" [fixedInViewport]="true" opened>
+            <mat-nav-list class="d-flex align-items-start flex-column h-100 p-0 nav-list pt-5">
+                <a mat-list-item>
+                    <span class="px-5">Início</span>
+                </a>
+                <a mat-list-item>
+                    <span class="px-5">Sobre</span>
+                </a>
+                <a mat-list-item>
+                    <span class="px-5">Serviços</span>
+                </a>
+                <a mat-list-item>
+                    <span class="px-5">Equipe</span>
+                </a>
+                <div class="flex-grow-1"></div>
+            </mat-nav-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</main>

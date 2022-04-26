@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from './error/error.component';
-import { HomeComponent } from './home/home.component';
-import { ExampleGuard } from './_shared/guards/example.guard';
+import { OrganizerComponent } from './organizer/organizer.component';
+import { LayoutComponent } from './_shared/components/layout/layout.component';
 
 const routes: Routes = [
-  { component: HomeComponent, path: 'home', canActivate: [ExampleGuard] },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: '', component: LayoutComponent, children: [
+      { path: '', component: OrganizerComponent },
+    ]
+  },
+  { path: '', redirectTo: '', pathMatch: 'full' },
   { path: '**', component: ErrorComponent }
 ];
 
