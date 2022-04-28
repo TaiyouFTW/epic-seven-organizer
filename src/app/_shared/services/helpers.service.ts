@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HelpersService {
 
-  constructor() { }
+  private today: Date = new Date();
+
+  constructor(private configService: ConfigService) { }
 
   fixJobClasses(jobCode: string) {
     switch (jobCode) {
@@ -24,6 +27,14 @@ export class HelpersService {
         return 'earth';
       default:
         return elementCode;
+    }
+  }
+
+  canUpdate() {
+    if (this.today.getDay() == 4 && this.today.getUTCHours() >= 9 && this.configService.currentCanUpdateValue) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

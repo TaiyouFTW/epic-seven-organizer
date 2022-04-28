@@ -13,7 +13,7 @@ export class HeroService {
   public currentHeroes: Observable<ListedHero>;
 
   constructor(private httpClient: HttpClient, private helpersService: HelpersService) {
-    let getCurrentHeroes = localStorage.getItem('currentHeroes');
+    let getCurrentHeroes = localStorage.getItem('eo_currentHeroes');
     let parsedCurrentHeroes = JSON.parse(getCurrentHeroes!);
 
     this._currentHeroesSubject = new BehaviorSubject<ListedHero>(parsedCurrentHeroes);
@@ -42,32 +42,36 @@ export class HeroService {
   }
 
   heroes(currentPage: number = 0) {
-    return this.httpClient.post<CompleteListedHero>('/guide/wearingStatus/getHeroList', {}, this.headers(currentPage))
-      .pipe(
-        map(response => {
-          let heroes: Hero[] = [];
-          response.heroList.forEach(element => {
-            heroes.push({
-              code: element.heroCode,
-              name: element.heroName,
-              grade: element.grade,
-              jobCode: this.helpersService.fixJobClasses(element.jobCode),
-              attributeCode: this.helpersService.fixElements(element.attributeCode),
+    if (this.currentHeroesValue == null || this.helpersService.canUpdate()) {
+      return this.httpClient.post<CompleteListedHero>('/guide/wearingStatus/getHeroList', {}, this.headers(currentPage))
+        .pipe(
+          map(response => {
+            let heroes: Hero[] = [];
+            response.heroList.forEach(element => {
+              heroes.push({
+                code: element.heroCode,
+                name: element.heroName,
+                grade: element.grade,
+                jobCode: this.helpersService.fixJobClasses(element.jobCode),
+                attributeCode: this.helpersService.fixElements(element.attributeCode),
+              });
             });
-          });
 
-          let listedHeroes: ListedHero = {
-            totalCount: response.totalCount,
-            currentPage: response.currentPage,
-            heroes: heroes
-          };
+            let listedHeroes: ListedHero = {
+              totalCount: response.totalCount,
+              currentPage: response.currentPage,
+              heroes: heroes
+            };
 
-          localStorage.setItem('currentHeroes', JSON.stringify(listedHeroes));
-          this._currentHeroesSubject.next(listedHeroes);
+            localStorage.setItem('eo_currentHeroes', JSON.stringify(listedHeroes));
+            this._currentHeroesSubject.next(listedHeroes);
 
-          return listedHeroes;
-        })
-      );
+            return listedHeroes;
+          })
+        );
+    } else {
+      return this._currentHeroesSubject;
+    }
   }
 
   // getResourceUrl(): string {
