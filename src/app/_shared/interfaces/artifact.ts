@@ -5,10 +5,10 @@ export interface ListedArtifact {
 }
 
 export interface Artifact {
-    artifactCode: string;
-    artifactName: string;
-    jobCode: string;
+    code: string;
+    name: string;
     grade: number;
+    jobCode: string;
 }
 
 export interface CompleteListedArtifact {

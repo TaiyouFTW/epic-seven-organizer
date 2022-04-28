@@ -23,12 +23,12 @@ export interface BuildHero {
     jobCode: string;
     attributeCode: string;
     level: number;
+    skillsLevel: number;
     buildStatus: string;
     equipment: Equipment;
     artifact: Artifact;
-    exclusiveEquipment?: {
-        best: boolean;
-    };
+    artifactLevel: number;
+    hasExclusiveEquipment?: boolean;
     set: Set[];
 }
 
