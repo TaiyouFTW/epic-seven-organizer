@@ -42,30 +42,30 @@ export class EpicService {
     return httpOptions;
   }
 
-  artifacts(currentPage: number = 0) {
-    return this.httpClient.post<CompleteListedArtifact>('/guide/wearingStatus/getArtifactList', {}, this.headers(currentPage))
-      .pipe(
-        map(response => {
-          let artifacts: Artifact[] = [];
-          response.artifactList.forEach(element => {
-            artifacts.push({
-              artifactCode: element.artifactCode,
-              artifactName: element.artifactName,
-              jobCode: element.jobCode,
-              grade: element.grade
-            });
-          });
+  // artifacts(currentPage: number = 0) {
+  //   return this.httpClient.post<CompleteListedArtifact>('/guide/wearingStatus/getArtifactList', {}, this.headers(currentPage))
+  //     .pipe(
+  //       map(response => {
+  //         let artifacts: Artifact[] = [];
+  //         response.artifactList.forEach(element => {
+  //           artifacts.push({
+  //             artifactCode: element.artifactCode,
+  //             artifactName: element.artifactName,
+  //             jobCode: element.jobCode,
+  //             grade: element.grade
+  //           });
+  //         });
 
-          let listedArtifacts: ListedArtifact = {
-            totalCount: response.totalCount,
-            currentPage: response.currentPage,
-            artifacts: artifacts
-          };
+  //         let listedArtifacts: ListedArtifact = {
+  //           totalCount: response.totalCount,
+  //           currentPage: response.currentPage,
+  //           artifacts: artifacts
+  //         };
 
-          return listedArtifacts;
-        })
-      );
-  }
+  //         return listedArtifacts;
+  //       })
+  //     );
+  // }
 
   // heroes(currentPage: number = 0) {
   //   return this.httpClient.post<CompleteListedHero>('/guide/wearingStatus/getHeroList', {}, this.headers(currentPage))
