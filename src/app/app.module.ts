@@ -17,6 +17,7 @@ import { OrganizerComponent } from './organizer/organizer.component';
 import { AddHeroComponent } from './organizer/add-hero/add-hero.component';
 import { PortraitComponent } from './_shared/components/portrait/portrait.component';
 import { LayoutComponent } from './_shared/components/layout/layout.component';
+import { HeroCardComponent } from './_shared/components/hero-card/hero-card.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { LayoutComponent } from './_shared/components/layout/layout.component';
     AddHeroComponent,
     PortraitComponent,
     LayoutComponent,
+    HeroCardComponent,
   ],
   imports: [
     BrowserModule,
