@@ -7,13 +7,14 @@ import {
 } from '@angular/common/http';
 import { finalize, Observable } from 'rxjs';
 import { LoadingService } from '../components/loading/loading.service';
+import { ConfigService } from '../services/config.service';
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
 
   private totalRequests: number = 0;
 
-  constructor(private loadingService: LoadingService) { }
+  constructor(private loadingService: LoadingService, private configService: ConfigService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     this.totalRequests++;
@@ -23,6 +24,7 @@ export class LoadingInterceptor implements HttpInterceptor {
       finalize(() => {
         this.totalRequests--;
         if (this.totalRequests === 0) {
+          this.configService.canUpdate(false);
           this.loadingService.hide();
         }
       })
