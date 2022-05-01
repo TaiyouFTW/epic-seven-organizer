@@ -1,0 +1,103 @@
+<form [formGroup]="form" #formGroupDirective class="container-fluid" (ngSubmit)="add()">
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <app-portrait [code]="f['heroList'].value ? f['heroList'].value.code : ''" [name]="f['heroList'].value ? f['heroList'].value.name : ''"></app-portrait>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-12 col-md-6 col-lg-4">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Hero List</mat-label>
+                <input type="text" placeholder="Select one" matInput formControlName="heroList" [matAutocomplete]="autoHero" [errorStateMatcher]="matcher" class="w-100">
+                <mat-autocomplete #autoHero="matAutocomplete" [displayWith]="getPortraitName" (closed)="setHero()" class="w-100">
+                    <mat-option *ngFor="let hero of filteredHeroes | async | orderBy:'name'" [value]="hero">
+                        <div class="d-inline-flex">
+                            <app-portrait [code]="hero.code" [name]="hero.name" [miniPortrait]="true"></app-portrait>
+                            <span class="ms-3">{{hero.name}}</span>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="f['heroList'].invalid && submitted">You must select a hero</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-6 col-md-3 col-lg-2">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Hero Level</mat-label>
+                <mat-select formControlName="heroLevel" [errorStateMatcher]="matcher">
+                    <mat-option [value]="level" *ngFor="let level of [50, 60]">{{level}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="f['heroLevel'].invalid && submitted">Level is required</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-6 col-md-3 col-lg-2">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Skills Level</mat-label>
+                <mat-select formControlName="skillsLevel" [errorStateMatcher]="matcher">
+                    <mat-option [value]="level" *ngFor="let level of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]">{{level}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="f['skillsLevel'].invalid && submitted">Level is required</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-6 col md-2 col-lg-4">
+            <p class="mt-3">
+                <mat-checkbox formControlName="exclusiveEquipment">Exclusive equipment</mat-checkbox>
+            </p>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-12 col-md-6 col-lg-4">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Artifact List</mat-label>
+                <input type="text" placeholder="Select one" matInput formControlName="artifactList" [matAutocomplete]="autoArtifact" [errorStateMatcher]="matcher" class="w-100">
+                <mat-autocomplete #autoArtifact="matAutocomplete" [displayWith]="getPortraitName" (closed)="setArtifact()" class="w-100">
+                    <mat-optgroup *ngFor="let jobCode of ['NN',  f['heroList'].value?.jobCode]" [label]="normalizeJobCode(jobCode)">
+                        <ng-container *ngFor="let artifact of filteredArtifacts | async | orderBy:'name'">
+                            <mat-option *ngIf="jobCode == artifact.jobCode && (artifact.jobCode == f['heroList'].value?.jobCode || artifact.jobCode == 'NN')" [value]="artifact">
+                                <div class="d-inline-flex">
+                                    <app-portrait [code]="artifact.code" [name]="artifact.name" [isArtifact]="true" [miniPortrait]="true"></app-portrait>
+                                    <span class="ms-3">{{artifact.name}}</span>
+                                </div>
+                            </mat-option>
+                        </ng-container>
+                    </mat-optgroup>
+                </mat-autocomplete>
+                <mat-error *ngIf="f['artifactList'].invalid && submitted">You must select a hero</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-6 col-md-3 col-lg-2">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Artifact Level</mat-label>
+                <mat-select formControlName="artifactLevel" [errorStateMatcher]="matcher">
+                    <mat-option [value]="level" *ngFor="let level of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]">{{level}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="f['artifactLevel'].invalid && submitted">Level is required</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-6 col-lg-4">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Build Status</mat-label>
+                <mat-select formControlName="status" [errorStateMatcher]="matcher">
+                    <mat-option class="text-success" value="Excelent">Excelent</mat-option>
+                    <mat-option class="text-info" value="Good">Good</mat-option>
+                    <mat-option class="text-danger" value="In Progress">In Progress</mat-option>
+                </mat-select>
+                <mat-error *ngIf="f['status'].invalid && submitted">A build status is required</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12 d-flex justify-content-center">
+            <button type="button" class="mx-2" mat-flat-button mat-dialog-close>Cancel</button>
+            <button type="submit" class="mx-2" mat-flat-button color="primary">Add</button>
+        </div>
+    </div>
+</form>

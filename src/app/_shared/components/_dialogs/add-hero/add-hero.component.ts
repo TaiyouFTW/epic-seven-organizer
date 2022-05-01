@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ControlContainer, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map, Observable, startWith } from 'rxjs';
 import { Artifact } from 'src/app/_shared/interfaces/artifact';
 // import { Heroz } from 'src/app/_shared/interfaces/heroes';
@@ -21,6 +22,11 @@ export class SubmittedForm {
   }
 }
 
+export interface DialogData {
+  heroes: Hero[];
+  artifacts: Artifact[];
+}
+
 @Component({
   selector: 'app-add-hero',
   templateUrl: './add-hero.component.html',
@@ -32,10 +38,10 @@ export class SubmittedForm {
 })
 export class AddHeroComponent implements OnInit, OnChanges {
 
-  @Input() heroes: Hero[] = [];
-  @Input() artifacts: Artifact[] = [];
+  // @Input() heroes: Hero[] = [];
+  // @Input() artifacts: Artifact[] = [];
 
-  @Output() heroEvent = new EventEmitter<BuildHero>();
+  // @Output() heroEvent = new EventEmitter<BuildHero>();
 
   form!: FormGroup;
   @ViewChild(FormGroupDirective) formRef!: FormGroupDirective;
@@ -46,7 +52,12 @@ export class AddHeroComponent implements OnInit, OnChanges {
   matcher = new MyErrorStateMatcher();
   submitted = new SubmittedForm();
 
-  constructor(private formBuilder: FormBuilder, private helpersService: HelpersService) {
+  constructor(
+    public dialogRef: MatDialogRef<AddHeroComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private formBuilder: FormBuilder,
+    private helpersService: HelpersService
+  ) {
 
     this.form = this.formBuilder.group({
       heroList: [null, Validators.required],
@@ -64,24 +75,21 @@ export class AddHeroComponent implements OnInit, OnChanges {
 
   get f() { return this.form.controls; }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.filteredHeroes = this.form.controls['heroList'].valueChanges.pipe(
+      startWith(''),
+      map(value => (typeof value === 'string' ? value : '')),
+      map(name => (name ? this._filterHero(name) : this.data.heroes.slice())),
+    );
+
+    this.filteredArtifacts = this.form.controls['artifactList'].valueChanges.pipe(
+      startWith(''),
+      map(value => (typeof value === 'string' ? value : '')),
+      map(name => (name ? this._filterArtifact(name) : this.data.artifacts.slice())),
+    );
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['heroes'] != undefined && changes['heroes'].firstChange) {
-      this.filteredHeroes = this.form.controls['heroList'].valueChanges.pipe(
-        startWith(''),
-        map(value => (typeof value === 'string' ? value : '')),
-        map(name => (name ? this._filterHero(name) : this.heroes.slice())),
-      );
-    }
-
-    if (changes['artifacts'] != undefined && changes['artifacts'].firstChange) {
-      this.filteredArtifacts = this.form.controls['artifactList'].valueChanges.pipe(
-        startWith(''),
-        map(value => (typeof value === 'string' ? value : '')),
-        map(name => (name ? this._filterArtifact(name) : this.artifacts.slice())),
-      );
-    }
   }
 
   add() {
@@ -96,7 +104,7 @@ export class AddHeroComponent implements OnInit, OnChanges {
       // equipment
       // set
       this.formRef.resetForm();
-      this.heroEvent.emit(field);
+      this.dialogRef.close(field);
     }
   }
 
@@ -104,7 +112,7 @@ export class AddHeroComponent implements OnInit, OnChanges {
     if (this.f['heroList'].value) {
       let filterValue = this._setFilterValue('heroList');
 
-      this.f['heroList'].setValue(this.heroes.filter(option => {
+      this.f['heroList'].setValue(this.data.heroes.filter(option => {
         let value = option.name.toLowerCase() == filterValue;
         if (value) {
           this.f['artifactList'].enable();
@@ -122,7 +130,7 @@ export class AddHeroComponent implements OnInit, OnChanges {
     if (this.f['artifactList'].value) {
       let filterValue = this._setFilterValue('artifactList');
 
-      this.f['artifactList'].setValue(this.artifacts.filter(option => {
+      this.f['artifactList'].setValue(this.data.artifacts.filter(option => {
         let value = option.name.toLowerCase() == filterValue;
         if (value) {
           this.f['artifactLevel'].enable();
@@ -154,12 +162,12 @@ export class AddHeroComponent implements OnInit, OnChanges {
   private _filterHero(value: string): Hero[] {
     const filterValue = value.toLowerCase();
 
-    return this.heroes.filter(option => option.name.toLowerCase().includes(filterValue));
+    return this.data.heroes.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
   private _filterArtifact(value: string): Artifact[] {
     const filterValue = value.toLowerCase();
 
-    return this.artifacts.filter(option => option.name.toLowerCase().includes(filterValue));
+    return this.data.artifacts.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 }

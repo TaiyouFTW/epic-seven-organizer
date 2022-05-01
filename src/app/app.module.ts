@@ -14,7 +14,7 @@ import { ErrorComponent } from './error/error.component';
 import { OrderByPipe } from './_shared/pipes/order-by.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrganizerComponent } from './organizer/organizer.component';
-import { AddHeroComponent } from './organizer/add-hero/add-hero.component';
+import { AddHeroComponent } from './_shared/components/_dialogs/add-hero/add-hero.component';
 import { PortraitComponent } from './_shared/components/portrait/portrait.component';
 import { LayoutComponent } from './_shared/components/layout/layout.component';
 import { HeroCardComponent } from './_shared/components/hero-card/hero-card.component';
