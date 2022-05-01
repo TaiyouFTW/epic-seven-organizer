@@ -1,11 +1,15 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { map, take, tap } from 'rxjs';
+import { Artifact } from '../_shared/interfaces/artifact';
 import { BuildHero, Hero, ListedHero } from '../_shared/interfaces/hero';
+import { ArtifactService } from '../_shared/services/artifact.service';
 import { EpicService } from '../_shared/services/epic.service';
 import { HeroService } from '../_shared/services/hero.service';
+import { AddHeroComponent } from './add-hero/add-hero.component';
 
 @Component({
   selector: 'app-organizer',
@@ -17,9 +21,10 @@ export class OrganizerComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   allHeroes: Hero[] = [];
-  unknown: Hero = {} as Hero;
+  allArtifacts: Artifact[] = [];
+  // unknown: Hero = {} as Hero;
 
-  heroes: Hero[] = new Array<Hero>();
+  heroes: BuildHero[] = new Array<BuildHero>();
 
   displayedColumns: string[] = ['bars', 'image', 'element', 'role', 'name', 'build', 'level'];
   dataSource = new MatTableDataSource<Hero>();
@@ -28,19 +33,26 @@ export class OrganizerComponent {
   totalPages: number = 1;
 
   constructor(
-    private heroService: HeroService
+    private heroService: HeroService,
+    private artifactService: ArtifactService,
+    public dialog: MatDialog
   ) {
-    if (this.heroService.currentHeroesValue == null) {
-      this.getHeroes();
-    } else {
-      this.allHeroes = this.heroService.currentHeroesValue.heroes;
-    }
+    this.getHeroes();
+    this.getArtifacts();
   }
 
   getHeroes() {
     this.heroService.heroes().subscribe(listHero => {
       this.allHeroes = listHero.heroes;
     });
+  }
+
+  getArtifacts() {
+    this.artifactService.artifacts().subscribe(listArtifact => {
+      this.allArtifacts = listArtifact.artifacts;
+    });
+    // this.allArtifacts = this.artifactService.currentArtifactValue.artifacts;
+    // console.log(this.allArtifacts);
   }
 
   addBuildedHeroes($event: BuildHero) {
