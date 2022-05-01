@@ -2,8 +2,10 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { ControlContainer, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { map, Observable, startWith } from 'rxjs';
+import { Artifact } from 'src/app/_shared/interfaces/artifact';
 // import { Heroz } from 'src/app/_shared/interfaces/heroes';
 import { BuildHero, Hero } from 'src/app/_shared/interfaces/hero';
+import { HelpersService } from 'src/app/_shared/services/helpers.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -31,7 +33,7 @@ export class SubmittedForm {
 export class AddHeroComponent implements OnInit, OnChanges {
 
   @Input() heroes: Hero[] = [];
-  // @Input() unknown: Heroz = {} as Heroz;
+  @Input() artifacts: Artifact[] = [];
 
   @Output() heroEvent = new EventEmitter<BuildHero>();
 
@@ -39,17 +41,25 @@ export class AddHeroComponent implements OnInit, OnChanges {
   @ViewChild(FormGroupDirective) formRef!: FormGroupDirective;
 
   filteredHeroes!: Observable<Hero[]>;
+  filteredArtifacts!: Observable<Artifact[]>;
 
   matcher = new MyErrorStateMatcher();
   submitted = new SubmittedForm();
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private helpersService: HelpersService) {
 
     this.form = this.formBuilder.group({
-      autocomplete: [null, Validators.required],
-      level: [null, Validators.required],
-      build: [null, Validators.required],
+      heroList: [null, Validators.required],
+      heroLevel: [null, Validators.required],
+      skillsLevel: [0],
+      artifactList: [null],
+      artifactLevel: [null],
+      exclusiveEquipment: [false],
+      status: [null, Validators.required],
     });
+
+    this.f['artifactList'].disable();
+    this.f['artifactLevel'].disable();
   }
 
   get f() { return this.form.controls; }
@@ -58,35 +68,98 @@ export class AddHeroComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['heroes'] != undefined && changes['heroes'].firstChange) {
-      this.filteredHeroes = this.form.controls['autocomplete'].valueChanges.pipe(
+      this.filteredHeroes = this.form.controls['heroList'].valueChanges.pipe(
         startWith(''),
-        map(value => (typeof value === 'string' ? value : console.log(value))),
-        map(name => (name ? this._filter(name) : this.heroes.slice())),
+        map(value => (typeof value === 'string' ? value : '')),
+        map(name => (name ? this._filterHero(name) : this.heroes.slice())),
+      );
+    }
+
+    if (changes['artifacts'] != undefined && changes['artifacts'].firstChange) {
+      this.filteredArtifacts = this.form.controls['artifactList'].valueChanges.pipe(
+        startWith(''),
+        map(value => (typeof value === 'string' ? value : '')),
+        map(name => (name ? this._filterArtifact(name) : this.artifacts.slice())),
       );
     }
   }
 
   add() {
-    let field: BuildHero = this.f['autocomplete'].value;
+    let field: BuildHero = this.f['heroList'].value;
     if (this.form.valid && field.code != '') {
-      field.buildStatus = this.f['build'].value;
-      field.level = this.f['level'].value;
+      field.buildStatus = this.f['status'].value;
+      field.level = this.f['heroLevel'].value;
+      field.skillsLevel = this.f['skillsLevel'].value;
+      field.artifact = this.f['artifactList'].value;
+      field.artifactLevel = this.f['artifactLevel'].value;
+      field.hasExclusiveEquipment = this.f['exclusiveEquipment'].value;
+      // equipment
+      // set
       this.formRef.resetForm();
       this.heroEvent.emit(field);
     }
   }
 
-  changeHero() {
-    console.log(this.f['autocomplete'].value);
+  setHero() {
+    if (this.f['heroList'].value) {
+      let filterValue = this._setFilterValue('heroList');
+
+      this.f['heroList'].setValue(this.heroes.filter(option => {
+        let value = option.name.toLowerCase() == filterValue;
+        if (value) {
+          this.f['artifactList'].enable();
+        }
+        return value;
+      })[0]);
+
+    } else {
+      this.f['artifactList'].setValue(null);
+      this.f['artifactList'].disable();
+    }
+  }
+
+  setArtifact() {
+    if (this.f['artifactList'].value) {
+      let filterValue = this._setFilterValue('artifactList');
+
+      this.f['artifactList'].setValue(this.artifacts.filter(option => {
+        let value = option.name.toLowerCase() == filterValue;
+        if (value) {
+          this.f['artifactLevel'].enable();
+        }
+        return value;
+      })[0]);
+    } else {
+      this.f['artifactLevel'].setValue(null);
+      this.f['artifactLevel'].disable();
+    }
   }
 
   getPortraitName(hero: Hero) {
     return hero && hero.name ? hero.name : '';
   }
 
-  private _filter(value: string): Hero[] {
+  normalizeJobCode(jobCode: string) {
+    return this.helpersService.fixJobCode(jobCode);
+  }
+
+  private _setFilterValue(formName: string) {
+    if (this.f[formName].value && this.f[formName].value.name) {
+      return this.f[formName].value.name.toLowerCase();
+    } else {
+      return this.f[formName].value.toLowerCase();
+    }
+  }
+
+  private _filterHero(value: string): Hero[] {
     const filterValue = value.toLowerCase();
 
     return this.heroes.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
+
+  private _filterArtifact(value: string): Artifact[] {
+    const filterValue = value.toLowerCase();
+
+    return this.artifacts.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 }
