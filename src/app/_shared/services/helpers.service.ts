@@ -30,6 +30,20 @@ export class HelpersService {
     }
   }
 
+  fixJobCode(jobCode: string) {
+    switch (jobCode) {
+      case 'NN':
+        return 'GENERIC';
+      case 'soul-weaver':
+        return 'SOUL WEAVER';
+      case undefined:
+      case null:
+        return '';
+      default:
+        return jobCode.toUpperCase();
+    }
+  }
+
   canUpdate() {
     if (this.today.getDay() == 4 && this.today.getUTCHours() >= 9 && this.configService.currentCanUpdateValue) {
       return true;

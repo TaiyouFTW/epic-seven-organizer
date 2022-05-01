@@ -22,7 +22,6 @@ export class LayoutComponent implements OnInit {
 
   constructor(private renderer: Renderer2, private configService: ConfigService, private breakpointObserver: BreakpointObserver) {
     this.changeTheme(this.configService.currentThemePreferenceValue);
-    console.log(this.isHandset$);
   }
 
   ngOnInit(): void {
