@@ -64,7 +64,7 @@ export class AddHeroComponent implements OnInit, OnChanges {
       heroLevel: [null, Validators.required],
       skillsLevel: [0],
       artifactList: [null],
-      artifactLevel: [null],
+      artifactLevel: [0],
       exclusiveEquipment: [false],
       status: [null, Validators.required],
     });

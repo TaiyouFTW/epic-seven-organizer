@@ -1,27 +1,118 @@
 <div class="hero-card rounded-3 pointer container py-3">
     <div class="row">
         <div class="col-12 d-flex justify-content-center">
-            <app-portrait [heroCode]="hero.code" [name]="hero.name" [role]="hero.jobCode" [element]="hero.attributeCode" [grade]="hero.grade"></app-portrait>
+            <app-portrait [code]="hero.code" [name]="hero.name" [role]="hero.jobCode" [element]="hero.attributeCode" [grade]="hero.grade"></app-portrait>
         </div>
     </div>
 
+    <div class="row my-3">
+        <div class="col-12">
+            <h6 class="text-uppercase text-center mb-0">{{hero.name}}</h6>
+        </div>
+    </div>
+
+    <!-- level and skills -->
+    <div class="row">
+        <div class="col-6">
+            <p class="text-start">Level: {{hero.level}}</p>
+        </div>
+        <div class="col-6">
+            <p class="text-end">Skills: {{hero.skillsLevel > 0 ? '+' + hero.skillsLevel : hero.skillsLevel}}</p>
+        </div>
+    </div>
+
+    <mat-divider class="my-3"></mat-divider>
+
     <div class="row">
         <div class="col-12">
-            <h6 class="text-uppercase text-center my-2">{{hero.name}}</h6>
+            <h6>Artifact</h6>
+        </div>
+    </div>
+    <div class="row mb-3 align-items-center">
+        <div class="col-auto">
+            <app-portrait [code]="hero.artifact.code" [name]="hero.artifact.name" [isArtifact]="true" [miniPortrait]="true"></app-portrait>
+        </div>
+        <div class="col">
+            <p>{{hero.artifact.name}} {{hero.artifactLevel > 0 ? '+' + hero.artifactLevel : ''}}</p>
+        </div>
+    </div>
+
+    <mat-divider class="my-3"></mat-divider>
+
+    <div class="row">
+        <div class="col-12">
+            <h6>Status</h6>
         </div>
     </div>
     <div class="row">
-        <div class="col-6">
-            <p>Level: {{hero.level}}</p>
+        <div class="col-6 border-right">
+            <div class="row">
+                <div class="col-6">
+                    <p>Atk:</p>
+                </div>
+                <div class="col-6">
+                    <p>4000</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p>Def:</p>
+                </div>
+                <div class="col-6">
+                    <p>1000</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p>Hp:</p>
+                </div>
+                <div class="col-6">
+                    <p>10000</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p>Spd:</p>
+                </div>
+                <div class="col-6">
+                    <p>200</p>
+                </div>
+            </div>
         </div>
+
         <div class="col-6">
-            <p>Skills: +{{hero.skillsLevel}}</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <!-- TODO: Add Sets -->
-            <p>Set: </p>
+            <div class="row">
+                <div class="col-6">
+                    <p>CRate:</p>
+                </div>
+                <div class="col-6">
+                    <p>100%</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p>CDmg:</p>
+                </div>
+                <div class="col-6">
+                    <p>350%</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p>Eff:</p>
+                </div>
+                <div class="col-6">
+                    <p>95%</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p>Res:</p>
+                </div>
+                <div class="col-6">
+                    <p>200%</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

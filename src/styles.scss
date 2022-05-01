@@ -96,3 +96,8 @@ h6 {
 .toolbar-single-row {
   height: 56px !important;
 }
+
+.mat-list-base .mat-list-item {
+  color: var(--text);
+  font-size: inherit !important;
+}

@@ -1,5 +1,9 @@
 @import "./../../../../colors.scss";
 
+p {
+    margin-bottom: 0;
+}
+
 .hero-card {
     width: 100%;
     min-height: 140px;
@@ -11,4 +15,8 @@
 
 .hero-card:hover {
     box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
+}
+
+.border-right {
+    border-right: 1px solid var(--border);
 }
