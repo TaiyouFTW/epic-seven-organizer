@@ -3,13 +3,13 @@ import { Component, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { map, take, tap } from 'rxjs';
+import { filter, map, take, tap } from 'rxjs';
 import { Artifact } from '../_shared/interfaces/artifact';
 import { BuildHero, Hero, ListedHero } from '../_shared/interfaces/hero';
 import { ArtifactService } from '../_shared/services/artifact.service';
 import { EpicService } from '../_shared/services/epic.service';
 import { HeroService } from '../_shared/services/hero.service';
-import { AddHeroComponent } from './add-hero/add-hero.component';
+import { AddHeroComponent } from '../_shared/components/_dialogs/add-hero/add-hero.component';
 
 @Component({
   selector: 'app-organizer',
@@ -51,8 +51,21 @@ export class OrganizerComponent {
     this.artifactService.artifacts().subscribe(listArtifact => {
       this.allArtifacts = listArtifact.artifacts;
     });
-    // this.allArtifacts = this.artifactService.currentArtifactValue.artifacts;
-    // console.log(this.allArtifacts);
+  }
+
+  addHero() {
+    const dialogRef = this.dialog.open(AddHeroComponent, {
+      data: {
+        heroes: this.allHeroes,
+        artifacts: this.allArtifacts
+      },
+      autoFocus: false
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(filter(result => result))
+      .subscribe(result => this.heroes.push(result));
   }
 
   addBuildedHeroes($event: BuildHero) {
