@@ -8,14 +8,16 @@ import { Component, Input, OnInit } from '@angular/core';
 export class PortraitComponent implements OnInit {
 
   @Input() unknown?: string;
-  @Input() heroCode?: string;
+  @Input() code?: string;
   @Input() name?: string;
   @Input() role?: string;
   @Input() element?: string;
   @Input() grade?: number;
   @Input() miniPortrait?: boolean;
+  @Input() isArtifact?: boolean = false;
 
-  imgUrl: string = 'https://static.smilegatemegaport.com/event/live/epic7/guide/images/hero/';
+  heroImgUrl: string = 'https://static.smilegatemegaport.com/event/live/epic7/guide/images/hero/';
+  artifactImgUrl: string = 'https://static.smilegatemegaport.com/event/live/epic7/guide/wearingStatus/images/artifact/';
 
   constructor() {
 
@@ -25,7 +27,6 @@ export class PortraitComponent implements OnInit {
   }
 
   onError(event: any) {
-    event.target.src = `https://www.e7vau.lt/static/game/face/${this.heroCode}_s.png`;
-    // event.target.src = 'https://www.e7vau.lt/static/game/face/unknown_s.png';
+    event.target.src = `https://www.e7vau.lt/static/game/face/${this.code}_s.png`;
   }
 }
