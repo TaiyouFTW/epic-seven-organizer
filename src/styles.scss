@@ -8,7 +8,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   background-color: var(--background);
   color: var(--text);
 }
@@ -79,10 +79,6 @@ h6 {
 .mat-drawer-container {
   min-height: calc(100vh - 56px);
   background-color: var(--background) !important;
-  color: var(--text) !important;
-}
-
-.mat-list-base .mat-list-item {
   color: var(--text) !important;
 }
 

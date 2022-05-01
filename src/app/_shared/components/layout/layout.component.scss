@@ -13,11 +13,10 @@
 }
 
 .is-active {
-    color: #fff !important;
-    background-color: rgba(103, 58, 183, 50%);
+    background-color: var(--highlight);
     &:hover,
     &:focus,
     &:active {
-        background-color: rgba(103, 58, 183, 50%) !important;
+        background-color: var(--highlight) !important;
     }
 }

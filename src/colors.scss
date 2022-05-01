@@ -11,13 +11,17 @@ $header-dark: #2d333b;
 $header-text-light: #ffffff;
 $header-text-dark: #cdd9e5;
 
+$red: #cf4926;
+$blue: #9be5ec;
+
 html[data-theme="light"] {
     --background: #{$background-light};
     --background-aside: #{$background-aside-light};
     --text: #{$text-light};
     --border: #{$border-light};
-    --header: #{$header-light};
+    --header: #{$header-dark};
     --header-text: #{$header-text-light};
+    --highlight: #{$blue};
 }
 
 html[data-theme="dark"] {
@@ -27,4 +31,5 @@ html[data-theme="dark"] {
     --border: #{$border-dark};
     --header: #{$header-dark};
     --header-text: #{$header-text-dark};
+    --highlight: #{$red};
 }
