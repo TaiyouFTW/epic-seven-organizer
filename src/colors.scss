@@ -1,3 +1,13 @@
+$black: #24292f;
+$white: #ffffff;
+$red: #cf3a26;
+
+$red-800: #c62828;
+$green-800: #2e7d32;
+$ligh-blue-800: #0277bd;
+$amber-800: #9e8129;
+$purple-800: #6a1b9a;
+
 $background-light: #f6f8fa;
 $background-dark: #1c2128;
 $background-aside-light: #ffffff;
@@ -11,9 +21,6 @@ $header-dark: #2d333b;
 $header-text-light: #ffffff;
 $header-text-dark: #cdd9e5;
 
-$red: #cf4926;
-$blue: #9be5ec;
-
 html[data-theme="light"] {
     --background: #{$background-light};
     --background-aside: #{$background-aside-light};
@@ -21,7 +28,8 @@ html[data-theme="light"] {
     --border: #{$border-light};
     --header: #{$header-dark};
     --header-text: #{$header-text-light};
-    --highlight: #{$blue};
+    --highlight: #{$red};
+    --chip: #{$background-dark};
 }
 
 html[data-theme="dark"] {
@@ -32,4 +40,5 @@ html[data-theme="dark"] {
     --header: #{$header-dark};
     --header-text: #{$header-text-dark};
     --highlight: #{$red};
+    --chip: #{$background-light};
 }
