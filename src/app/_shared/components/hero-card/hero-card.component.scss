@@ -13,10 +13,47 @@ p {
     transition: box-shadow 0.2s ease-in-out;
 }
 
+.hero-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    height: 56px;
+    background: var(--header);
+    color: var(--header-text);
+    border-bottom: 1px solid var(--border);
+}
+
 .hero-card:hover {
     box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
 }
 
 .border-right {
     border-right: 1px solid var(--border);
+}
+
+.stat {
+    height: 18px;
+    width: auto;
+}
+
+::ng-deep .mat-chip-list-wrapper {
+    width: 100%;
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: inline-block;
+}
+
+.artifact-row,
+.hero-name-row {
+    height: 40px;
+}
+
+small {
+    font-size: 0.75em;
+}
+
+::ng-deep .mat-standard-chip {
+    min-height: 24px;
 }

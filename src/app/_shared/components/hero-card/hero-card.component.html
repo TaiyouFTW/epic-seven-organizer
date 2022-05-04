@@ -1,117 +1,112 @@
-<div class="hero-card rounded-3 pointer container py-3">
+<div class="hero-card rounded-3 container py-3">
+
+    <!-- Tags -->
+    <section class="row mb-3">
+        <div class="col-12">
+            <div class="row" *ngIf="hero.tags && hero.tags.length > 0">
+                <div class="col-12">
+                    <mat-chip-list aria-label="tags">
+                        <mat-chip *ngFor="let tag of hero.tags" [ngClass]="'chip-' + tag.toLowerCase()"><small>{{tag}}</small></mat-chip>
+                    </mat-chip-list>
+                </div>
+
+                <mat-divider class="my-3"></mat-divider>
+            </div>
+        </div>
+    </section>
+
     <div class="row">
         <div class="col-12 d-flex justify-content-center">
             <app-portrait [code]="hero.code" [name]="hero.name" [role]="hero.jobCode" [element]="hero.attributeCode" [grade]="hero.grade"></app-portrait>
         </div>
     </div>
 
-    <div class="row my-3">
+    <div class="row my-3 hero-name-row">
         <div class="col-12">
             <h6 class="text-uppercase text-center mb-0">{{hero.name}}</h6>
         </div>
     </div>
 
     <!-- level and skills -->
-    <div class="row">
-        <div class="col-6">
-            <p class="text-start">Level: {{hero.level}}</p>
+    <section class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-6">
+                    <p class="text-start">Level: {{hero.level}}</p>
+                </div>
+                <div class="col-6">
+                    <p class="text-end">Skills: {{hero.skillsLevel > 0 ? '+' + hero.skillsLevel : hero.skillsLevel}}</p>
+                </div>
+            </div>
         </div>
-        <div class="col-6">
-            <p class="text-end">Skills: {{hero.skillsLevel > 0 ? '+' + hero.skillsLevel : hero.skillsLevel}}</p>
-        </div>
-    </div>
 
-    <mat-divider class="my-3"></mat-divider>
+        <mat-divider class="my-3"></mat-divider>
+    </section>
 
-    <div class="row">
+    <section class="row">
         <div class="col-12">
             <h6>Artifact</h6>
+            <div class="row mb-3 align-items-center artifact-row" *ngIf="hero.artifact && hero.artifact.name != ''; else dontHaveArtifact">
+                <div class="col-auto">
+                    <app-portrait [code]="hero.artifact.code" [name]="hero.artifact.name" [isArtifact]="true" [miniPortrait]="true"></app-portrait>
+                </div>
+                <div class="col">
+                    <p>{{hero.artifact.name}} {{hero.artifactLevel > 0 ? '+' + hero.artifactLevel : ''}}</p>
+                </div>
+            </div>
+            <ng-template #dontHaveArtifact>
+                <div class="row mb-3 align-items-center artifact-row">
+                    <div class="col-12">
+                        <p>No artifacts were selected</p>
+                    </div>
+                </div>
+            </ng-template>
         </div>
-    </div>
-    <div class="row mb-3 align-items-center">
-        <div class="col-auto">
-            <app-portrait [code]="hero.artifact.code" [name]="hero.artifact.name" [isArtifact]="true" [miniPortrait]="true"></app-portrait>
-        </div>
-        <div class="col">
-            <p>{{hero.artifact.name}} {{hero.artifactLevel > 0 ? '+' + hero.artifactLevel : ''}}</p>
-        </div>
-    </div>
 
-    <mat-divider class="my-3"></mat-divider>
+        <mat-divider class="my-3"></mat-divider>
+    </section>
 
     <div class="row">
         <div class="col-12">
-            <h6>Status</h6>
+            <h6>Statistics</h6>
         </div>
     </div>
     <div class="row">
         <div class="col-6 border-right">
-            <div class="row">
-                <div class="col-6">
-                    <p>Atk:</p>
-                </div>
-                <div class="col-6">
-                    <p>4000</p>
-                </div>
+            <div class="d-inline-flex w-100">
+                <img class="stat me-3" src="./../../../../assets/images/stat/atk.png" matTooltip="Attack">
+                <p>4000</p>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <p>Def:</p>
-                </div>
-                <div class="col-6">
-                    <p>1000</p>
-                </div>
+            <div class="d-inline-flex">
+                <img class="stat me-3" src="./../../../../assets/images/stat/def.png" matTooltip="Defense">
+                <p>1000</p>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <p>Hp:</p>
-                </div>
-                <div class="col-6">
-                    <p>10000</p>
-                </div>
+            <div class="d-inline-flex">
+                <img class="stat me-3" src="./../../../../assets/images/stat/hp.png" matTooltip="HP">
+                <p>10000</p>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <p>Spd:</p>
-                </div>
-                <div class="col-6">
-                    <p>200</p>
-                </div>
+            <div class="d-inline-flex">
+                <img class="stat me-3" src="./../../../../assets/images/stat/spd.png" matTooltip="Speed">
+                <p>200</p>
             </div>
         </div>
 
-        <div class="col-6">
-            <div class="row">
-                <div class="col-6">
-                    <p>CRate:</p>
-                </div>
-                <div class="col-6">
-                    <p>100%</p>
-                </div>
+        <div class="col-6 border-left">
+            <div class="d-inline-flex w-100">
+                <img class="stat me-3" src="./../../../../assets/images/stat/crate.png" matTooltip="Critical Rate">
+                <p>100%</p>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <p>CDmg:</p>
-                </div>
-                <div class="col-6">
-                    <p>350%</p>
-                </div>
+            <div class="d-inline-flex">
+                <img class="stat me-3" src="./../../../../assets/images/stat/cdmg.png" matTooltip="Critical Damage">
+                <p>350%</p>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <p>Eff:</p>
-                </div>
-                <div class="col-6">
-                    <p>95%</p>
-                </div>
+            <div class="d-inline-flex">
+                <img class="stat me-3" src="./../../../../assets/images/stat/eff.png" matTooltip="Effectiveness">
+                <p>95%</p>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <p>Res:</p>
-                </div>
-                <div class="col-6">
-                    <p>200%</p>
-                </div>
+            <div class="d-inline-flex">
+                <img class="stat me-3" src="./../../../../assets/images/stat/res.png" matTooltip="Resistance">
+                <p>200%</p>
             </div>
         </div>
     </div>
