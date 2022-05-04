@@ -13,6 +13,7 @@
 }
 
 .is-active {
+    color: $white !important;
     background-color: var(--highlight);
     &:hover,
     &:focus,
