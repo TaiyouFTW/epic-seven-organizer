@@ -27,35 +27,10 @@ $custom-red-palette: (
     ),
 );
 
-$custom-blue-palette: (
-    50: $blue,
-    100: $blue,
-    200: $blue,
-    300: $blue,
-    400: $blue,
-    500: $blue,
-    600: $blue,
-    700: $blue,
-    800: $blue,
-    900: $blue,
-    contrast: (
-        50: #212529,
-        100: #212529,
-        200: #212529,
-        300: #212529,
-        400: #212529,
-        500: #212529,
-        600: #212529,
-        700: #212529,
-        800: #212529,
-        900: #212529,
-    ),
-);
-
 @include mat.core();
 
 // Define a light theme
-$light-primary: mat.define-palette($custom-blue-palette);
+$light-primary: mat.define-palette($custom-red-palette);
 $light-accent: mat.define-palette($custom-red-palette);
 $light-theme: mat.define-light-theme(
     (
@@ -68,7 +43,7 @@ $light-theme: mat.define-light-theme(
 
 // Define a dark theme
 $dark-primary: mat.define-palette($custom-red-palette);
-$dark-accent: mat.define-palette($custom-blue-palette);
+$dark-accent: mat.define-palette($custom-red-palette);
 $dark-theme: mat.define-dark-theme(
     (
         color: (
