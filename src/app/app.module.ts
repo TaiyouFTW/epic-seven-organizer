@@ -19,6 +19,7 @@ import { PortraitComponent } from './_shared/components/portrait/portrait.compon
 import { LayoutComponent } from './_shared/components/layout/layout.component';
 import { HeroCardComponent } from './_shared/components/hero-card/hero-card.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
