@@ -24,7 +24,7 @@ export interface BuildHero {
     attributeCode: string;
     level: number;
     skillsLevel: number;
-    buildStatus: string;
+    tags: string[];
     equipment: Equipment;
     artifact: Artifact;
     artifactLevel: number;
