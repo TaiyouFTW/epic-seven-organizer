@@ -4,7 +4,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map, Observable, startWith } from 'rxjs';
 import { Artifact } from 'src/app/_shared/interfaces/artifact';
-// import { Heroz } from 'src/app/_shared/interfaces/heroes';
+import { DialogHero } from 'src/app/_shared/interfaces/dialogHero';
 import { BuildHero, Hero } from 'src/app/_shared/interfaces/hero';
 import { HelpersService } from 'src/app/_shared/services/helpers.service';
 
@@ -22,11 +22,6 @@ export class SubmittedForm {
   }
 }
 
-export interface DialogData {
-  heroes: Hero[];
-  artifacts: Artifact[];
-}
-
 @Component({
   selector: 'app-add-hero',
   templateUrl: './add-hero.component.html',
@@ -38,11 +33,6 @@ export interface DialogData {
 })
 export class AddHeroComponent implements OnInit, OnChanges {
 
-  // @Input() heroes: Hero[] = [];
-  // @Input() artifacts: Artifact[] = [];
-
-  // @Output() heroEvent = new EventEmitter<BuildHero>();
-
   form!: FormGroup;
   @ViewChild(FormGroupDirective) formRef!: FormGroupDirective;
 
@@ -52,9 +42,13 @@ export class AddHeroComponent implements OnInit, OnChanges {
   matcher = new MyErrorStateMatcher();
   submitted = new SubmittedForm();
 
+  tags: string[] = ['PVP', 'PVE', 'Wyvern', 'Golem', 'Banshee', 'Azimanak', 'Caides', 'Waifu', 'Husbando'];
+
+  selectedHeroes: BuildHero[] = [];
+
   constructor(
     public dialogRef: MatDialogRef<AddHeroComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data: DialogHero,
     private formBuilder: FormBuilder,
     private helpersService: HelpersService
   ) {
@@ -66,7 +60,7 @@ export class AddHeroComponent implements OnInit, OnChanges {
       artifactList: [null],
       artifactLevel: [0],
       exclusiveEquipment: [false],
-      status: [null, Validators.required],
+      tags: [null],
     });
 
     this.f['artifactList'].disable();
@@ -90,19 +84,37 @@ export class AddHeroComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['heroes'] != undefined && changes['heroes'].firstChange) {
+      this.filteredHeroes = this.form.controls['heroList'].valueChanges.pipe(
+        startWith(''),
+        map(value => (typeof value === 'string' ? value : '')),
+        map(name => (name ? this._filterHero(name) : this.data.heroes.slice())),
+      );
+    }
+
+    if (changes['artifacts'] != undefined && changes['artifacts'].firstChange) {
+      this.filteredArtifacts = this.form.controls['artifactList'].valueChanges.pipe(
+        startWith(''),
+        map(value => (typeof value === 'string' ? value : '')),
+        map(name => (name ? this._filterArtifact(name) : this.data.artifacts.slice())),
+      );
+    }
   }
 
   add() {
-    let field: BuildHero = this.f['heroList'].value;
+    let field: BuildHero = {} as BuildHero;
     if (this.form.valid && field.code != '') {
-      field.buildStatus = this.f['status'].value;
+      field.name = this.f['heroList'].value.name;
+      field.attributeCode = this.f['heroList'].value.attributeCode;
+      field.code = this.f['heroList'].value.code;
+      field.jobCode = this.f['heroList'].value.jobCode;
+      field.grade = this.f['heroList'].value.grade;
+      field.tags = this.f['tags'].value;
       field.level = this.f['heroLevel'].value;
       field.skillsLevel = this.f['skillsLevel'].value;
       field.artifact = this.f['artifactList'].value;
       field.artifactLevel = this.f['artifactLevel'].value;
       field.hasExclusiveEquipment = this.f['exclusiveEquipment'].value;
-      // equipment
-      // set
       this.formRef.resetForm();
       this.dialogRef.close(field);
     }
@@ -143,12 +155,25 @@ export class AddHeroComponent implements OnInit, OnChanges {
     }
   }
 
+  onTagRemoved(tag: string) {
+    const tags = this.f['tags'].value as string[];
+    this._removeFirst(tags, tag);
+    this.f['tags'].setValue(tags);
+  }
+
   getPortraitName(hero: Hero) {
     return hero && hero.name ? hero.name : '';
   }
 
   normalizeJobCode(jobCode: string) {
     return this.helpersService.fixJobCode(jobCode);
+  }
+
+  private _removeFirst<T>(array: T[], toRemove: T): void {
+    const index = array.indexOf(toRemove);
+    if (index !== -1) {
+      array.splice(index, 1);
+    }
   }
 
   private _setFilterValue(formName: string) {
