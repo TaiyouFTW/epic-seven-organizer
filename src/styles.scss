@@ -26,8 +26,8 @@ h6 {
 
 @media (min-width: 768px) {
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
 
   /* Handle */
@@ -100,4 +100,48 @@ h6 {
 .mat-list-base .mat-list-item {
   color: var(--text);
   font-size: inherit !important;
+}
+
+.mat-checkbox-checkmark-path {
+  stroke: white !important;
+}
+
+html[data-theme="dark"] .mat-pseudo-checkbox::after,
+.mat-pseudo-checkbox::after {
+  color: white;
+}
+
+.chip-pvp {
+  color: $white !important;
+  background-color: darken($red-800, 15%) !important;
+}
+
+.chip-pve {
+  color: $white !important;
+  background-color: darken($ligh-blue-800, 15%) !important;
+}
+
+.chip-wyvern {
+  color: $white;
+  background-color: $red-800 !important;
+}
+
+.chip-golem {
+  color: $white;
+  background-color: $green-800 !important;
+}
+
+.chip-banshee {
+  color: $white;
+  background-color: $ligh-blue-800 !important;
+}
+
+.chip-caides {
+  color: $white;
+  background-color: $amber-800 !important;
+}
+
+.chip-azimanak {
+  color: $white;
+  background-color: $purple-800 !important;
 }
