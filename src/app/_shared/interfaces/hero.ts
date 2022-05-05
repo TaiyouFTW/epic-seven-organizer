@@ -24,12 +24,14 @@ export interface BuildHero {
     attributeCode: string;
     level: number;
     skillsLevel: number;
-    tags: string[];
-    equipment: Equipment;
     artifact: Artifact;
     artifactLevel: number;
-    hasExclusiveEquipment?: boolean;
-    set: Set[];
+    imprint: string;
+    tags: string[];
+    priority: number;
+    // hasExclusiveEquipment?: boolean;
+    // equipment: Equipment;
+    // set: Set[];
 }
 
 export interface CompleteListedHero {

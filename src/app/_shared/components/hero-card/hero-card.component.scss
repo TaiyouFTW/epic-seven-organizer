@@ -49,6 +49,9 @@ p {
 .hero-name-row {
     height: 40px;
 }
+.tag-row {
+    height: 68px;
+}
 
 small {
     font-size: 0.75em;
@@ -56,4 +59,12 @@ small {
 
 ::ng-deep .mat-standard-chip {
     min-height: 24px;
+}
+
+.hero-name-width-fix {
+    margin-left: calc(20px + 0.25rem);
+}
+
+.hero-card-button {
+    font-size: inherit;
 }

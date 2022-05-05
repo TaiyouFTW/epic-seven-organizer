@@ -42,7 +42,7 @@ export class AddHeroComponent implements OnInit, OnChanges {
   matcher = new MyErrorStateMatcher();
   submitted = new SubmittedForm();
 
-  tags: string[] = ['PVP', 'PVE', 'Wyvern', 'Golem', 'Banshee', 'Azimanak', 'Caides', 'Waifu', 'Husbando'];
+  tags: string[] = ['PVP', 'PVE', 'Wyvern', 'Golem', 'Banshee', 'Azimanak', 'Caides', 'Expedition'];
 
   selectedHeroes: BuildHero[] = [];
 
@@ -59,12 +59,14 @@ export class AddHeroComponent implements OnInit, OnChanges {
       skillsLevel: [0],
       artifactList: [null],
       artifactLevel: [0],
-      exclusiveEquipment: [false],
+      imprint: [null],
       tags: [null],
+      // exclusiveEquipment: [false],
     });
 
     this.f['artifactList'].disable();
     this.f['artifactLevel'].disable();
+    this.f['imprint'].disable();
   }
 
   get f() { return this.form.controls; }
@@ -114,7 +116,8 @@ export class AddHeroComponent implements OnInit, OnChanges {
       field.skillsLevel = this.f['skillsLevel'].value;
       field.artifact = this.f['artifactList'].value;
       field.artifactLevel = this.f['artifactLevel'].value;
-      field.hasExclusiveEquipment = this.f['exclusiveEquipment'].value;
+      field.imprint = this.f['imprint'].value;
+      // field.hasExclusiveEquipment = this.f['exclusiveEquipment'].value;
       this.formRef.resetForm();
       this.dialogRef.close(field);
     }
@@ -128,6 +131,8 @@ export class AddHeroComponent implements OnInit, OnChanges {
         let value = option.name.toLowerCase() == filterValue;
         if (value) {
           this.f['artifactList'].enable();
+          this.f['imprint'].setValue(null);
+          this.f['imprint'].enable();
         }
         return value;
       })[0]);
@@ -135,6 +140,8 @@ export class AddHeroComponent implements OnInit, OnChanges {
     } else {
       this.f['artifactList'].setValue(null);
       this.f['artifactList'].disable();
+      this.f['imprint'].setValue(null);
+      this.f['imprint'].disable();
     }
   }
 

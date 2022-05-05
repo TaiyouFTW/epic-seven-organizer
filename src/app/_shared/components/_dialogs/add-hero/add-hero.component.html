@@ -7,7 +7,7 @@
     <div class="row mb-3">
         <div class="col-12 col-md-6 col-lg-6">
             <mat-form-field appearance="fill" class="w-100">
-                <mat-label>Hero List</mat-label>
+                <mat-label>Hero</mat-label>
                 <input type="text" placeholder="Select one" matInput formControlName="heroList" [matAutocomplete]="autoHero" [errorStateMatcher]="matcher" class="w-100">
                 <mat-autocomplete #autoHero="matAutocomplete" [displayWith]="getPortraitName" (closed)="setHero()" class="w-100">
                     <mat-option *ngFor="let hero of filteredHeroes | async | orderBy:'name'" [value]="hero">
@@ -45,7 +45,7 @@
     <div class="row mb-3">
         <div class="col-12 col-md-6 col-lg-6">
             <mat-form-field appearance="fill" class="w-100">
-                <mat-label>Artifact List</mat-label>
+                <mat-label>Artifact</mat-label>
                 <input type="text" placeholder="Select one" matInput formControlName="artifactList" [matAutocomplete]="autoArtifact" [errorStateMatcher]="matcher" class="w-100">
                 <mat-autocomplete #autoArtifact="matAutocomplete" [displayWith]="getPortraitName" (closed)="setArtifact()" class="w-100">
                     <mat-optgroup *ngFor="let jobCode of ['NN',  f['heroList'].value?.jobCode]" [label]="normalizeJobCode(jobCode)">
@@ -59,7 +59,6 @@
                         </ng-container>
                     </mat-optgroup>
                 </mat-autocomplete>
-                <mat-error *ngIf="f['artifactList'].invalid && submitted">You must select a hero</mat-error>
             </mat-form-field>
         </div>
 
@@ -69,14 +68,22 @@
                 <mat-select formControlName="artifactLevel" [errorStateMatcher]="matcher">
                     <mat-option [value]="level" *ngFor="let level of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]">{{level}}</mat-option>
                 </mat-select>
-                <mat-error *ngIf="f['artifactLevel'].invalid && submitted">Level is required</mat-error>
             </mat-form-field>
         </div>
 
-        <div class="col-6 col md-2 col-lg-3">
-            <p class="mt-3">
-                <mat-checkbox color="primary" formControlName="exclusiveEquipment">Exclusive equipment</mat-checkbox>
-            </p>
+        <div class="col-6 col-md-3 col-lg-3">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Imprint</mat-label>
+                <mat-select formControlName="imprint" [errorStateMatcher]="matcher">
+                    <mat-option *ngIf="f['heroList'].value?.grade <= 3" [value]="'D'">D</mat-option>
+                    <mat-option *ngIf="f['heroList'].value?.grade <= 4" [value]="'C'">C</mat-option>
+                    <mat-option [value]="'B'">B</mat-option>
+                    <mat-option [value]="'A'">A</mat-option>
+                    <mat-option [value]="'S'">S</mat-option>
+                    <mat-option [value]="'SS'">SS</mat-option>
+                    <mat-option [value]="'SSS'">SSS</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
     </div>
 

@@ -59,16 +59,16 @@ export class OrganizerComponent {
         heroes: this.allHeroes,
         artifacts: this.allArtifacts
       },
-      autoFocus: false
+      autoFocus: false,
+      restoreFocus: false
     });
 
     dialogRef
       .afterClosed()
       .pipe(filter(result => result))
-      .subscribe(result => this.heroes.push(result));
-  }
-
-  addBuildedHeroes($event: BuildHero) {
-    this.heroes.push($event);
+      .subscribe(hero => {
+        hero.priority = this.heroes.length;
+        this.heroes.push(hero);
+      });
   }
 }

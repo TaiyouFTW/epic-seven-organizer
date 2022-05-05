@@ -1,20 +1,5 @@
 <div class="hero-card rounded-3 container py-3">
 
-    <!-- Tags -->
-    <section class="row mb-3">
-        <div class="col-12">
-            <div class="row" *ngIf="hero.tags && hero.tags.length > 0">
-                <div class="col-12">
-                    <mat-chip-list aria-label="tags">
-                        <mat-chip *ngFor="let tag of hero.tags" [ngClass]="'chip-' + tag.toLowerCase()"><small>{{tag}}</small></mat-chip>
-                    </mat-chip-list>
-                </div>
-
-                <mat-divider class="my-3"></mat-divider>
-            </div>
-        </div>
-    </section>
-
     <div class="row">
         <div class="col-12 d-flex justify-content-center">
             <app-portrait [code]="hero.code" [name]="hero.name" [role]="hero.jobCode" [element]="hero.attributeCode" [grade]="hero.grade"></app-portrait>
@@ -31,11 +16,14 @@
     <section class="row">
         <div class="col-12">
             <div class="row">
-                <div class="col-6">
+                <div class="col-6 border-right d-flex flex-column justify-content-center gap-1">
                     <p class="text-start">Level: {{hero.level}}</p>
+                    <p class="text-start">Skills: {{hero.skillsLevel > 0 ? '+' + hero.skillsLevel : hero.skillsLevel}}</p>
+                    <p class="text-start">Imprint: {{hero.imprint}}</p>
                 </div>
-                <div class="col-6">
-                    <p class="text-end">Skills: {{hero.skillsLevel > 0 ? '+' + hero.skillsLevel : hero.skillsLevel}}</p>
+                <div class="col-6 border-left">
+                    <button mat-button class="hero-card-button w-100 text-underline"><u>Edit hero</u></button>
+                    <button mat-button class="hero-card-button w-100 text-underline"><u>Edit priority</u></button>
                 </div>
             </div>
         </div>
@@ -46,7 +34,7 @@
     <section class="row">
         <div class="col-12">
             <h6>Artifact</h6>
-            <div class="row mb-3 align-items-center artifact-row" *ngIf="hero.artifact && hero.artifact.name != ''; else dontHaveArtifact">
+            <div class="row align-items-center artifact-row" *ngIf="hero.artifact && hero.artifact.name != ''; else dontHaveArtifact">
                 <div class="col-auto">
                     <app-portrait [code]="hero.artifact.code" [name]="hero.artifact.name" [isArtifact]="true" [miniPortrait]="true"></app-portrait>
                 </div>
@@ -55,7 +43,7 @@
                 </div>
             </div>
             <ng-template #dontHaveArtifact>
-                <div class="row mb-3 align-items-center artifact-row">
+                <div class="row align-items-center artifact-row">
                     <div class="col-12">
                         <p>No artifacts were selected</p>
                     </div>
@@ -66,7 +54,29 @@
         <mat-divider class="my-3"></mat-divider>
     </section>
 
-    <div class="row">
+    <!-- Tags -->
+    <section class="row tag-row">
+        <div class="col-12">
+            <h6>{{hero.tags && hero.tags.length > 1 ? 'Tags' : 'Tag'}}</h6>
+            <div class="row" *ngIf="hero.tags && hero.tags.length > 0; else dontHaveTags">
+                <div class="col-12">
+                    <mat-chip-list aria-label="tags">
+                        <mat-chip *ngFor="let tag of hero.tags" [ngClass]="'chip-' + tag.toLowerCase()"><small>{{tag}}</small></mat-chip>
+                    </mat-chip-list>
+                </div>
+            </div>
+            <ng-template #dontHaveTags>
+                <div class="row align-items-center artifact-row">
+                    <div class="col-12">
+                        <p>No tags were selected</p>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </section>
+</div>
+
+<!-- <div class="row">
         <div class="col-12">
             <h6>Statistics</h6>
         </div>
@@ -109,5 +119,4 @@
                 <p>200%</p>
             </div>
         </div>
-    </div>
-</div>
+    </div> -->
