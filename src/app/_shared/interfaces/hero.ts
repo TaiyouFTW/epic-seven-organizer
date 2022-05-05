@@ -29,6 +29,7 @@ export interface BuildHero {
     imprint: string;
     tags: string[];
     priority: number;
+    awakening: number;
     // hasExclusiveEquipment?: boolean;
     // equipment: Equipment;
     // set: Set[];

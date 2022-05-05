@@ -55,12 +55,13 @@ export class AddHeroComponent implements OnInit, OnChanges {
 
     this.form = this.formBuilder.group({
       heroList: [null, Validators.required],
-      heroLevel: [null, Validators.required],
+      heroLevel: [0],
       skillsLevel: [0],
       artifactList: [null],
       artifactLevel: [0],
       imprint: [null],
       tags: [null],
+      awakening: [0],
       // exclusiveEquipment: [false],
     });
 
@@ -117,7 +118,7 @@ export class AddHeroComponent implements OnInit, OnChanges {
       field.artifact = this.f['artifactList'].value;
       field.artifactLevel = this.f['artifactLevel'].value;
       field.imprint = this.f['imprint'].value;
-      // field.hasExclusiveEquipment = this.f['exclusiveEquipment'].value;
+      field.awakening = this.f['awakening'].value;
       this.formRef.resetForm();
       this.dialogRef.close(field);
     }
