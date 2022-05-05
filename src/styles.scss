@@ -71,7 +71,6 @@ h6 {
 
 .mat-drawer-side {
   background-color: var(--background-aside) !important;
-  border-top: 1px solid var(--border) !important;
   border-right: 1px solid var(--border) !important;
   color: var(--text) !important;
 }
@@ -89,7 +88,6 @@ h6 {
 .mat-toolbar {
   background-color: var(--header) !important;
   color: var(--header-text) !important;
-  border-bottom: 1px solid var(--border) !important;
 }
 
 .mat-toolbar,
