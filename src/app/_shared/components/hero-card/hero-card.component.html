@@ -20,7 +20,7 @@
                     <p class="text-start">Level: {{hero.level}}</p>
                     <p class="text-start">Awakening: {{hero.awakening}}</p>
                     <p class="text-start">Skills: {{hero.skillsLevel > 0 ? '+' + hero.skillsLevel : hero.skillsLevel}}</p>
-                    <p class="text-start">Imprint: {{hero.imprint}}</p>
+                    <p class="text-start">Imprint: {{hero.imprint != null ? hero.imprint : 'None'}}</p>
                 </div>
                 <div class="col-6 border-left d-flex flex-column justify-content-center gap-1">
                     <button mat-button class="hero-card-button w-100 text-underline"><u>Edit hero</u></button>
