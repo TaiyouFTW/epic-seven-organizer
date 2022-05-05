@@ -3,7 +3,7 @@
         <mat-icon>menu</mat-icon>
     </button>
     <span class="spacer"></span>
-    <button mat-icon-button (click)="changeTheme(colorTheme == 'light' ? 'dark': 'light')">
+    <button mat-icon-button (click)="changeTheme(colorTheme == 'light' ? 'dark': 'light')" matTooltip="{{ colorTheme == 'light' ? 'dark': 'light' }} mode">
         <span [ngClass]="colorTheme == 'light' ? 'moon' : 'sun'">
             <fa-icon [icon]="['fas', colorTheme == 'light' ? 'moon' : 'sun']" [fixedWidth]="true"></fa-icon>
         </span>
