@@ -99,9 +99,10 @@ h6 {
 
 .mat-list-base .mat-list-item {
   color: var(--text);
-  font-size: inherit !important;
+  font-size: 14px;
 }
 
+html[data-theme="dark"] .mat-checkbox-checkmark-path,
 .mat-checkbox-checkmark-path {
   stroke: white !important;
 }
@@ -111,6 +112,10 @@ html[data-theme="dark"] .mat-pseudo-checkbox::after,
   color: white;
 }
 
+html[data-theme="dark"] .mat-checkbox-checkmark,
+.mat-checkbox-checkmark {
+  fill: white;
+}
 .chip-pvp {
   color: $white !important;
   background-color: darken($red-800, 15%) !important;
@@ -144,4 +149,9 @@ html[data-theme="dark"] .mat-pseudo-checkbox::after,
 .chip-azimanak {
   color: $white;
   background-color: $purple-800 !important;
+}
+
+.chip-expedition {
+  color: $white;
+  background-color: $pink-800 !important;
 }
