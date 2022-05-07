@@ -3,16 +3,41 @@
 @import "./colors.scss";
 
 $custom-red-palette: (
-    50: $red,
-    100: $red,
-    200: $red,
-    300: $red,
-    400: $red,
-    500: $red,
-    600: $red,
-    700: $red,
-    800: $red,
-    900: $red,
+    50: $red-800,
+    100: $red-800,
+    200: $red-800,
+    300: $red-800,
+    400: $red-800,
+    500: $red-800,
+    600: $red-800,
+    700: $red-800,
+    800: $red-800,
+    900: $red-800,
+    contrast: (
+        50: #fff,
+        100: #ffffff,
+        200: #ffffff,
+        300: #ffffff,
+        400: #ffffff,
+        500: #ffffff,
+        600: #ffffff,
+        700: #ffffff,
+        800: #ffffff,
+        900: #ffffff,
+    ),
+);
+
+$custom-red-light-palette: (
+    50: $red-800-light,
+    100: $red-800-light,
+    200: $red-800-light,
+    300: $red-800-light,
+    400: $red-800-light,
+    500: $red-800-light,
+    600: $red-800-light,
+    700: $red-800-light,
+    800: $red-800-light,
+    900: $red-800-light,
     contrast: (
         50: #fff,
         100: #ffffff,
@@ -43,7 +68,7 @@ $light-theme: mat.define-light-theme(
 
 // Define a dark theme
 $dark-primary: mat.define-palette($custom-red-palette);
-$dark-accent: mat.define-palette($custom-red-palette);
+$dark-accent: mat.define-palette($custom-red-light-palette);
 $dark-theme: mat.define-dark-theme(
     (
         color: (
