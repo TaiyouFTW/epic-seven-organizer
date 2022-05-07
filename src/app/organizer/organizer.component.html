@@ -8,7 +8,7 @@
     <mat-divider class="my-3"></mat-divider>
 
     <section class="row mt-4">
-        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-3" *ngFor="let hero of heroes">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-3" *ngFor="let hero of heroes | orderBy:order">
             <app-hero-card [hero]="hero"></app-hero-card>
         </div>
     </section>

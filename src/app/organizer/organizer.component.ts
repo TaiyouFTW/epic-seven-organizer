@@ -10,6 +10,7 @@ import { ArtifactService } from '../_shared/services/artifact.service';
 import { EpicService } from '../_shared/services/epic.service';
 import { HeroService } from '../_shared/services/hero.service';
 import { AddHeroComponent } from '../_shared/components/_dialogs/add-hero/add-hero.component';
+import { HeroPoolService } from '../_shared/services/hero-pool.service';
 
 @Component({
   selector: 'app-organizer',
@@ -27,18 +28,22 @@ export class OrganizerComponent {
   heroes: BuildHero[] = new Array<BuildHero>();
 
   displayedColumns: string[] = ['bars', 'image', 'element', 'role', 'name', 'build', 'level'];
-  dataSource = new MatTableDataSource<Hero>();
+  // dataSource = new MatTableDataSource<Hero>();
 
   page: number = 0;
   totalPages: number = 1;
 
+  order: string = 'priority';
+
   constructor(
     private heroService: HeroService,
+    private heroPoolService: HeroPoolService,
     private artifactService: ArtifactService,
     public dialog: MatDialog
   ) {
     this.getHeroes();
     this.getArtifacts();
+    this.getHeroPool();
   }
 
   getHeroes() {
@@ -51,6 +56,10 @@ export class OrganizerComponent {
     this.artifactService.artifacts().subscribe(listArtifact => {
       this.allArtifacts = listArtifact.artifacts;
     });
+  }
+
+  getHeroPool() {
+    this.heroes = this.heroPoolService.currentHeroPoolValue != null ? this.heroPoolService.currentHeroPoolValue : Array<BuildHero>();
   }
 
   addHero() {
@@ -69,6 +78,7 @@ export class OrganizerComponent {
       .subscribe(hero => {
         hero.priority = this.heroes.length;
         this.heroes.push(hero);
+        this.heroPoolService.currentHeroPoolValue = this.heroes;
       });
   }
 }
