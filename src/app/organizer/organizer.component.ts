@@ -11,6 +11,7 @@ import { EpicService } from '../_shared/services/epic.service';
 import { HeroService } from '../_shared/services/hero.service';
 import { AddHeroComponent } from '../_shared/components/_dialogs/add-hero/add-hero.component';
 import { HeroPoolService } from '../_shared/services/hero-pool.service';
+import { HelpersService } from '../_shared/services/helpers.service';
 
 @Component({
   selector: 'app-organizer',
@@ -35,15 +36,22 @@ export class OrganizerComponent {
 
   order: string = 'priority';
 
+  tags: string[] = [];
+
+  chipFilter: string = 'all';
+
   constructor(
     private heroService: HeroService,
     private heroPoolService: HeroPoolService,
     private artifactService: ArtifactService,
+    private helpersService: HelpersService,
     public dialog: MatDialog
   ) {
     this.getHeroes();
     this.getArtifacts();
     this.getHeroPool();
+
+    this.tags = this.helpersService.getTags;
   }
 
   getHeroes() {
@@ -80,5 +88,20 @@ export class OrganizerComponent {
         this.heroes.push(hero);
         this.heroPoolService.currentHeroPoolValue = this.heroes;
       });
+  }
+
+  setChipFilter(chip: string) {
+    this.chipFilter = chip.toLowerCase();
+  }
+
+  verifyChipFilter(tags: string[]) {
+    if (this.chipFilter === 'all') {
+      return true;
+    }
+    return tags.some(tag => tag.toLowerCase() === this.chipFilter);
+  }
+
+  filterHeroes() {
+    return this.heroes.filter(hero => this.verifyChipFilter(hero.tags));
   }
 }
