@@ -49,3 +49,16 @@
 .hero-card-shadow:hover {
     box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
 }
+
+::ng-deep .mat-chip-list-wrapper {
+    height: 42px;
+}
+
+.chip-all {
+    color: white !important;
+    background-color: $red-800 !important;
+}
+
+::ng-deep.mat-chip.mat-standard-chip:focus::after {
+    opacity: 0;
+}

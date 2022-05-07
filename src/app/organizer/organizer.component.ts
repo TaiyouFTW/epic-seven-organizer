@@ -12,6 +12,7 @@ import { HeroService } from '../_shared/services/hero.service';
 import { AddHeroComponent } from '../_shared/components/_dialogs/add-hero/add-hero.component';
 import { HeroPoolService } from '../_shared/services/hero-pool.service';
 import { HelpersService } from '../_shared/services/helpers.service';
+import { MatChipList } from '@angular/material/chips';
 
 @Component({
   selector: 'app-organizer',
@@ -20,16 +21,13 @@ import { HelpersService } from '../_shared/services/helpers.service';
 })
 export class OrganizerComponent {
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   allHeroes: Hero[] = [];
   allArtifacts: Artifact[] = [];
-  // unknown: Hero = {} as Hero;
 
   heroes: BuildHero[] = new Array<BuildHero>();
+  filteredHeroes: BuildHero[] = new Array<BuildHero>();
 
   displayedColumns: string[] = ['bars', 'image', 'element', 'role', 'name', 'build', 'level'];
-  // dataSource = new MatTableDataSource<Hero>();
 
   page: number = 0;
   totalPages: number = 1;
@@ -38,7 +36,7 @@ export class OrganizerComponent {
 
   tags: string[] = [];
 
-  chipFilter: string = 'all';
+  chipFilter: string[] = ['all'];
 
   constructor(
     private heroService: HeroService,
@@ -68,6 +66,7 @@ export class OrganizerComponent {
 
   getHeroPool() {
     this.heroes = this.heroPoolService.currentHeroPoolValue != null ? this.heroPoolService.currentHeroPoolValue : Array<BuildHero>();
+    this.filteredHeroes = this.heroes;
   }
 
   addHero() {
@@ -87,21 +86,47 @@ export class OrganizerComponent {
         hero.priority = this.heroes.length;
         this.heroes.push(hero);
         this.heroPoolService.currentHeroPoolValue = this.heroes;
+        this.filteredHeroes = this.heroes;
+        this.chipFilter = ['all'];
       });
   }
 
   setChipFilter(chip: string) {
-    this.chipFilter = chip.toLowerCase();
+
+    const index = this.chipFilter.indexOf(chip.toLowerCase());
+    const hasAll = this.chipFilter.indexOf('all');
+    if (index >= 0) {
+      this.chipFilter.splice(index, 1);
+    } else {
+      this.chipFilter.push(chip.toLowerCase());
+    }
+    if (hasAll >= 0 && this.chipFilter.length > 1) {
+      this.chipFilter.splice(hasAll, 1);
+    }
+    if (chip == 'all' || this.chipFilter.length == 0) {
+      this.chipFilter = ['all'];
+    }
+    this.filterHeroes();
   }
 
   verifyChipFilter(tags: string[]) {
-    if (this.chipFilter === 'all') {
+    if (this.chipFilter.indexOf('all') >= 0) {
       return true;
     }
-    return tags.some(tag => tag.toLowerCase() === this.chipFilter);
+    return tags.some(tag => {
+      return this.chipFilter.indexOf(tag.toLowerCase())
+    });
   }
 
   filterHeroes() {
-    return this.heroes.filter(hero => this.verifyChipFilter(hero.tags));
+    this.filteredHeroes = this.heroes.filter(hero => {
+      let isInFilter = this.chipFilter.indexOf('all') >= 0 ? true : false;
+      hero.tags.forEach(tag => {
+        if (this.chipFilter.indexOf(tag.toLowerCase()) >= 0) {
+          isInFilter = true;
+        }
+      });
+      return isInFilter;
+    });
   }
 }
