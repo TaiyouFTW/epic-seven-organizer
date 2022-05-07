@@ -114,7 +114,7 @@ export class OrganizerComponent {
       return true;
     }
     return tags.some(tag => {
-      return this.chipFilter.indexOf(tag.toLowerCase())
+      return this.chipFilter.indexOf(tag.toLowerCase()) >= 0;
     });
   }
 
@@ -128,5 +128,7 @@ export class OrganizerComponent {
       });
       return isInFilter;
     });
+
+    console.log(this.filteredHeroes);
   }
 }
