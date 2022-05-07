@@ -88,11 +88,7 @@
             <mat-form-field class="w-100" appearance="fill" color="accent">
                 <mat-label>Build status</mat-label>
                 <mat-select formControlName="status" [errorStateMatcher]="matcher">
-                    <mat-option [value]="'Not builded'">Not builded</mat-option>
-                    <mat-option [value]="'Need fix'">Need fix</mat-option>
-                    <mat-option [value]="'Ok'">Ok</mat-option>
-                    <mat-option [value]="'Builded'">Builded</mat-option>
-                    <mat-option [value]="'Best build'">Best build</mat-option>
+                    <mat-option *ngFor="let status of buildStatus" [value]="status">{{status}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

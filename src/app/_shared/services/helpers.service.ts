@@ -8,7 +8,18 @@ export class HelpersService {
 
   private today: Date = new Date();
 
+  private tags: string[] = ['PVP', 'PVE', 'Wyvern', 'Golem', 'Banshee', 'Azimanak', 'Caides', 'Expedition'];
+  private buildStatus: string[] = ['Not builded', 'Need fix', 'Ok', 'Builded', 'Best build'];
+
   constructor(private configService: ConfigService) { }
+
+  public get getTags(): string[] {
+    return this.tags;
+  }
+
+  public get getBuildStatus(): string[] {
+    return this.buildStatus;
+  }
 
   fixJobClasses(jobCode: string) {
     switch (jobCode) {

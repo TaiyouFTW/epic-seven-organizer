@@ -42,7 +42,8 @@ export class AddHeroComponent implements OnInit, OnChanges {
   matcher = new MyErrorStateMatcher();
   submitted = new SubmittedForm();
 
-  tags: string[] = ['PVP', 'PVE', 'Wyvern', 'Golem', 'Banshee', 'Azimanak', 'Caides', 'Expedition'];
+  tags: string[] = [];
+  buildStatus: string[] = [];
 
   selectedHeroes: BuildHero[] = [];
 
@@ -52,6 +53,9 @@ export class AddHeroComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder,
     private helpersService: HelpersService
   ) {
+
+    this.tags = this.helpersService.getTags;
+    this.buildStatus = this.helpersService.getBuildStatus;
 
     this.form = this.formBuilder.group({
       heroList: [null, Validators.required],
