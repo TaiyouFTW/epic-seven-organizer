@@ -62,6 +62,7 @@ export class AddHeroComponent implements OnInit, OnChanges {
       imprint: [null],
       tags: [null],
       awakening: [0],
+      status: ['Not builded'],
       // exclusiveEquipment: [false],
     });
 
@@ -119,6 +120,7 @@ export class AddHeroComponent implements OnInit, OnChanges {
       field.artifactLevel = this.f['artifactLevel'].value;
       field.imprint = this.f['imprint'].value;
       field.awakening = this.f['awakening'].value;
+      field.buildStatus = this.f['status'].value;
       this.formRef.resetForm();
       this.dialogRef.close(field);
     }

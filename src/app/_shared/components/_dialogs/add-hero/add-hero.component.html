@@ -6,7 +6,7 @@
     </div>
     <div class="row mb-3">
         <div class="col-12 col-md-6 col-lg-6">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="fill" class="w-100" color="accent">
                 <mat-label>Hero</mat-label>
                 <input type="text" placeholder="Select one" matInput formControlName="heroList" [matAutocomplete]="autoHero" [errorStateMatcher]="matcher" class="w-100">
                 <mat-autocomplete #autoHero="matAutocomplete" [displayWith]="getPortraitName" (closed)="setHero()" class="w-100">
@@ -22,7 +22,7 @@
         </div>
 
         <div class="col-6 col-md-3 col-lg-3">
-            <mat-form-field class="w-100" appearance="fill">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
                 <mat-label>Hero Level</mat-label>
                 <mat-select formControlName="heroLevel" [errorStateMatcher]="matcher">
                     <mat-option [value]="level" *ngFor="let level of [0, 10, 20, 30, 40, 50, 60]">{{level}}</mat-option>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="col-6 col-md-3 col-lg-3">
-            <mat-form-field class="w-100" appearance="fill">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
                 <mat-label>Awakening</mat-label>
                 <mat-select formControlName="awakening" [errorStateMatcher]="matcher">
                     <mat-option [value]="0">0</mat-option>
@@ -60,7 +60,7 @@
 
     <div class="row mb-3">
         <div class="col-6 col-md-3 col-lg-3">
-            <mat-form-field class="w-100" appearance="fill">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
                 <mat-label>Skills Level</mat-label>
                 <mat-select formControlName="skillsLevel" [errorStateMatcher]="matcher">
                     <mat-option [value]="level" *ngFor="let level of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]">{{level}}</mat-option>
@@ -70,7 +70,7 @@
         </div>
 
         <div class="col-6 col-md-3 col-lg-3">
-            <mat-form-field class="w-100" appearance="fill">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
                 <mat-label>Imprint</mat-label>
                 <mat-select formControlName="imprint" [errorStateMatcher]="matcher">
                     <mat-option *ngIf="f['heroList'].value?.grade <= 3" [value]="'D'">D</mat-option>
@@ -83,11 +83,24 @@
                 </mat-select>
             </mat-form-field>
         </div>
+
+        <div class="col-6 col-md-3 col-lg-3">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
+                <mat-label>Build status</mat-label>
+                <mat-select formControlName="status" [errorStateMatcher]="matcher">
+                    <mat-option [value]="'Not builded'">Not builded</mat-option>
+                    <mat-option [value]="'Need fix'">Need fix</mat-option>
+                    <mat-option [value]="'Ok'">Ok</mat-option>
+                    <mat-option [value]="'Builded'">Builded</mat-option>
+                    <mat-option [value]="'Best build'">Best build</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
     </div>
 
     <div class="row mb-3">
         <div class="col-12 col-md-6 col-lg-6">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="fill" class="w-100" color="accent">
                 <mat-label>Artifact</mat-label>
                 <input type="text" placeholder="Select one" matInput formControlName="artifactList" [matAutocomplete]="autoArtifact" [errorStateMatcher]="matcher" class="w-100">
                 <mat-autocomplete #autoArtifact="matAutocomplete" [displayWith]="getPortraitName" (closed)="setArtifact()" class="w-100">
@@ -106,7 +119,7 @@
         </div>
 
         <div class="col-6 col-md-3 col-lg-3">
-            <mat-form-field class="w-100" appearance="fill">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
                 <mat-label>Artifact Level</mat-label>
                 <mat-select formControlName="artifactLevel" [errorStateMatcher]="matcher">
                     <mat-option [value]="level" *ngFor="let level of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]">{{level}}</mat-option>
@@ -117,7 +130,7 @@
 
     <div class="row mb-3">
         <div class="col-12 col-md-12 col-lg-12">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="fill" class="w-100" color="accent">
                 <mat-label>Tags</mat-label>
                 <mat-select formControlName="tags" multiple>
                     <mat-select-trigger>
