@@ -1,5 +1,5 @@
 <div class="position-relative hero-portrait" [class.mini-portrait]="miniPortrait" [ngClass]="[role != undefined && element != undefined ? 'hero-portrait-group' : '', role != undefined ? role : '', element != undefined ? element : '']">
-    <img *ngIf="isArtifact" class="portrait" [class.mini-portrait]="miniPortrait" [src]="code ? artifactImgUrl + code + '_ico.png' : './../../../assets/images/unknown.png'" alt="{{name}}" (error)="onError($event)">
-    <img *ngIf="!isArtifact" class="portrait" [class.mini-portrait]="miniPortrait" [src]="code ? heroImgUrl + code + '_s.png' : './../../../assets/images/unknown.png'" alt="{{name}}" (error)="onError($event)">
-    <img *ngIf="!isArtifact" class="frame" [class.d-none]="miniPortrait" src="./../../../assets/images/frame.png">
+    <img *ngIf="isArtifact" class="portrait" [class.mini-portrait]="miniPortrait" [src]="code ? artifactImgUrl + code + '_ico.png' : './assets/images/unknown.png'" alt="{{name}}" (error)="onError($event)">
+    <img *ngIf="!isArtifact" class="portrait" [class.mini-portrait]="miniPortrait" [src]="code ? heroImgUrl + code + '_s.png' : './assets/images/unknown.png'" alt="{{name}}" (error)="onError($event)">
+    <img *ngIf="!isArtifact" class="frame" [class.d-none]="miniPortrait" src="./assets/images/frame.png">
 </div>
