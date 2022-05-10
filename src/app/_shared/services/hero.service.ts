@@ -1,8 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { CompleteListedHero, Hero, ListedHero } from '../interfaces/hero';
 import { HelpersService } from './helpers.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -43,90 +44,71 @@ export class HeroService {
 
   heroes(currentPage: number = 0) {
     if (this.currentHeroesValue == null || this.helpersService.canUpdate()) {
-      // return this.httpClient.post<CompleteListedHero>('/guide/wearingStatus/getHeroList', {}, this.headers(currentPage))
-      return this.httpClient.post<CompleteListedHero>('/guide/catalyst/getHeroFirstSet', {}, this.headers(currentPage))
-        .pipe(
-          map(response => {
-            let heroes: Hero[] = [];
-            response.heroList.forEach(element => {
-              heroes.push({
-                code: element.heroCd,
-                name: element.heroNm,
-                grade: element.grade,
-                jobCode: this.helpersService.fixJobClasses(element.jobCd),
-                attributeCode: this.helpersService.fixElements(element.attributeCd),
-                // code: element.heroCode,
-                // name: element.heroName,
-                // grade: element.grade,
-                // jobCode: this.helpersService.fixJobClasses(element.jobCode),
-                // attributeCode: this.helpersService.fixElements(element.attributeCode),
-              });
-            });
-
-            let listedHeroes: ListedHero = {
-              totalCount: response.totalCount,
-              currentPage: response.currentPage,
-              heroes: heroes
-            };
-
-            localStorage.setItem('eo_currentHeroes', JSON.stringify(listedHeroes));
-            this._currentHeroesSubject.next(listedHeroes);
-
-            return listedHeroes;
-          })
-        );
+      if (environment.production) {
+        return this._fromProduction();
+      } else {
+        return this._fromDevelopment(currentPage);
+      }
     } else {
       return this._currentHeroesSubject;
     }
   }
 
-  // getResourceUrl(): string {
-  //   return 'portrait';
-  // }
+  private _fromDevelopment(currentPage: number) {
+    return this.httpClient.post<CompleteListedHero>('/guide/catalyst/getHeroFirstSet', {}, this.headers(currentPage))
+      .pipe(
+        map(response => {
+          let heroes: Hero[] = [];
+          response.heroList.forEach(element => {
+            heroes.push({
+              code: element.heroCd,
+              name: element.heroNm,
+              grade: element.grade,
+              jobCode: this.helpersService.fixJobClasses(element.jobCd),
+              attributeCode: this.helpersService.fixElements(element.attributeCd)
+            });
+          });
 
-  // playableCharacters(): Observable<Heroz[]> {
-  //   return this.httpClient.get<Raw>(this.fileUrl)
-  //     .pipe(
-  //       map(response => {
-  //         let heroes: Heroz[] = [];
-  //         for (let tag in response.heroes) {
-  //           if (tag.indexOf('c') === 0 && tag.length < 6) {
-  //             if (blacklist.indexOf(tag) === -1) {
-  //               let rawHero = response.raw.find((e: { name: string; }) => e.name == response.heroes[tag]);
-  //               heroes.push({
-  //                 id: tag,
-  //                 name: response.heroes[tag],
-  //                 image: `https://www.e7vau.lt/static/game/face/${tag}_s.png`,
-  //                 rarity: rawHero ? rawHero.rarity : 0,
-  //                 element: rawHero ? rawHero.element.toLowerCase() : '',
-  //                 role: rawHero ? rawHero.class.replace(" ", "-").toLowerCase() : '',
-  //                 // element: rawHero ? `${this.imageAssets}/element/${rawHero.element.toLowerCase()}.png` : '',
-  //                 // role: rawHero ? `${this.imageAssets}/class/${rawHero.class.replace(" ", "-").toLowerCase()}.png` : '',
-  //               });
-  //             }
-  //           }
-  //         }
-  //         return heroes;
-  //       })
-  //     );
-  // }
+          let listedHeroes: ListedHero = {
+            totalCount: response.totalCount,
+            currentPage: response.currentPage,
+            heroes: heroes
+          };
 
-  // unknown(): Observable<Heroz> {
-  //   return this.httpClient.get<any>(this.fileUrl)
-  //     .pipe(
-  //       map(response => {
-  //         let hero: Heroz = {} as Heroz;
-  //         for (let tag in response.heroes) {
-  //           if (tag.indexOf('c4141') === 0) {
-  //             hero = {
-  //               id: tag,
-  //               name: response[tag],
-  //               image: `https://www.e7vau.lt/static/game/face/${tag}_s.png?`,
-  //             };
-  //           }
-  //         }
-  //         return hero;
-  //       })
-  //     );
-  // }
+          localStorage.setItem('eo_currentHeroes', JSON.stringify(listedHeroes));
+          this._currentHeroesSubject.next(listedHeroes);
+
+          return listedHeroes;
+        })
+      );
+  }
+
+  private _fromProduction() {
+    return this.httpClient.get<CompleteListedHero>('https://gist.githubusercontent.com/TaiyouFTW/41fb7c29a336dee60596c3d8fc2585cb/raw/c1b21c60943001ef485a7b1e558253030d74d127/getHeroFirstSet.json', {})
+      .pipe(
+        map(response => {
+          let heroes: Hero[] = [];
+          response.heroList.forEach(element => {
+            heroes.push({
+              code: element.heroCd,
+              name: element.heroNm,
+              grade: element.grade,
+              jobCode: this.helpersService.fixJobClasses(element.jobCd),
+              attributeCode: this.helpersService.fixElements(element.attributeCd)
+            });
+          });
+
+          let listedHeroes: ListedHero = {
+            totalCount: response.totalCount,
+            currentPage: response.currentPage,
+            heroes: heroes
+          };
+
+          localStorage.setItem('eo_currentHeroes', JSON.stringify(listedHeroes));
+          this._currentHeroesSubject.next(listedHeroes);
+
+          return listedHeroes;
+        })
+      );
+  }
 }
