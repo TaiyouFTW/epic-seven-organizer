@@ -52,6 +52,7 @@
 
 ::ng-deep .mat-chip-list-wrapper {
     min-height: 42px;
+    display: flex !important;
     justify-content: center !important;
 }
 
