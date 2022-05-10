@@ -24,7 +24,7 @@ export class LoadingInterceptor implements HttpInterceptor {
       finalize(() => {
         this.totalRequests--;
         if (this.totalRequests === 0) {
-          this.configService.canUpdate(false);
+          this.configService.canUpdateByDate();
           this.loadingService.hide();
         }
       })

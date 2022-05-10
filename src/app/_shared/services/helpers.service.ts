@@ -56,7 +56,8 @@ export class HelpersService {
   }
 
   canUpdate() {
-    if (this.today.getDay() == 4 && this.today.getUTCHours() >= 9 && this.configService.currentCanUpdateValue) {
+    let lastUpdate = new Date(this.configService.currentCanUpdateByDateValue);
+    if (this.today.getDay() == 2 && this.today > lastUpdate) {
       return true;
     } else {
       return false;

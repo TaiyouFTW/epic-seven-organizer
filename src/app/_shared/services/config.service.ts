@@ -9,8 +9,9 @@ export class ConfigService {
   private _currentThemePreferenceSubject: BehaviorSubject<string>;
   public currentThemePreference: Observable<string>;
 
-  private _currentCanUpdateSubject: BehaviorSubject<boolean>;
-  public currentCanUpdate: Observable<boolean>;
+  private _currentCanUpdateByDateSubject: BehaviorSubject<Date>;
+  public currentCanUpdateByDate: Observable<Date>;
+
 
   constructor() {
     // theme preferences
@@ -19,19 +20,19 @@ export class ConfigService {
     this._currentThemePreferenceSubject = new BehaviorSubject<string>(parsedCurrentThemePreference);
     this.currentThemePreference = this._currentThemePreferenceSubject.asObservable();
 
-    // can update data
-    let getCurrentCanUpdate = localStorage.getItem('eo_canUpdate');
-    let parsedCurrentCanUpdate = JSON.parse(getCurrentCanUpdate!);
-    this._currentCanUpdateSubject = new BehaviorSubject<boolean>(parsedCurrentCanUpdate);
-    this.currentCanUpdate = this._currentCanUpdateSubject.asObservable();
+    // can date
+    let getCurrentCanUpdateByDate = localStorage.getItem('eo_canUpdateByDate');
+    let parsedCurrentCanUpdateByDate = JSON.parse(getCurrentCanUpdateByDate!);
+    this._currentCanUpdateByDateSubject = new BehaviorSubject<Date>(parsedCurrentCanUpdateByDate);
+    this.currentCanUpdateByDate = this._currentCanUpdateByDateSubject.asObservable();
   }
 
   public get currentThemePreferenceValue(): string {
     return this._currentThemePreferenceSubject.value;
   }
 
-  public get currentCanUpdateValue(): boolean {
-    return this._currentCanUpdateSubject.value == null ? true : this._currentCanUpdateSubject.value;
+  public get currentCanUpdateByDateValue(): Date {
+    return this._currentCanUpdateByDateSubject.value == null ? new Date() : this._currentCanUpdateByDateSubject.value;
   }
 
   themePreferences(themeColor: string) {
@@ -39,8 +40,8 @@ export class ConfigService {
     this._currentThemePreferenceSubject.next(themeColor);
   }
 
-  canUpdate(canUpdate: boolean = true) {
-    localStorage.setItem('eo_canUpdate', JSON.stringify(canUpdate));
-    this._currentCanUpdateSubject.next(canUpdate);
+  canUpdateByDate() {
+    localStorage.setItem('eo_canUpdateByDate', JSON.stringify(new Date()));
+    this._currentCanUpdateByDateSubject.next(new Date());
   }
 }
