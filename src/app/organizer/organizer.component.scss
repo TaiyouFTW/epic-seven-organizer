@@ -51,7 +51,8 @@
 }
 
 ::ng-deep .mat-chip-list-wrapper {
-    height: 42px;
+    min-height: 42px;
+    justify-content: center !important;
 }
 
 .chip-all {
