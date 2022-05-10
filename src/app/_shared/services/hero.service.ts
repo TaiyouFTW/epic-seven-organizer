@@ -43,17 +43,23 @@ export class HeroService {
 
   heroes(currentPage: number = 0) {
     if (this.currentHeroesValue == null || this.helpersService.canUpdate()) {
-      return this.httpClient.post<CompleteListedHero>('/guide/wearingStatus/getHeroList', {}, this.headers(currentPage))
+      // return this.httpClient.post<CompleteListedHero>('/guide/wearingStatus/getHeroList', {}, this.headers(currentPage))
+      return this.httpClient.post<CompleteListedHero>('/guide/catalyst/getHeroFirstSet', {}, this.headers(currentPage))
         .pipe(
           map(response => {
             let heroes: Hero[] = [];
             response.heroList.forEach(element => {
               heroes.push({
-                code: element.heroCode,
-                name: element.heroName,
+                code: element.heroCd,
+                name: element.heroNm,
                 grade: element.grade,
-                jobCode: this.helpersService.fixJobClasses(element.jobCode),
-                attributeCode: this.helpersService.fixElements(element.attributeCode),
+                jobCode: this.helpersService.fixJobClasses(element.jobCd),
+                attributeCode: this.helpersService.fixElements(element.attributeCd),
+                // code: element.heroCode,
+                // name: element.heroName,
+                // grade: element.grade,
+                // jobCode: this.helpersService.fixJobClasses(element.jobCode),
+                // attributeCode: this.helpersService.fixElements(element.attributeCode),
               });
             });
 

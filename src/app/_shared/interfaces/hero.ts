@@ -51,12 +51,12 @@ export interface CompleteListedHero {
 export interface CompleteHero {
     langCode?: any;
     worldCode?: any;
-    heroCode: string;
-    heroName: string;
+    heroCd: string;
+    heroNm: string;
     grade: number;
-    jobCode: string;
+    jobCd: string;
     jobName?: any;
-    attributeCode: string;
+    attributeCd: string;
     attributeName?: any;
     dataDt?: any;
     rowNum: number;
