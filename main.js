@@ -6,21 +6,19 @@ function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({
         width: 1280,
-        height: 7200,
-        icon: `file://${__dirname}/dist/epic_seven_organizer/assets/logo/logo.png`,
+        height: 720,
+        icon: `${__dirname}/dist/epic_seven_organizer/favicon.ico`,
         webPreferences: {
             nodeIntegration: true,
         },
-        autoHideMenuBar: true,
-        frame: true,
-        show: true
+        autoHideMenuBar: true
     })
 
 
     win.loadURL(`file://${__dirname}/dist/epic_seven_organizer/index.html`)
 
     //// uncomment below to open the DevTools.
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
 
     // Event when the window is closed.
     win.on('closed', function () {
