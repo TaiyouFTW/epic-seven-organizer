@@ -28,11 +28,11 @@ export class ConfigService {
   }
 
   public get currentThemePreferenceValue(): string {
-    return this._currentThemePreferenceSubject.value;
+    return this._currentThemePreferenceSubject.value == null || this._currentThemePreferenceSubject.value == undefined || this._currentThemePreferenceSubject.value == '' ? 'light' : this._currentThemePreferenceSubject.value;
   }
 
   public get currentCanUpdateByDateValue(): Date {
-    return this._currentCanUpdateByDateSubject.value == null ? new Date() : this._currentCanUpdateByDateSubject.value;
+    return this._currentCanUpdateByDateSubject.value == null || this._currentCanUpdateByDateSubject.value == undefined ? new Date() : this._currentCanUpdateByDateSubject.value;
   }
 
   themePreferences(themeColor: string) {
