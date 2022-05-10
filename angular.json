@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "template": {
+    "epic_seven_organizer": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -39,7 +39,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/template",
+            "outputPath": "dist/epic_seven_organizer",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,8 +63,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -93,12 +93,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "epic_seven_organizer:build"
+          },
           "configurations": {
             "production": {
-              "browserTarget": "template:build:production"
+              "browserTarget": "epic_seven_organizer:build:production"
             },
             "development": {
-              "browserTarget": "template:build:development"
+              "browserTarget": "epic_seven_organizer:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -106,11 +109,11 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "template:build"
+            "browserTarget": "epic_seven_organizer:build"
           }
         }
       }
     }
   },
-  "defaultProject": "template"
+  "defaultProject": "epic_seven_organizer"
 }
