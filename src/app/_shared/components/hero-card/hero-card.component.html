@@ -17,15 +17,15 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-6 border-right d-flex flex-column justify-content-center gap-1">
-                    <p class="text-start">Level: {{hero.level}}</p>
-                    <p class="text-start">Awakening: {{hero.awakening}}</p>
-                    <p class="text-start">Skills: {{hero.skillsLevel > 0 ? '+' + hero.skillsLevel : hero.skillsLevel}}</p>
-                    <p class="text-start">Imprint: {{hero.imprint != null ? hero.imprint : 'None'}}</p>
+                    <p class="text-start">Level: <span [class.highlight]="hero.level == 60">{{hero.level == 60 ? 'Max' : hero.level}}</span></p>
+                    <p class="text-start">Awakening: <span [class.highlight]="hero.awakening == 6">{{hero.awakening == 6 ? 'Max' : hero.awakening}}</span></p>
+                    <p class="text-start">Skills: <span [class.highlight]="hero.skillsLevel == 15">{{hero.skillsLevel > 0 ? '+' + hero.skillsLevel : hero.skillsLevel}}</span></p>
+                    <p class="text-start">Imprint: <span [class.highlight]="hero.imprint == 'SSS'">{{hero.imprint != null ? hero.imprint : 'None'}}</span></p>
                     <mat-select [(value)]="hero.buildStatus" (valueChange)="changeStatus(hero)">
                         <mat-option *ngFor="let status of buildStatus" [value]="status">{{status}}</mat-option>
                     </mat-select>
                 </div>
-                <div class="col-6 border-left d-flex flex-column justify-content-center gap-1">
+                <div class="col-6 border-left d-flex flex-column justify-content-around">
                     <button mat-button class="hero-card-button w-100 text-underline"><u>Edit hero</u></button>
                     <button mat-button class="hero-card-button w-100 text-underline" (click)="delete()"><u>Delete hero</u></button>
                 </div>
@@ -43,7 +43,7 @@
                     <app-portrait [code]="hero.artifact.code" [name]="hero.artifact.name" [isArtifact]="true" [miniPortrait]="true"></app-portrait>
                 </div>
                 <div class="col">
-                    <p>{{hero.artifact.name}} {{hero.artifactLevel > 0 ? '+' + hero.artifactLevel : ''}}</p>
+                    <p>{{hero.artifact.name}} <span [class.highlight]="hero.artifactLevel == 30">{{hero.artifactLevel > 0 ? '+' + hero.artifactLevel : ''}}</span></p>
                 </div>
             </div>
             <ng-template #dontHaveArtifact>

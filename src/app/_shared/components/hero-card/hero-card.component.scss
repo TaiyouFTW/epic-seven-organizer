@@ -4,6 +4,10 @@ p {
     margin-bottom: 0;
 }
 
+p > span {
+    font-weight: bold;
+}
+
 .hero-card {
     width: 100%;
     min-height: 140px;
@@ -53,10 +57,6 @@ p {
     height: 68px;
 }
 
-small {
-    font-size: 0.75em;
-}
-
 ::ng-deep .hero-card-tag-group .mat-standard-chip {
     min-height: 24px;
 }
@@ -67,4 +67,12 @@ small {
 
 .hero-card-button {
     font-size: inherit;
+}
+
+.highlight {
+    color: var(--highlight);
+}
+
+::ng-deep .hero-card .mat-select-value {
+    color: var(--text) !important;
 }
