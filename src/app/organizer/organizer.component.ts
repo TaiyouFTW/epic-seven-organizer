@@ -80,17 +80,21 @@ export class OrganizerComponent {
       .subscribe(hero => {
         hero.priority = this.heroes.length;
         this.heroes.push(hero);
-        this.heroPoolService.currentHeroPoolValue = this.heroes;
-        this.filteredHeroes = this.heroes;
+        this.updateHeroPool();
         this.chipFilter = ['all'];
       });
+  }
+
+  changeHeroBuildStatus(hero: BuildHero) {
+    const index = this.heroes.indexOf(hero);
+    this.heroes[index] = hero;
+    this.updateHeroPool();
   }
 
   deleteHero(hero: BuildHero) {
     const index = this.heroes.indexOf(hero);
     this.heroes.splice(index, 1);
-    this.heroPoolService.currentHeroPoolValue = this.heroes;
-    this.filteredHeroes = this.heroes;
+    this.updateHeroPool();
   }
 
   setChipFilter(chip: string) {
@@ -132,5 +136,10 @@ export class OrganizerComponent {
     });
 
     console.log(this.filteredHeroes);
+  }
+
+  updateHeroPool() {
+    this.heroPoolService.currentHeroPoolValue = this.heroes;
+    this.filteredHeroes = this.heroes;
   }
 }

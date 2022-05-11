@@ -19,7 +19,7 @@
     <section class="row mt-4">
         <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-3" *ngFor="let hero of filteredHeroes | orderBy:order">
             <ng-container *ngIf="verifyChipFilter(hero.tags)">
-                <app-hero-card [hero]="hero" (onDeleteEvent)="deleteHero($event)"></app-hero-card>
+                <app-hero-card [hero]="hero" (onDeleteEvent)="deleteHero($event)" (onChangeBuildStatus)="changeHeroBuildStatus($event)"></app-hero-card>
             </ng-container>
         </div>
     </section>

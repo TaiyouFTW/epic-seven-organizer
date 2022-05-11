@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs';
 import { BuildHero } from '../../interfaces/hero';
+import { HelpersService } from '../../services/helpers.service';
 import { DeleteComponent } from '../_dialogs/delete/delete.component';
 
 @Component({
@@ -13,14 +14,25 @@ export class HeroCardComponent implements OnInit {
 
   @Input() hero: BuildHero = {} as BuildHero;
   @Output() onDeleteEvent = new EventEmitter<BuildHero>();
+  @Output() onChangeBuildStatus = new EventEmitter<BuildHero>();
+
+  buildStatus: string[] = [];
+
+  selectedBuildStatus: string = '';
 
   constructor(
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    private helpersService: HelpersService
+  ) {
+    this.buildStatus = this.helpersService.getBuildStatus;
+  }
 
   ngOnInit(): void {
   }
 
+  changeStatus(hero: BuildHero) {
+    this.onChangeBuildStatus.emit(hero);
+  }
 
   delete() {
     const dialogRef = this.dialog.open(DeleteComponent, {

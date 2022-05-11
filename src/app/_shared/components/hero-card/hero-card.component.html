@@ -21,6 +21,9 @@
                     <p class="text-start">Awakening: {{hero.awakening}}</p>
                     <p class="text-start">Skills: {{hero.skillsLevel > 0 ? '+' + hero.skillsLevel : hero.skillsLevel}}</p>
                     <p class="text-start">Imprint: {{hero.imprint != null ? hero.imprint : 'None'}}</p>
+                    <mat-select [(value)]="hero.buildStatus" (valueChange)="changeStatus(hero)">
+                        <mat-option *ngFor="let status of buildStatus" [value]="status">{{status}}</mat-option>
+                    </mat-select>
                 </div>
                 <div class="col-6 border-left d-flex flex-column justify-content-center gap-1">
                     <button mat-button class="hero-card-button w-100 text-underline"><u>Edit hero</u></button>
