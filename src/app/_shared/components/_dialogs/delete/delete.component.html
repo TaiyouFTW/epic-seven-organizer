@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Delete hero?</h1>
+<div mat-dialog-content>
+    <p>Are you sure you want to delete <span>{{name}}</span>?</p>
+    <p>You can't undo this action.</p>
+</div>
+<div mat-dialog-actions class="justify-content-between">
+    <button mat-flat-button mat-dialog-close>Cancel</button>
+    <button mat-button color="primary" (click)="delete()">Delete</button>
+</div>

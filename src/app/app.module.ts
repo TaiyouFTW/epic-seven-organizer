@@ -18,6 +18,7 @@ import { AddHeroComponent } from './_shared/components/_dialogs/add-hero/add-her
 import { PortraitComponent } from './_shared/components/portrait/portrait.component';
 import { LayoutComponent } from './_shared/components/layout/layout.component';
 import { HeroCardComponent } from './_shared/components/hero-card/hero-card.component';
+import { DeleteComponent } from './_shared/components/_dialogs/delete/delete.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { HeroCardComponent } from './_shared/components/hero-card/hero-card.comp
     PortraitComponent,
     LayoutComponent,
     HeroCardComponent,
+    DeleteComponent,
   ],
   imports: [
     BrowserModule,

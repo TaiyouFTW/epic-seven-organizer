@@ -1,18 +1,13 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { filter, map, take, tap } from 'rxjs';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { filter } from 'rxjs';
 import { Artifact } from '../_shared/interfaces/artifact';
-import { BuildHero, Hero, ListedHero } from '../_shared/interfaces/hero';
+import { BuildHero, Hero } from '../_shared/interfaces/hero';
 import { ArtifactService } from '../_shared/services/artifact.service';
-import { EpicService } from '../_shared/services/epic.service';
 import { HeroService } from '../_shared/services/hero.service';
 import { AddHeroComponent } from '../_shared/components/_dialogs/add-hero/add-hero.component';
 import { HeroPoolService } from '../_shared/services/hero-pool.service';
 import { HelpersService } from '../_shared/services/helpers.service';
-import { MatChipList } from '@angular/material/chips';
 
 @Component({
   selector: 'app-organizer',
@@ -89,6 +84,13 @@ export class OrganizerComponent {
         this.filteredHeroes = this.heroes;
         this.chipFilter = ['all'];
       });
+  }
+
+  deleteHero(hero: BuildHero) {
+    const index = this.heroes.indexOf(hero);
+    this.heroes.splice(index, 1);
+    this.heroPoolService.currentHeroPoolValue = this.heroes;
+    this.filteredHeroes = this.heroes;
   }
 
   setChipFilter(chip: string) {

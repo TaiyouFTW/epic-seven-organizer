@@ -1,0 +1,6 @@
+@import "./../../../../../colors.scss";
+
+p > span {
+    color: $red-800;
+    font-weight: bold;
+}
