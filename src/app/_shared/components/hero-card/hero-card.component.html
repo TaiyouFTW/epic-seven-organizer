@@ -65,7 +65,7 @@
             <div class="row" *ngIf="hero.tags && hero.tags.length > 0; else dontHaveTags">
                 <div class="col-12">
                     <mat-chip-list aria-label="tags" class="hero-card-tag-group">
-                        <mat-chip *ngFor="let tag of hero.tags" [ngClass]="'chip-' + tag.toLowerCase()"><small>{{tag}}</small></mat-chip>
+                        <mat-chip *ngFor="let tag of hero.tags" [ngClass]="'chip-' + tag.toLowerCase()">{{tag}}</mat-chip>
                     </mat-chip-list>
                 </div>
             </div>

@@ -114,6 +114,11 @@ html[data-theme="dark"] .mat-checkbox-checkmark,
 .mat-checkbox-checkmark {
   fill: white;
 }
+
+.mat-chip {
+  font-size: 12px;
+}
+
 .chip-pvp {
   color: $white !important;
   background-color: darken($red-800, 15%) !important;
