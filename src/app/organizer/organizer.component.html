@@ -9,7 +9,7 @@
 
     <div class="row mt-4 justify-content-center">
         <div class="col-12">
-            <mat-chip-list aria-label="tags" multiple>
+            <mat-chip-list aria-label="tags" class="organizer-tag-group" multiple>
                 <mat-chip (click)="setChipFilter('all')" [ngClass]="chipFilter.indexOf('all') >= 0 ? 'chip-all' : ''">ALL</mat-chip>
                 <mat-chip *ngFor="let tag of tags" [ngClass]="chipFilter.indexOf(tag.toLowerCase()) >= 0 ? 'chip-' + tag.toLowerCase() : ''" (click)="setChipFilter(tag)"><small>{{tag}}</small></mat-chip>
             </mat-chip-list>

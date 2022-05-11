@@ -50,10 +50,10 @@
     box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
 }
 
-::ng-deep .mat-chip-list-wrapper {
+::ng-deep .organizer-tag-group .mat-chip-list-wrapper {
     min-height: 42px;
-    display: flex !important;
-    justify-content: center !important;
+    display: flex;
+    justify-content: center;
 }
 
 .chip-all {
