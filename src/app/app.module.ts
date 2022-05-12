@@ -21,6 +21,7 @@ import { HeroCardComponent } from './_shared/components/hero-card/hero-card.comp
 import { DeleteComponent } from './_shared/components/_dialogs/delete/delete.component';
 import { EditHeroComponent } from './_shared/components/_dialogs/edit-hero/edit-hero.component';
 import { FormHeroComponent } from './_shared/components/form-hero/form-hero.component';
+import { SetPriorityComponent } from './_shared/components/_dialogs/set-priority/set-priority.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { FormHeroComponent } from './_shared/components/form-hero/form-hero.comp
     DeleteComponent,
     EditHeroComponent,
     FormHeroComponent,
+    SetPriorityComponent,
   ],
   imports: [
     BrowserModule,

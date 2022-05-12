@@ -58,6 +58,10 @@ h6 {
   cursor: pointer;
 }
 
+.move {
+  cursor: move;
+}
+
 .mat-cell,
 .mat-footer-cell {
   color: var(--text) !important;

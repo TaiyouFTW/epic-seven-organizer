@@ -1,0 +1,15 @@
+<div class="list-container">
+    <div cdkDropList class="w-100 h-100" [ngClass]="'list-' + theme" (cdkDropListDropped)="drop($event)">
+        <div class="d-flex px-2 py-3 align-items-center gap-3" [ngClass]="'item-' + theme" *ngFor="let hero of heroes; let index = index" cdkDrag>
+            <fa-icon class="move p-2" [icon]="['fas', 'up-down-left-right']" [fixedWidth]="true" cdkDragHandle></fa-icon>
+            <span>{{index + 1}}</span>
+            <app-portrait [code]="hero.code" [name]="hero.name" [miniPortrait]="true"></app-portrait>
+            <span class="me-5">{{hero.name}}</span>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3 d-flex justify-content-around">
+    <button type="button" class="mx-2" mat-flat-button mat-dialog-close>Cancel</button>
+    <button type="submit" class="mx-2" mat-flat-button color="primary" (click)="save()">Save</button>
+</div>
