@@ -52,7 +52,8 @@
             "styles": [
               "./node_modules/bootstrap/scss/bootstrap.scss",
               "src/theme.scss",
-              "src/styles.scss"
+              "src/styles.scss",
+              "scrollbar.css"
             ],
             "scripts": [
               "node_modules/vanilla-text-mask/dist/vanillaTextMask.js"
