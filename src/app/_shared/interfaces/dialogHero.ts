@@ -1,7 +1,8 @@
 import { Artifact } from "./artifact";
-import { Hero } from "./hero";
+import { BuildHero, Hero } from "./hero";
 
 export interface DialogHero {
     heroes: Hero[];
     artifacts: Artifact[];
+    hero?: BuildHero;
 }

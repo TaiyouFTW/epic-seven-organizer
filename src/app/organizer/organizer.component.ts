@@ -91,6 +91,12 @@ export class OrganizerComponent {
     this.updateHeroPool();
   }
 
+  updateHero(heroes: [BuildHero, BuildHero]) {
+    const index = this.heroes.indexOf(heroes[1]);
+    this.heroes[index] = heroes[0];
+    this.updateHeroPool();
+  }
+
   deleteHero(hero: BuildHero) {
     const index = this.heroes.indexOf(hero);
     this.heroes.splice(index, 1);
