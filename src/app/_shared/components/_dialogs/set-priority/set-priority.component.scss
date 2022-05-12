@@ -1,7 +1,14 @@
 @import "./../../../../../colors.scss";
 
+$box-height: 36px;
+
+.before-list,
+.after-list {
+    height: $box-height;
+}
+
 .list-container {
-    height: 80vh;
+    height: calc(80vh - #{$box-height} - #{$box-height} - 1rem - 1rem);
     overflow: auto;
 }
 

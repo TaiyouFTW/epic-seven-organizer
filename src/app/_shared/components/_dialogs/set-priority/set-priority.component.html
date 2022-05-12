@@ -1,3 +1,5 @@
+<h2 class="mb-3 before-list" mat-dialog-title>Change Priority</h2>
+
 <div class="list-container">
     <div cdkDropList class="w-100 h-100" [ngClass]="'list-' + theme" (cdkDropListDropped)="drop($event)">
         <div class="d-flex px-2 py-3 align-items-center gap-3" [ngClass]="'item-' + theme" *ngFor="let hero of heroes; let index = index" cdkDrag>
@@ -9,7 +11,7 @@
     </div>
 </div>
 
-<div class="mt-3 d-flex justify-content-around">
+<div class="after-list mt-3 d-flex justify-content-around">
     <button type="button" class="mx-2" mat-flat-button mat-dialog-close>Cancel</button>
     <button type="submit" class="mx-2" mat-flat-button color="primary" (click)="save()">Save</button>
 </div>
