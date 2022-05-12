@@ -23,6 +23,13 @@ $header-dark: #2d333b;
 $header-text-light: #ffffff;
 $header-text-dark: #cdd9e5;
 
+$aux-background-light: rgba(0, 0, 0, 0.04);
+$aux-background-dark: rgba(255, 255, 255, 0.1);
+$aux-background-field-light: whitesmoke;
+$aux-background-field-dark: rgb(85, 85, 85);
+$aux-border-field-light: rgba(0, 0, 0, 0.42);
+$aux-border-field-dark: rgba(255, 255, 255, 0.5);
+
 html[data-theme="light"] {
     --background: #{$background-light};
     --background-aside: #{$background-aside-light};
@@ -32,6 +39,10 @@ html[data-theme="light"] {
     --header-text: #{$header-text-light};
     --highlight: #{$red-800};
     --chip: #{$background-dark};
+    --aux-color: #{$black};
+    --aux-background: #{$aux-background-light};
+    --aux-background-field: #{$aux-background-field-light};
+    --aux-border-field: #{$aux-border-field-light};
 }
 
 html[data-theme="dark"] {
@@ -43,4 +54,8 @@ html[data-theme="dark"] {
     --header-text: #{$header-text-dark};
     --highlight: #{$red-800};
     --chip: #{$background-light};
+    --aux-color: #{$white};
+    --aux-background: #{$aux-background-dark};
+    --aux-background-field: #{$aux-background-field-dark};
+    --aux-border-field: #{$aux-border-field-dark};
 }
