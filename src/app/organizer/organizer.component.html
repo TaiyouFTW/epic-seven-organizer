@@ -1,8 +1,9 @@
-<div class="container-fluid pt-3">
+<div class="container pt-3">
     <div class="row">
         <div class="col-12">
             <button mat-flat-button color="primary" class="me-3" (click)="addHero()">Add Hero</button>
             <button mat-button class="me-3" (click)="changePriority()">Change Priority</button>
+            <button mat-button class="me-3" (click)="changeVisibility()">Change Visibility</button>
         </div>
     </div>
 
@@ -18,7 +19,7 @@
     </div>
 
     <section class="row mt-4">
-        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-4" *ngFor="let hero of filteredHeroes | orderBy:order">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let hero of filteredHeroes | orderBy:order">
             <ng-container *ngIf="verifyChipFilter(hero.tags)">
                 <app-hero-card [hero]="hero" [heroes]="allHeroes" [artifacts]="allArtifacts" (onEditEvent)="updateHero($event)" (onDeleteEvent)="deleteHero($event)" (onChangeBuildStatus)="changeHeroBuildStatus($event)"></app-hero-card>
             </ng-container>

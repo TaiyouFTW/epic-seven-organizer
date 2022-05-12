@@ -103,6 +103,10 @@ export class OrganizerComponent {
       });
   }
 
+  changeVisibility() {
+
+  }
+
   changeHeroBuildStatus(hero: BuildHero) {
     const index = this.heroes.indexOf(hero);
     this.heroes[index] = hero;
