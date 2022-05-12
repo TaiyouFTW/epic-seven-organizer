@@ -10,6 +10,7 @@ p > span {
 
 .hero-card {
     width: 100%;
+    max-width: 330px;
     min-height: 140px;
     background: var(--background-aside);
     border: 1px solid var(--border);
