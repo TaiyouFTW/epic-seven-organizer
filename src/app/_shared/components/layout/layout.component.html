@@ -11,7 +11,7 @@
 </mat-toolbar>
 
 <mat-sidenav-container>
-    <mat-sidenav #drawer class="sidenav" [mode]="(isHandset$ | async) ? 'over' : 'side'" [fixedInViewport]="true" [fixedTopGap]="56" [opened]="!(isHandset$ | async)">
+    <mat-sidenav #drawer class="sidenav" [mode]="(isHandset$ | async) ? 'over' : 'side'" [fixedInViewport]="false" [fixedTopGap]="56" [opened]="!(isHandset$ | async)">
         <aside>
             <mat-nav-list class="d-flex align-items-start flex-column h-100 p-0 nav-list">
                 <a mat-list-item routerLink="/" [routerLinkActive]="['is-active']">
