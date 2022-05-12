@@ -5,9 +5,9 @@ import { BuildHero } from 'src/app/_shared/interfaces/hero';
 import { ConfigService } from 'src/app/_shared/services/config.service';
 
 @Component({
-  selector: 'app-set-priority',
-  templateUrl: './set-priority.component.html',
-  styleUrls: ['./set-priority.component.scss']
+  selector: 'app-change-priority',
+  templateUrl: './change-priority.component.html',
+  styleUrls: ['./change-priority.component.scss']
 })
 export class SetPriorityComponent implements OnInit {
 

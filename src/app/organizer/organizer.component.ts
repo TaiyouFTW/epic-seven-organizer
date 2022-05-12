@@ -8,7 +8,7 @@ import { HeroService } from '../_shared/services/hero.service';
 import { AddHeroComponent } from '../_shared/components/_dialogs/add-hero/add-hero.component';
 import { HeroPoolService } from '../_shared/services/hero-pool.service';
 import { HelpersService } from '../_shared/services/helpers.service';
-import { SetPriorityComponent } from '../_shared/components/_dialogs/set-priority/set-priority.component';
+import { SetPriorityComponent } from '../_shared/components/_dialogs/change-priority/change-priority.component';
 
 @Component({
   selector: 'app-organizer',
@@ -86,7 +86,7 @@ export class OrganizerComponent {
       });
   }
 
-  setPriority() {
+  changePriority() {
     const dialogRef = this.dialog.open(SetPriorityComponent, {
       data: this.heroes,
       autoFocus: false,
