@@ -11,14 +11,15 @@
 </mat-toolbar>
 
 <mat-sidenav-container>
-    <mat-sidenav #drawer class="sidenav" [mode]="'over'" [fixedInViewport]="false" [fixedTopGap]="56" [opened]="false">
+    <mat-sidenav #drawer class="sidenav" [mode]="sidenavOver ? 'over' : 'side'" [fixedInViewport]="false" [fixedTopGap]="56" [opened]="!sidenavOver">
+
         <aside>
             <mat-nav-list class="d-flex align-items-start flex-column h-100 p-0 nav-list">
                 <a mat-list-item routerLink="/" [routerLinkActive]="['is-active']">
-                    <span class="px-5">Characters</span>
+                    <span class="ps-2">Characters</span>
                 </a>
                 <a mat-list-item routerLink="/inventory" [routerLinkActive]="['is-active']">
-                    <span class="px-5">Inventory</span>
+                    <span class="ps-2">Inventory</span>
                 </a>
             </mat-nav-list>
         </aside>

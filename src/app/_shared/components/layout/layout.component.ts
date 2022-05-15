@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { Observable, map, shareReplay } from 'rxjs';
 import { ConfigService } from '../../services/config.service';
 
@@ -12,16 +12,19 @@ export class LayoutComponent implements OnInit {
 
   colorTheme: string = 'light';
 
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+  getScreenWidth: number;
+  sidenavOver: boolean = false;
 
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.getScreenWidth = window.innerWidth;
+    this.sidenavOver = this.getScreenWidth < 1065;
+  }
 
-  constructor(private renderer: Renderer2, private configService: ConfigService, private breakpointObserver: BreakpointObserver) {
+  constructor(private renderer: Renderer2, private configService: ConfigService) {
     this.changeTheme(this.configService.currentThemePreferenceValue);
+    this.getScreenWidth = window.innerWidth;
+    this.sidenavOver = this.getScreenWidth < 1065;
   }
 
   ngOnInit(): void {

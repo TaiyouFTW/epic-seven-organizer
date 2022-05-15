@@ -79,6 +79,10 @@ h6 {
   color: var(--text) !important;
 }
 
+.mat-drawer-inner-container {
+  background-color: var(--background-aside) !important;
+}
+
 .mat-drawer-container {
   min-height: calc(100vh - 56px);
   background-color: var(--background) !important;
