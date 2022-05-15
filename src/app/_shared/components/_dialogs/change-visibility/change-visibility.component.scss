@@ -1,0 +1,24 @@
+@import "./../../../../../colors.scss";
+
+$box-height: 36px;
+
+.before-list,
+.after-list {
+    height: $box-height;
+}
+
+.list-container {
+    height: calc(80vh - #{$box-height} - #{$box-height} - 1rem - 1rem);
+    overflow: auto;
+}
+
+.priority-list {
+    background: var(--aux-background);
+}
+
+.priority-item {
+    color: var(--aux-color);
+    background: var(--aux-background-field);
+    border-bottom: 1px solid var(--aux-border-field);
+    font-size: 1.2em;
+}

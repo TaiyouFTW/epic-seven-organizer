@@ -9,6 +9,7 @@ import { AddHeroComponent } from '../_shared/components/_dialogs/add-hero/add-he
 import { HeroPoolService } from '../_shared/services/hero-pool.service';
 import { HelpersService } from '../_shared/services/helpers.service';
 import { SetPriorityComponent } from '../_shared/components/_dialogs/change-priority/change-priority.component';
+import { ChangeVisibilityComponent } from '../_shared/components/_dialogs/change-visibility/change-visibility.component';
 
 @Component({
   selector: 'app-organizer',
@@ -62,7 +63,7 @@ export class OrganizerComponent {
 
   getHeroPool() {
     this.heroes = this.heroPoolService.currentHeroPoolValue != null ? this.heroPoolService.currentHeroPoolValue : Array<BuildHero>();
-    this.filteredHeroes = this.heroes;
+    this.filteredHeroes = this.heroes.filter(hero => hero.visible);
   }
 
   addHero() {
@@ -104,7 +105,20 @@ export class OrganizerComponent {
   }
 
   changeVisibility() {
+    const dialogRef = this.dialog.open(ChangeVisibilityComponent, {
+      data: this.heroes,
+      autoFocus: false,
+      restoreFocus: false
+    });
 
+    dialogRef
+      .afterClosed()
+      .pipe(filter(result => result))
+      .subscribe((heroes: BuildHero[]) => {
+        this.heroes = heroes;
+        this.updateHeroPool();
+        this.chipFilter = ['all'];
+      });
   }
 
   changeHeroBuildStatus(hero: BuildHero) {
@@ -161,13 +175,11 @@ export class OrganizerComponent {
         }
       });
       return isInFilter;
-    });
-
-    console.log(this.filteredHeroes);
+    }).filter(hero => hero.visible);
   }
 
   updateHeroPool() {
     this.heroPoolService.currentHeroPoolValue = this.heroes;
-    this.filteredHeroes = this.heroes;
+    this.filteredHeroes = this.heroes.filter(hero => hero.visible);
   }
 }

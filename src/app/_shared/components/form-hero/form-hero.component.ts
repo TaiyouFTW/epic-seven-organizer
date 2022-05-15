@@ -143,6 +143,7 @@ export class FormHeroComponent implements OnInit, OnChanges {
       field.imprint = this.f['imprint'].value;
       field.awakening = this.f['awakening'].value;
       field.buildStatus = this.f['status'].value;
+      field.visible = true;
       this.formRef.resetForm();
       if (this.hero) {
         // Emit when update

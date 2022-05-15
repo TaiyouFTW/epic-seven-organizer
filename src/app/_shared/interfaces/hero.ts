@@ -31,6 +31,7 @@ export interface BuildHero {
     priority: number;
     awakening: number;
     buildStatus: string;
+    visible: boolean;
     // hasExclusiveEquipment?: boolean;
     // equipment: Equipment;
     // set: Set[];
