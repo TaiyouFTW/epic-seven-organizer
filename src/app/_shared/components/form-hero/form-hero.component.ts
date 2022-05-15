@@ -119,6 +119,8 @@ export class FormHeroComponent implements OnInit, OnChanges {
 
   save() {
     let field: BuildHero = {} as BuildHero;
+    this.setHero();
+    this.setArtifact();
     if (this.form.valid) {
       field.name = this.f['heroList'].value.name;
       field.attributeCode = this.f['heroList'].value.attributeCode;
@@ -134,44 +136,44 @@ export class FormHeroComponent implements OnInit, OnChanges {
       field.awakening = this.f['awakening'].value;
       field.buildStatus = this.f['status'].value;
       field.visible = true;
+
       this.formRef.resetForm();
       if (this.hero) {
-        // Emit when update
         this.onEdit.emit(field);
       } else {
-        // Emit when add
         this.onAdd.emit(field);
       }
     }
   }
 
   setHero() {
+    this.f['artifactList'].setValue(null);
+    this.f['artifactList'].disable();
+    this.f['artifactLevel'].setValue(null);
+    this.f['artifactLevel'].disable();
+    this.f['imprint'].setValue(null);
+    this.f['imprint'].disable();
+
     if (this.f['heroList'].value) {
       let filterValue = this._setFilterValue('heroList');
+
 
       this.f['heroList'].setValue(this.heroes.filter(option => {
         let value = option.name.toLowerCase() == filterValue;
         if (value) {
-          this.f['artifactList'].setValue(null);
           this.f['artifactList'].enable();
-          this.f['artifactLevel'].setValue(null);
-          this.f['artifactLevel'].disable();
           this.f['imprint'].enable();
         }
         return value;
       })[0]);
 
-    } else {
-      this.f['artifactList'].setValue(null);
-      this.f['artifactList'].disable();
-      this.f['artifactLevel'].setValue(null);
-      this.f['artifactLevel'].disable();
-      this.f['imprint'].setValue(null);
-      this.f['imprint'].disable();
     }
   }
 
   setArtifact() {
+    this.f['artifactLevel'].setValue(null);
+    this.f['artifactLevel'].disable();
+
     if (this.f['artifactList'].value) {
       let filterValue = this._setFilterValue('artifactList');
 
@@ -182,9 +184,6 @@ export class FormHeroComponent implements OnInit, OnChanges {
         }
         return value;
       })[0]);
-    } else {
-      this.f['artifactLevel'].setValue(null);
-      this.f['artifactLevel'].disable();
     }
   }
 
