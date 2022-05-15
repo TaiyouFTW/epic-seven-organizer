@@ -104,7 +104,7 @@ export class OrganizerComponent {
       });
   }
 
-  changeVisibility() {
+  setVisibility() {
     const dialogRef = this.dialog.open(ChangeVisibilityComponent, {
       data: this.heroes,
       autoFocus: false,
