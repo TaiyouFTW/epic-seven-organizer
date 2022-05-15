@@ -74,21 +74,11 @@ export class FormHeroComponent implements OnInit, OnChanges {
   get f() { return this.form.controls; }
 
   ngOnInit(): void {
-    // this.filteredHeroes = this.form.controls['heroList'].valueChanges.pipe(
-    //   startWith(''),
-    //   map(value => (typeof value === 'string' ? value : '')),
-    //   map(name => (name ? this._filterHero(name) : this.heroes.slice())),
-    // );
-
-    // this.filteredArtifacts = this.form.controls['artifactList'].valueChanges.pipe(
-    //   startWith(''),
-    //   map(value => (typeof value === 'string' ? value : '')),
-    //   map(name => (name ? this._filterArtifact(name) : this.artifacts.slice())),
-    // );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['hero'] != undefined && changes['hero'].firstChange) {
+      this.f['heroList'].disable();
       this.fillForm();
     }
     if (changes['heroes'] != undefined && changes['heroes'].firstChange) {
@@ -162,8 +152,10 @@ export class FormHeroComponent implements OnInit, OnChanges {
       this.f['heroList'].setValue(this.heroes.filter(option => {
         let value = option.name.toLowerCase() == filterValue;
         if (value) {
+          this.f['artifactList'].setValue(null);
           this.f['artifactList'].enable();
-          this.f['imprint'].setValue(null);
+          this.f['artifactLevel'].setValue(null);
+          this.f['artifactLevel'].disable();
           this.f['imprint'].enable();
         }
         return value;
@@ -172,6 +164,8 @@ export class FormHeroComponent implements OnInit, OnChanges {
     } else {
       this.f['artifactList'].setValue(null);
       this.f['artifactList'].disable();
+      this.f['artifactLevel'].setValue(null);
+      this.f['artifactLevel'].disable();
       this.f['imprint'].setValue(null);
       this.f['imprint'].disable();
     }
