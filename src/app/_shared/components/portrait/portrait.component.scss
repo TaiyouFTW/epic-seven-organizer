@@ -22,28 +22,6 @@ $width: 60px;
     padding: 0px;
 }
 
-.hero-portrait-group:before,
-.hero-portrait-group:after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1.4375rem;
-    height: 1.375rem;
-    background: url("/assets/images/icon_spr.png") no-repeat;
-    background-size: 14.375rem auto;
-    z-index: 1;
-    margin-bottom: -10px;
-}
-
-.hero-portrait-group:after {
-    left: auto;
-    right: 0;
-    width: 1.28125rem;
-    height: 1.28125rem;
-}
-
 .frame {
     position: absolute;
     top: 0;
@@ -52,72 +30,19 @@ $width: 60px;
     bottom: 0;
 }
 
-.thief:before {
-    background-position: -4.5rem 0;
-}
-.knight:before {
-    background-position: -3.1rem 0;
-}
-.mage:before {
-    background-position: -1.625rem 0;
-}
-.material:before {
-    background-position: -10.25rem 0;
-}
-.soul-weaver:before {
-    background-position: -7.4375rem 0;
-}
-.ranger:before {
-    background-position: -6rem 0;
-}
-.warrior:before {
-    background-position: -8.875rem 0;
+.element,
+.role {
+    width: 23px;
+    height: auto;
+    z-index: 3;
+    position: absolute;
+    top: 0;
 }
 
-.dark:after {
-    background-position: 0 0;
-}
-.fire:after {
-    background-position: 0 -1.625rem;
-}
-.ice:after {
-    background-position: 0 -3.3125rem;
-}
-.earth:after {
-    background-position: 0 -4.9375rem;
-}
-.light:after {
-    background-position: 0 -6.625rem;
+.element {
+    right: 0;
 }
 
-.star1 .hero:after {
-    background-position: -1.9375rem -1.9375rem;
-}
-.star2 .hero:after {
-    background-position: -1.9375rem -3.1875rem;
-}
-.star3 .hero:after {
-    background-position: -1.9375rem -4.4375rem;
-}
-.star4 .hero:after {
-    background-position: -1.9375rem -5.75rem;
-}
-.star5 .hero:after {
-    background-position: -1.9375rem -7rem;
-}
-
-.star1 .artifact:after {
-    background-position: -1.9375rem -1.9375rem;
-}
-.star2 .artifact:after {
-    background-position: -1.9375rem -3.1875rem;
-}
-.star3 .artifact:after {
-    background-position: -1.9375rem -4.4375rem;
-}
-.star4 .artifact:after {
-    background-position: -1.9375rem -5.75rem;
-}
-.star5 .artifact:after {
-    background-position: -1.9375rem -7rem;
+.role {
+    left: 0;
 }
