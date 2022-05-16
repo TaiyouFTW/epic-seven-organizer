@@ -5,6 +5,7 @@ let win;
 function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({
+        minWidth: 425,
         width: 1280,
         height: 720,
         icon: `${__dirname}/dist/epic_seven_organizer/favicon.ico`,
