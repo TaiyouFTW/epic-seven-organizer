@@ -1,55 +1,5 @@
 @import "./../../colors.scss";
 
-.cdk-drag-preview {
-    border-width: 0;
-    border-bottom-width: 1px;
-    border-top-width: 1px;
-    border-style: solid;
-    border-bottom-color: rgba(0, 0, 0, 0.12);
-    border-top-color: rgba(0, 0, 0, 0.12);
-}
-
-.mat-column-bars,
-.mat-column-image,
-.mat-column-element,
-.mat-column-role {
-    flex: 0 0 5%;
-}
-
-.hero-card {
-    width: 100%;
-    min-height: 140px;
-    background: var(--background-aside);
-    border: 1px solid var(--border);
-}
-
-.hero {
-    width: 59.5px;
-    height: 59.5px;
-}
-
-.hero:before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1.4375rem;
-    height: 1.375rem;
-    background: url("/assets/images/icon_spr.png") no-repeat;
-    background-size: 14.375rem auto;
-    z-index: 1;
-    margin-bottom: -10px;
-}
-
-.hero-card-shadow {
-    box-shadow: none;
-    transition: box-shadow 0.2s ease-in-out;
-}
-.hero-card-shadow:hover {
-    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
-}
-
 ::ng-deep .organizer-tag-group .mat-chip-list-wrapper {
     min-height: 42px;
     display: flex;
