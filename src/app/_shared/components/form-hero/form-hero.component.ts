@@ -147,43 +147,51 @@ export class FormHeroComponent implements OnInit, OnChanges {
   }
 
   setHero() {
-    this.f['artifactList'].setValue(null);
-    this.f['artifactList'].disable();
-    this.f['artifactLevel'].setValue(null);
-    this.f['artifactLevel'].disable();
-    this.f['imprint'].setValue(null);
-    this.f['imprint'].disable();
-
     if (this.f['heroList'].value) {
       let filterValue = this._setFilterValue('heroList');
 
-
-      this.f['heroList'].setValue(this.heroes.filter(option => {
+      let filtered = this.heroes.filter(option => {
         let value = option.name.toLowerCase() == filterValue;
         if (value) {
           this.f['artifactList'].enable();
           this.f['imprint'].enable();
         }
         return value;
-      })[0]);
+      })[0];
 
+      if (filtered) {
+        this.f['heroList'].setValue(filtered);
+      } else {
+        this.f['heroList'].setValue(null);
+        this.f['artifactList'].setValue(null);
+        this.f['artifactList'].disable();
+        this.f['artifactLevel'].setValue(null);
+        this.f['artifactLevel'].disable();
+        this.f['imprint'].setValue(null);
+        this.f['imprint'].disable();
+      }
     }
   }
 
   setArtifact() {
-    this.f['artifactLevel'].setValue(null);
-    this.f['artifactLevel'].disable();
-
     if (this.f['artifactList'].value) {
       let filterValue = this._setFilterValue('artifactList');
 
-      this.f['artifactList'].setValue(this.artifacts.filter(option => {
+      let filtered = this.artifacts.filter(option => {
         let value = option.name.toLowerCase() == filterValue;
         if (value) {
           this.f['artifactLevel'].enable();
         }
         return value;
-      })[0]);
+      })[0];
+
+      if (filtered) {
+        this.f['artifactList'].setValue(filtered);
+      } else {
+        this.f['artifactList'].setValue(null);
+        this.f['artifactLevel'].setValue(null);
+        this.f['artifactLevel'].disable();
+      }
     }
   }
 
