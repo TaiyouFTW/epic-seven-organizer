@@ -1,5 +1,6 @@
 {
   "name": "epic_seven_organizer",
+  "productName": "Epic Seven Organizer",
   "version": "0.0.0",
   "main": "main.js",
   "scripts": {
@@ -9,7 +10,8 @@
     "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "electron": "electron .",
-    "electron-build": "ng build --configuration production --base-href ./ && electron ."
+    "electron-build": "ng build --configuration production --base-href ./ && electron .",
+    "pack": "electron-packager . Epic_Seven_Organizer --overwrite --out=dist/win --asar --icon=dist/epic_seven_organizer/favicon.ico --ignore=^e2e$ --ignore=^src$ --ignore=^src-backend$ --ignore=^.editorconfig$ --ignore=^.gitignore$ --ignore=^angular.json$ --ignore=^browserslist$ --ignore=^karma.conf.js$ --ignore=^package-lock.json$ --ignore=^README.md$ --ignore=^tslint --ignore=^tsconfig"
   },
   "private": true,
   "dependencies": {
@@ -38,6 +40,7 @@
     "@angular/compiler-cli": "~13.1.0",
     "@types/node": "^12.11.1",
     "electron": "^18.2.0",
+    "electron-packager": "^15.5.1",
     "typescript": "~4.5.2"
   }
 }
