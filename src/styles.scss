@@ -54,74 +54,74 @@ h6 {
   width: auto;
 }
 
-.pointer {
-  cursor: pointer;
-}
+  .pointer {
+    cursor: pointer;
+  }
 
-.move {
-  cursor: move;
-}
+  .move {
+    cursor: move;
+  }
 
-.mat-cell,
-.mat-footer-cell {
-  color: var(--text) !important;
-}
+  .mat-cell,
+  .mat-footer-cell {
+    color: var(--text) !important;
+  }
 
-.mat-table,
-.mat-paginator,
-.mat-paginator-page-size .mat-select-trigger {
-  background: var(--text) !important;
-}
+  .mat-table,
+  .mat-paginator,
+  .mat-paginator-page-size .mat-select-trigger {
+    background: var(--text) !important;
+  }
 
-.mat-drawer-side {
-  background-color: var(--background-aside) !important;
-  border-right: 1px solid var(--border) !important;
-  color: var(--text) !important;
-}
+  .mat-drawer-side {
+    background-color: var(--background-aside) !important;
+    border-right: 1px solid var(--border) !important;
+    color: var(--text) !important;
+  }
 
-.mat-drawer-inner-container {
-  background-color: var(--background-aside) !important;
-}
+  .mat-drawer-inner-container {
+    background-color: var(--background-aside) !important;
+  }
 
-.mat-drawer-container {
-  min-height: calc(100vh - 56px);
-  background-color: var(--background) !important;
-  color: var(--text) !important;
-}
+  .mat-drawer-container {
+    min-height: calc(100vh - 56px);
+    background-color: var(--background) !important;
+    color: var(--text) !important;
+  }
 
-.mat-divider {
-  border-top-color: var(--border) !important;
-}
+  .mat-divider {
+    border-top-color: var(--border) !important;
+  }
 
-.mat-toolbar {
-  background-color: var(--header) !important;
-  color: var(--header-text) !important;
-}
+  .mat-toolbar {
+    background-color: var(--header) !important;
+    color: var(--header-text) !important;
+  }
 
-.mat-toolbar,
-.toolbar-single-row {
-  height: 56px !important;
-}
+  .mat-toolbar,
+  .toolbar-single-row {
+    height: 56px !important;
+  }
 
-.mat-list-base .mat-list-item {
-  color: var(--text);
-  font-size: 14px;
-}
+  .mat-list-base .mat-list-item {
+    color: var(--text);
+    font-size: 14px;
+  }
 
-html[data-theme="dark"] .mat-checkbox-checkmark-path,
-.mat-checkbox-checkmark-path {
-  stroke: white !important;
-}
+  html[data-theme="dark"] .mat-checkbox-checkmark-path,
+  .mat-checkbox-checkmark-path {
+    stroke: white !important;
+  }
 
-html[data-theme="dark"] .mat-pseudo-checkbox::after,
-.mat-pseudo-checkbox::after {
-  color: white;
-}
+  html[data-theme="dark"] .mat-pseudo-checkbox::after,
+  .mat-pseudo-checkbox::after {
+    color: white;
+  }
 
-html[data-theme="dark"] .mat-checkbox-checkmark,
-.mat-checkbox-checkmark {
-  fill: white;
-}
+  html[data-theme="dark"] .mat-checkbox-checkmark,
+  .mat-checkbox-checkmark {
+    fill: white;
+  }
 
 .mat-chip {
   font-size: 12px;
