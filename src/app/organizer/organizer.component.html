@@ -9,8 +9,17 @@
 
     <mat-divider class="my-3"></mat-divider>
 
-    <div class="row mt-4 justify-content-center">
-        <div class="col-12">
+    <div class="row mt-4">
+        <div class="col-12 col-lg-auto">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
+                <mat-label>Filter By Status</mat-label>
+                <mat-select [formControl]="filterByStatus" (selectionChange)="statusFilter()">
+                    <mat-option value="All">All</mat-option>
+                    <mat-option *ngFor="let status of buildStatus" [value]="status">{{status}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-8">
             <mat-chip-list aria-label="tags" class="organizer-tag-group" multiple>
                 <mat-chip (click)="setChipFilter('all')" [ngClass]="chipFilter.indexOf('all') >= 0 ? 'chip-all' : ''">ALL</mat-chip>
                 <mat-chip *ngFor="let tag of tags" [ngClass]="chipFilter.indexOf(tag.toLowerCase()) >= 0 ? 'chip-' + tag.toLowerCase() : ''" (click)="setChipFilter(tag)"><small>{{tag}}</small></mat-chip>

@@ -10,6 +10,7 @@ import { HeroPoolService } from '../_shared/services/hero-pool.service';
 import { HelpersService } from '../_shared/services/helpers.service';
 import { SetPriorityComponent } from '../_shared/components/_dialogs/change-priority/change-priority.component';
 import { ChangeVisibilityComponent } from '../_shared/components/_dialogs/change-visibility/change-visibility.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-organizer',
@@ -35,6 +36,9 @@ export class OrganizerComponent {
 
   chipFilter: string[] = ['all'];
 
+  filterByStatus: FormControl = new FormControl('All');
+  buildStatus: string[] = [];
+
   constructor(
     private heroService: HeroService,
     private heroPoolService: HeroPoolService,
@@ -47,6 +51,7 @@ export class OrganizerComponent {
     this.getHeroPool();
 
     this.tags = this.helpersService.getTags;
+    this.buildStatus = this.helpersService.getBuildStatus;
   }
 
   getHeroes() {
@@ -181,5 +186,13 @@ export class OrganizerComponent {
   updateHeroPool() {
     this.heroPoolService.currentHeroPoolValue = this.heroes;
     this.filteredHeroes = this.heroes.filter(hero => hero.visible);
+  }
+
+  statusFilter() {
+    if (this.filterByStatus.value.toLowerCase() == 'all') {
+      this.filteredHeroes = this.heroes.filter(hero => hero.visible);
+    } else {
+      this.filteredHeroes = this.heroes.filter(hero => hero.visible && hero.buildStatus.toLowerCase() == this.filterByStatus.value.toLowerCase());
+    }
   }
 }
