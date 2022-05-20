@@ -174,11 +174,13 @@ export class OrganizerComponent {
   filterHeroes() {
     this.filteredHeroes = this.heroes.filter(hero => {
       let isInFilter = this.chipFilter.indexOf('all') >= 0 ? true : false;
-      hero.tags.forEach(tag => {
-        if (this.chipFilter.indexOf(tag.toLowerCase()) >= 0) {
-          isInFilter = true;
-        }
-      });
+      if (hero.tags != null) {
+        hero.tags.forEach(tag => {
+          if (this.chipFilter.indexOf(tag.toLowerCase()) >= 0) {
+            isInFilter = true;
+          }
+        });
+      }
       return isInFilter;
     }).filter(hero => hero.visible);
   }
