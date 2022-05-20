@@ -1,5 +1,9 @@
 @import "./../../../../colors.scss";
 
+main {
+    min-height: calc(100vh - 56px - 140px);
+}
+
 .sidenav {
     width: 240px;
 }

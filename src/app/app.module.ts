@@ -23,6 +23,7 @@ import { EditHeroComponent } from './_shared/components/_dialogs/edit-hero/edit-
 import { FormHeroComponent } from './_shared/components/form-hero/form-hero.component';
 import { SetPriorityComponent } from './_shared/components/_dialogs/change-priority/change-priority.component';
 import { ChangeVisibilityComponent } from './_shared/components/_dialogs/change-visibility/change-visibility.component';
+import { FooterComponent } from './_shared/components/layout/footer/footer.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { ChangeVisibilityComponent } from './_shared/components/_dialogs/change-
     FormHeroComponent,
     SetPriorityComponent,
     ChangeVisibilityComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
