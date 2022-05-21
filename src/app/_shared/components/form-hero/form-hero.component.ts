@@ -132,7 +132,7 @@ export class FormHeroComponent implements OnInit, OnChanges {
       field.skillsLevel = this.f['skillsLevel'].value;
       field.artifact = this.f['artifactList'].value;
       field.artifactLevel = this.f['artifactLevel'].value;
-      field.imprint = this.f['imprint'].value;
+      field.imprint = this.f['imprint'].value != 'none' ? this.f['imprint'].value : null;
       field.awakening = this.f['awakening'].value;
       field.buildStatus = this.f['status'].value;
       field.visible = true;

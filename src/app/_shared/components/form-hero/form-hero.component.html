@@ -73,6 +73,7 @@
             <mat-form-field class="w-100" appearance="fill" color="accent">
                 <mat-label>Imprint</mat-label>
                 <mat-select formControlName="imprint" [errorStateMatcher]="matcher">
+                    <mat-option [value]="'none'">None</mat-option>
                     <mat-option *ngIf="f['heroList'].value?.grade <= 3" [value]="'D'">D</mat-option>
                     <mat-option *ngIf="f['heroList'].value?.grade <= 4" [value]="'C'">C</mat-option>
                     <mat-option [value]="'B'">B</mat-option>
