@@ -1,126 +1,46 @@
-<div class="hero-card rounded-3 container py-3">
-
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-            <app-portrait [code]="hero.code" [name]="hero.name" [role]="hero.jobCode" [element]="hero.attributeCode" [grade]="hero.grade"></app-portrait>
+<div class="hero-card position-relative">
+    <div class="hero-card-content pt-3" [class.inactive]="!hero.visible">
+        <div class="d-flex justify-content-center align-items-center w-100 pb-2">
+            <div class="position-relative">
+                <app-portrait [code]="hero.code" [name]="hero.name" [role]="hero.jobCode" [element]="hero.attributeCode" [grade]="hero.grade"></app-portrait>
+                <ng-container *ngIf="hero.artifact && hero.artifact.name != ''">
+                    <div class="position-absolute artifact" matTooltip="{{hero.artifact.name}} - level {{hero.artifactLevel}}">
+                        <app-portrait [code]="hero.artifact.code" [name]="hero.artifact.name" [isArtifact]="true" [miniPortrait]="true"></app-portrait>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <h6 class="hero-name d-flex justify-content-center align-items-center px-3 mb-0 text-center">{{hero.name}}</h6>
+        <div class="d-flex justify-content-center align-items-center text-center py-2">
+            <div class="w-100 border-end">
+                <div class="mb-1">
+                    <p class="mb-0">level</p>
+                    <span [class.highlight]="hero.level == 60">{{hero.level == 60 ? 'Max' : hero.level}}</span>
+                </div>
+                <div class="mb-1">
+                    <p class="mb-0">skills</p>
+                    <span [class.highlight]="hero.skillsLevel == 15">{{hero.skillsLevel > 0 ? '+' + hero.skillsLevel : hero.skillsLevel}}</span>
+                </div>
+            </div>
+            <div class="w-100 border-right">
+                <div class="mb-1">
+                    <p class="mb-0">awakening</p>
+                    <span [class.highlight]="hero.awakening == 6">{{hero.awakening == 6 ? 'Max' : hero.awakening}}</span>
+                </div>
+                <div class="mb-1">
+                    <p class="mb-0">imprint</p>
+                    <span [class.highlight]="hero.imprint == 'SSS'">{{hero.imprint != null ? hero.imprint : 'none'}}</span>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="row my-3 hero-name-row">
-        <div class="col-12">
-            <h6 class="text-uppercase text-center mb-0">{{hero.name}}</h6>
-        </div>
+    <mat-divider></mat-divider>
+    <div class="d-flex justify-content-center gap-1">
+        <button mat-button class="flex-fill" (click)="edit()">
+            <fa-icon [icon]="['fas', 'pen-to-square']" [fixedWidth]="true" cdkDragHandle></fa-icon>
+        </button>
+        <button mat-button class="flex-fill" (click)="delete()">
+            <fa-icon [icon]="['fas', 'trash']" [fixedWidth]="true" cdkDragHandle></fa-icon>
+        </button>
     </div>
-
-    <!-- level and skills -->
-    <section class="row">
-        <div class="col-12">
-            <div class="row">
-                <div class="col-6 border-right d-flex flex-column justify-content-center gap-1">
-                    <p class="text-start">Level: <span [class.highlight]="hero.level == 60">{{hero.level == 60 ? 'Max' : hero.level}}</span></p>
-                    <p class="text-start">Awakening: <span [class.highlight]="hero.awakening == 6">{{hero.awakening == 6 ? 'Max' : hero.awakening}}</span></p>
-                    <p class="text-start">Skills: <span [class.highlight]="hero.skillsLevel == 15">{{hero.skillsLevel > 0 ? '+' + hero.skillsLevel : hero.skillsLevel}}</span></p>
-                    <p class="text-start">Imprint: <span [class.highlight]="hero.imprint == 'SSS'">{{hero.imprint != null ? hero.imprint : 'None'}}</span></p>
-                    <mat-select [(value)]="hero.buildStatus" (valueChange)="changeStatus(hero)">
-                        <mat-option *ngFor="let status of buildStatus" [value]="status">{{status}}</mat-option>
-                    </mat-select>
-                </div>
-                <div class="col-6 border-left d-flex flex-column justify-content-around">
-                    <button mat-button class="hero-card-button w-100 text-underline" (click)="edit()"><u>Edit hero</u></button>
-                    <button mat-button class="hero-card-button w-100 text-underline" (click)="delete()"><u>Delete hero</u></button>
-                </div>
-            </div>
-        </div>
-
-        <mat-divider class="my-3"></mat-divider>
-    </section>
-
-    <section class="row">
-        <div class="col-12">
-            <h6>Artifact</h6>
-            <div class="row align-items-center artifact-row" *ngIf="hero.artifact && hero.artifact.name != ''; else dontHaveArtifact">
-                <div class="col-auto">
-                    <app-portrait [code]="hero.artifact.code" [name]="hero.artifact.name" [isArtifact]="true" [miniPortrait]="true"></app-portrait>
-                </div>
-                <div class="col">
-                    <p>{{hero.artifact.name}} <span [class.highlight]="hero.artifactLevel == 30">{{hero.artifactLevel > 0 ? '+' + hero.artifactLevel : ''}}</span></p>
-                </div>
-            </div>
-            <ng-template #dontHaveArtifact>
-                <div class="row align-items-center artifact-row">
-                    <div class="col-12">
-                        <p>No artifacts were selected</p>
-                    </div>
-                </div>
-            </ng-template>
-        </div>
-
-        <mat-divider class="my-3"></mat-divider>
-    </section>
-
-    <!-- Tags -->
-    <section class="row tag-row">
-        <div class="col-12">
-            <h6>{{hero.tags && hero.tags.length > 1 ? 'Tags' : 'Tag'}}</h6>
-            <div class="row" *ngIf="hero.tags && hero.tags.length > 0; else dontHaveTags">
-                <div class="col-12">
-                    <mat-chip-list aria-label="tags" class="hero-card-tag-group">
-                        <mat-chip *ngFor="let tag of hero.tags" [ngClass]="'chip-' + tag.toLowerCase()">{{tag}}</mat-chip>
-                    </mat-chip-list>
-                </div>
-            </div>
-            <ng-template #dontHaveTags>
-                <div class="row align-items-center artifact-row">
-                    <div class="col-12">
-                        <p>No tags were selected</p>
-                    </div>
-                </div>
-            </ng-template>
-        </div>
-    </section>
 </div>
-
-<!-- <div class="row">
-        <div class="col-12">
-            <h6>Statistics</h6>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6 border-right">
-            <div class="d-inline-flex w-100">
-                <img class="stat me-3" src="./../../../../assets/images/stat/atk.png" matTooltip="Attack">
-                <p>4000</p>
-            </div>
-            <div class="d-inline-flex">
-                <img class="stat me-3" src="./../../../../assets/images/stat/def.png" matTooltip="Defense">
-                <p>1000</p>
-            </div>
-            <div class="d-inline-flex">
-                <img class="stat me-3" src="./../../../../assets/images/stat/hp.png" matTooltip="HP">
-                <p>10000</p>
-            </div>
-            <div class="d-inline-flex">
-                <img class="stat me-3" src="./../../../../assets/images/stat/spd.png" matTooltip="Speed">
-                <p>200</p>
-            </div>
-        </div>
-
-        <div class="col-6 border-left">
-            <div class="d-inline-flex w-100">
-                <img class="stat me-3" src="./../../../../assets/images/stat/crate.png" matTooltip="Critical Rate">
-                <p>100%</p>
-            </div>
-            <div class="d-inline-flex">
-                <img class="stat me-3" src="./../../../../assets/images/stat/cdmg.png" matTooltip="Critical Damage">
-                <p>350%</p>
-            </div>
-            <div class="d-inline-flex">
-                <img class="stat me-3" src="./../../../../assets/images/stat/eff.png" matTooltip="Effectiveness">
-                <p>95%</p>
-            </div>
-            <div class="d-inline-flex">
-                <img class="stat me-3" src="./../../../../assets/images/stat/res.png" matTooltip="Resistance">
-                <p>200%</p>
-            </div>
-        </div>
-    </div> -->

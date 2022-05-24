@@ -68,7 +68,7 @@ export class OrganizerComponent {
 
   getHeroPool() {
     this.heroes = this.heroPoolService.currentHeroPoolValue != null ? this.heroPoolService.currentHeroPoolValue : Array<BuildHero>();
-    this.filteredHeroes = this.heroes.filter(hero => hero.visible);
+    this.filteredHeroes = this.heroes;
   }
 
   addHero() {
@@ -182,19 +182,19 @@ export class OrganizerComponent {
         });
       }
       return isInFilter;
-    }).filter(hero => hero.visible);
+    });
   }
 
   updateHeroPool() {
     this.heroPoolService.currentHeroPoolValue = this.heroes;
-    this.filteredHeroes = this.heroes.filter(hero => hero.visible);
+    this.filteredHeroes = this.heroes;
   }
 
   statusFilter() {
     if (this.filterByStatus.value.toLowerCase() == 'all') {
-      this.filteredHeroes = this.heroes.filter(hero => hero.visible);
+      this.filteredHeroes = this.heroes;
     } else {
-      this.filteredHeroes = this.heroes.filter(hero => hero.visible && hero.buildStatus.toLowerCase() == this.filterByStatus.value.toLowerCase());
+      this.filteredHeroes = this.heroes.filter(hero => hero.buildStatus.toLowerCase() == this.filterByStatus.value.toLowerCase());
     }
   }
 }
