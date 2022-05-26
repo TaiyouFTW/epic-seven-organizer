@@ -39,6 +39,8 @@ export class OrganizerComponent {
   filterByStatus: FormControl = new FormControl('All');
   buildStatus: string[] = [];
 
+  isVisible: boolean = false;
+
   constructor(
     private heroService: HeroService,
     private heroPoolService: HeroPoolService,
@@ -172,7 +174,7 @@ export class OrganizerComponent {
   }
 
   filterHeroes() {
-    this.filteredHeroes = this.heroes.filter(hero => {
+    const auxFilteredHeroes = this.heroes.filter(hero => {
       let isInFilter = this.chipFilter.indexOf('all') >= 0 ? true : false;
       if (hero.tags != null) {
         hero.tags.forEach(tag => {
@@ -183,6 +185,17 @@ export class OrganizerComponent {
       }
       return isInFilter;
     });
+
+    if (this.isVisible) {
+      this.filteredHeroes = auxFilteredHeroes;
+    } else {
+      this.filteredHeroes = auxFilteredHeroes.filter(hero => hero.visible);
+    }
+  }
+
+  changeVisibility() {
+    this.isVisible = !this.isVisible;
+    this.filterHeroes();
   }
 
   updateHeroPool() {

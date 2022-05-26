@@ -19,6 +19,11 @@
                 </mat-select>
             </mat-form-field>
         </div>
+        <div class="col-12 col-lg-auto">
+            <button mat-button (click)="changeVisibility()">
+                <fa-icon [icon]="['fas', isVisible ? 'eye-slash' : 'eye']" [fixedWidth]="true"></fa-icon>
+            </button>
+        </div>
         <div class="col-12 col-lg-8">
             <mat-chip-list aria-label="tags" class="organizer-tag-group" multiple>
                 <mat-chip (click)="setChipFilter('all')" [ngClass]="chipFilter.indexOf('all') >= 0 ? 'chip-all' : ''">ALL</mat-chip>
