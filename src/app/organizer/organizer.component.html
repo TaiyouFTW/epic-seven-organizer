@@ -10,7 +10,7 @@
     <mat-divider class="my-3"></mat-divider>
 
     <div class="row mt-4">
-        <div class="col-12 col-lg-auto">
+        <div class="col-8 col-lg-auto">
             <mat-form-field class="w-100" appearance="fill" color="accent">
                 <mat-label>Filter By Status</mat-label>
                 <mat-select [formControl]="filterByStatus" (selectionChange)="statusFilter()">
@@ -19,7 +19,7 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-12 col-lg-auto">
+        <div class="col-4 col-lg-auto">
             <button mat-button (click)="changeVisibility()">
                 <fa-icon [icon]="['fas', isVisible ? 'eye-slash' : 'eye']" [fixedWidth]="true"></fa-icon>
             </button>
