@@ -33,6 +33,11 @@
                 </div>
             </div>
         </div>
+        <div class="d-flex justify-content-center mb-2">
+            <mat-select class="select-build" [(value)]="hero.buildStatus" (valueChange)="changeStatus(hero)">
+                <mat-option *ngFor="let status of buildStatus" [value]="status">{{status}}</mat-option>
+            </mat-select>
+        </div>
     </div>
     <mat-divider></mat-divider>
     <div class="d-flex justify-content-center gap-1">

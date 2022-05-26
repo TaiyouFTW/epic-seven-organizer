@@ -24,3 +24,12 @@
 .highlight {
     color: var(--highlight);
 }
+
+.select-build {
+    width: 80px;
+}
+
+.select-build ::ng-deep .mat-select-value {
+    color: var(--text) !important;
+    text-align: center;
+}
