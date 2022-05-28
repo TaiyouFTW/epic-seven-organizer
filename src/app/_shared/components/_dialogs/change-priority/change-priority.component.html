@@ -1,15 +1,6 @@
 <h2 class="mb-3 before-list" mat-dialog-title>Change Priority</h2>
 
-<div class="list-container">
-    <div cdkDropList class="w-100 h-100 priority-list" (cdkDropListDropped)="drop($event)">
-        <div class="d-flex px-2 py-3 align-items-center gap-3 priority-item" *ngFor="let hero of heroes; let index = index" cdkDrag>
-            <fa-icon class="move p-2" [icon]="['fas', 'up-down-left-right']" [fixedWidth]="true" cdkDragHandle></fa-icon>
-            <span>{{index + 1}}</span>
-            <app-portrait [code]="hero.code" [name]="hero.name" [miniPortrait]="true"></app-portrait>
-            <span class="me-5">{{hero.name}}</span>
-        </div>
-    </div>
-</div>
+
 
 <div class="after-list mt-3 d-flex justify-content-around">
     <button type="button" class="mx-2" mat-flat-button mat-dialog-close>Cancel</button>
