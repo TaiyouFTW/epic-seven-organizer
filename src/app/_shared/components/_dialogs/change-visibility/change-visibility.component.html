@@ -4,10 +4,12 @@
     <button type="button" mat-button (click)="toggleAll()">Mark all as {{allSlideToggle == true ? 'not' : ''}} visible</button>
 </div>
 
-<div class="d-flex px-3 py-3 align-items-center gap-3 priority-item" *ngFor="let hero of heroes; let index = index">
-    <app-portrait [code]="hero.code" [name]="hero.name" [miniPortrait]="true"></app-portrait>
-    <span class="me-5 flex-fill">{{hero.name}}</span>
-    <mat-slide-toggle color="primary" [checked]="toggleList[index]" (toggleChange)="changeVisibility(toggleList[index], index)"></mat-slide-toggle>
+<div class="list-container priority-list">
+    <div class="d-flex px-3 py-3 align-items-center gap-3 priority-item" *ngFor="let hero of heroes; let index = index">
+        <app-portrait [code]="hero.code" [name]="hero.name" [miniPortrait]="true"></app-portrait>
+        <span class="me-5 flex-fill">{{hero.name}}</span>
+        <mat-slide-toggle color="primary" [checked]="toggleList[index]" (toggleChange)="changeVisibility(toggleList[index], index)"></mat-slide-toggle>
+    </div>
 </div>
 
 <div class="after-list mt-3 d-flex justify-content-around">
