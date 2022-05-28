@@ -1,0 +1,4 @@
+<mat-chip-list aria-label="tags" class="organizer-tag-group" multiple>
+    <mat-chip (click)="setChip('all')" [ngClass]="chips.indexOf('all') >= 0 ? 'chip-all' : ''">ALL</mat-chip>
+    <mat-chip *ngFor="let tag of tags" [ngClass]="chips.indexOf(tag.toLowerCase()) >= 0 ? 'chip-' + tag.toLowerCase() : ''" (click)="setChip(tag)"><small>{{tag}}</small></mat-chip>
+</mat-chip-list>

@@ -1,0 +1,20 @@
+@import "./../../../../../colors.scss";
+
+::ng-deep .organizer-tag-group .mat-chip-list-wrapper {
+    min-height: 42px;
+    display: flex;
+    justify-content: center;
+}
+
+.chip-all {
+    color: white !important;
+    background-color: $red-800 !important;
+}
+
+::ng-deep .organizer-tag-group .mat-standard-chip {
+    min-height: 24px !important;
+}
+
+::ng-deep.mat-chip.mat-standard-chip:focus::after {
+    opacity: 0;
+}

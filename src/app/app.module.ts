@@ -24,6 +24,10 @@ import { FormHeroComponent } from './_shared/components/form-hero/form-hero.comp
 import { SetPriorityComponent } from './_shared/components/_dialogs/change-priority/change-priority.component';
 import { ChangeVisibilityComponent } from './_shared/components/_dialogs/change-visibility/change-visibility.component';
 import { FooterComponent } from './_shared/components/layout/footer/footer.component';
+import { FiltersComponent } from './_shared/components/hero-filter/hero-filter.component';
+import { ByStatusComponent } from './_shared/components/hero-filter/by-status/by-status.component';
+import { ByVisibilityComponent } from './_shared/components/hero-filter/by-visibility/by-visibility.component';
+import { ByChipComponent } from './_shared/components/hero-filter/by-chip/by-chip.component';
 
 
 @NgModule({
@@ -43,6 +47,10 @@ import { FooterComponent } from './_shared/components/layout/footer/footer.compo
     SetPriorityComponent,
     ChangeVisibilityComponent,
     FooterComponent,
+    FiltersComponent,
+    ByStatusComponent,
+    ByVisibilityComponent,
+    ByChipComponent,
   ],
   imports: [
     BrowserModule,

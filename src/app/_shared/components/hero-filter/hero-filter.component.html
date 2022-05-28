@@ -1,0 +1,15 @@
+<section class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-8 col-lg-auto">
+            <app-by-status (statusChange)="filteredByStatus($event)"></app-by-status>
+        </div>
+
+        <div class="col-4 col-lg-auto">
+            <app-by-visibility [byVisibility]="showOnlyActive" (byVisibilityChange)="filteredByVisibility($event)"></app-by-visibility>
+        </div>
+
+        <div class="col-12 col-lg-8">
+            <app-by-chip (chipsChange)="filteredByChips($event)"></app-by-chip>
+        </div>
+    </div>
+</section>
