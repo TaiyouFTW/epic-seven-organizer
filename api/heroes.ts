@@ -16,5 +16,5 @@ export default (request: VercelRequest, response: VercelResponse) => {
         headers: myHeaders
     };
     const heroes = fetch('http://epic7.smilegatemegaport.com/guide/catalyst/getHeroFirstSet', myInit).then(response => response.json());
-    response.status(200).send(heroes);
+    return response.status(200).send(heroes);
 };
