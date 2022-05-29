@@ -4,7 +4,7 @@
             <app-portrait [code]="f['heroList'].value ? f['heroList'].value.code : ''" [name]="f['heroList'].value ? f['heroList'].value.name : ''"></app-portrait>
         </div>
     </div>
-    <div class="row mb-3">
+    <div class="row mb-0 mb-sm-3">
         <div class="col-12 col-md-6 col-lg-6">
             <mat-form-field appearance="fill" class="w-100" color="accent">
                 <mat-label>Hero</mat-label>
@@ -58,7 +58,7 @@
         </div>
     </div>
 
-    <div class="row mb-3">
+    <div class="row mb-0 mb-sm-3">
         <div class="col-6 col-md-3 col-lg-3">
             <mat-form-field class="w-100" appearance="fill" color="accent">
                 <mat-label>Skills Level</mat-label>
@@ -95,7 +95,7 @@
         </div>
     </div>
 
-    <div class="row mb-3">
+    <div class="row mb-0 mb-sm-3">
         <div class="col-12 col-md-6 col-lg-6">
             <mat-form-field appearance="fill" class="w-100" color="accent">
                 <mat-label>Artifact</mat-label>
@@ -125,7 +125,7 @@
         </div>
     </div>
 
-    <div class="row mb-3">
+    <div class="row mb-0 mb-sm-3">
         <div class="col-12 col-md-12 col-lg-12">
             <mat-form-field appearance="fill" class="w-100" color="accent">
                 <mat-label>Tags</mat-label>
@@ -133,12 +133,12 @@
                     <mat-select-trigger>
                         <mat-chip-list>
                             <ng-container *ngFor="let tag of f['tags'].value; let i = index">
-                                <mat-chip *ngIf="i < 3" [removable]="true" (removed)="onTagRemoved(tag)" [ngClass]="'chip-' + tag.toLowerCase()">
+                                <mat-chip *ngIf="i < 2" [removable]="true" (removed)="onTagRemoved(tag)" [ngClass]="'chip-' + tag.toLowerCase()">
                                     {{tag}} <mat-icon matChipRemove>cancel</mat-icon>
                                 </mat-chip>
                             </ng-container>
-                            <span *ngIf="f['tags'].value?.length > 3" class="additional-selection">
-                                (+{{f['tags'].value.length - 3}} {{f['tags'].value?.length === 4 ? 'other' : 'others'}})
+                            <span *ngIf="f['tags'].value?.length > 2" class="additional-selection">
+                                (+{{f['tags'].value.length - 2}} {{f['tags'].value?.length === 3 ? 'other' : 'others'}})
                             </span>
                         </mat-chip-list>
                     </mat-select-trigger>
@@ -148,7 +148,7 @@
         </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row">
         <div class="col-12 d-flex justify-content-center">
             <button type="button" class="mx-2" mat-flat-button mat-dialog-close>Cancel</button>
             <button type="submit" class="mx-2" mat-flat-button color="primary">{{hero ? 'Save' : 'Add'}}</button>
