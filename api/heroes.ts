@@ -4,13 +4,6 @@ export default (request: VercelRequest, response: VercelResponse) => {
     response.setHeader('Access-Control-Allow-Credentials', 'true');
     response.setHeader('Access-Control-Allow-Origin', '*');
 
-    if (request.method === 'GET') {
-        const heroes = getHeroes();
-        response.status(200).send(heroes);
-    }
-};
-
-async function getHeroes() {
     let myHeaders = new Headers();
     myHeaders.append('gc_currentPage', '0');
     myHeaders.append('gc_hero', 'c4071');
@@ -22,5 +15,6 @@ async function getHeroes() {
         method: 'POST',
         headers: myHeaders
     };
-    return await fetch('http://epic7.smilegatemegaport.com/guide/catalyst/getHeroFirstSet', myInit).then(response => response.json());
-}
+    const heroes = fetch('http://epic7.smilegatemegaport.com/guide/catalyst/getHeroFirstSet', myInit).then(response => response.json());
+    response.status(200).send(heroes);
+};
