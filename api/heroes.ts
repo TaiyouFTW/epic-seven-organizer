@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import fetch from 'node-fetch';
 
 export default async (request: VercelRequest, response: VercelResponse) => {
     const headersList = {
@@ -11,8 +12,8 @@ export default async (request: VercelRequest, response: VercelResponse) => {
         "gc_hero": "c4071",
     }
 
-    const res = await fetch('https://api.hgbrasil.com/weather??woeid=449648');
-
-    const data = await res.json();
-    return response.json(data);
+    fetch('https://api.hgbrasil.com/weather??woeid=449648')
+        .then((res) => {
+            return res.json()
+        });
 };
