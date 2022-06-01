@@ -13,4 +13,10 @@ app.get('/api/item/:slug', (req, res) => {
     res.end(`Item: ${slug}`);
 });
 
+app.get('/api/many', (req, res) => {
+    const { slug } = req.params;
+    const getFetch = await fetch('https://api.hgbrasil.com/weather??woeid=449648');
+    res.end(getFetch);
+});
+
 module.exports = app;
