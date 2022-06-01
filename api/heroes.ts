@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 export default async (request: VercelRequest, response: VercelResponse) => {
-    let headersList = {
+    const headersList = {
         "Accept": "*/*",
         "User-Agent": "Thunder Client (https://www.thunderclient.com)",
         "gc_currentPage": "13",
@@ -11,10 +11,10 @@ export default async (request: VercelRequest, response: VercelResponse) => {
         "gc_hero": "c4071"
     }
 
-    fetch("http://epic7.smilegatemegaport.com/guide/catalyst/getHeroFirstSet", {
+    return response.end(fetch("http://epic7.smilegatemegaport.com/guide/catalyst/getHeroFirstSet", {
         method: "POST",
         headers: headersList
     }).then(function (response) {
         return response.json();
-    });
+    }));
 };
