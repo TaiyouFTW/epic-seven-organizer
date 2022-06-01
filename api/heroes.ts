@@ -11,11 +11,8 @@ export default async (request: VercelRequest, response: VercelResponse) => {
         "gc_hero": "c4071",
     }
 
-    const res = await fetch('http://epic7.smilegatemegaport.com/guide/catalyst/getHeroFirstSet', {
-        method: 'POST',
-        headers: headersList,
-    });
+    const res = await fetch('https://api.hgbrasil.com/weather??woeid=449648');
 
     const data = await res.json();
-    return response.status(200).json(data);
+    return response.json(data);
 };
