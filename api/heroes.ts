@@ -11,7 +11,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
         "gc_hero": "c4071"
     }
 
-    return response.end(fetch("http://epic7.smilegatemegaport.com/guide/catalyst/getHeroFirstSet", {
+    return response.send(fetch("http://epic7.smilegatemegaport.com/guide/catalyst/getHeroFirstSet", {
         method: "POST",
         headers: headersList
     }).then(function (response) {
