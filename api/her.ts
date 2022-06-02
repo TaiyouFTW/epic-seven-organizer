@@ -2,7 +2,6 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import fetch from 'node-fetch';
 
 export default async (request: VercelRequest, response: VercelResponse) => {
-    request({})
     const headersList = {
         "Accept": "*/*",
         "User-Agent": "Thunder Client (https://www.thunderclient.com)",
