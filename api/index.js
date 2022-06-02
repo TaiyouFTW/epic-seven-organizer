@@ -1,5 +1,5 @@
 const app = require('express')();
-const { v4 } = require('uuid');
+const request = require('request');
 
 app.get('/api', (req, res) => {
     const path = `/api/item/${v4()}`;
@@ -14,9 +14,7 @@ app.get('/api/item/:slug', (req, res) => {
 });
 
 app.get('/api/many', (req, res) => {
-    const { slug } = req.params;
-    const getFetch = await fetch('https://api.hgbrasil.com/weather??woeid=449648');
-    res.end(getFetch);
+    request({ uri: 'https://api.hgbrasil.com/weather??woeid=449648' }).pipe(res);
 });
 
 module.exports = app;
