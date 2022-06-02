@@ -13,7 +13,7 @@ app.get('/api/item/:slug', (req, res) => {
     res.end(`Item: ${slug}`);
 });
 
-app.get('/api/many', (req, res) => {
+app.get('/api/ui', (req, res) => {
     request({ uri: 'https://api.hgbrasil.com/weather??woeid=449648' }).pipe(res);
 });
 
