@@ -1,12 +1,14 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import request from 'request';
+import { environment } from 'src/environments/environment';
 
 export default async (req: VercelRequest, res: VercelResponse) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Origin', '*');
 
     if (req.method === 'GET') {
-        request('https://epic7.smilegatemegaport.com/guide/catalyst/getHeroFirstSet',
+        request(
+            `${environment.url}catalyst/getHeroFirstSet`,
             {
                 method: 'POST',
                 headers: {
@@ -22,6 +24,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
                 } else {
                     res.status(response.statusCode).send(error.message);
                 }
-            });
+            }
+        );
     }
 };
