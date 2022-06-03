@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import * as request from 'request';
+import request from 'request';
 
 export default async (req: VercelRequest, res: VercelResponse) => {
     const { name } = req.query;
