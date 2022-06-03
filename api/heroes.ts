@@ -15,7 +15,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
                 "gc_world": "world_global",
                 "gc_hero": "c4071",
             }
-        });
+        }).pipe(res);
 
     res.status(200).send(data);
 };
