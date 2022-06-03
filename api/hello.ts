@@ -1,6 +1,9 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import * as request from 'request';
 
 export default (req: VercelRequest, res: VercelResponse) => {
-    request({ uri: 'https://api.hgbrasil.com/weather??woeid=449648' }).pipe(res);
+    const request = new Request('https://api.hgbrasil.com/weather??woeid=449648');
+    const url = request.url;
+    fetch(request)
+        .then(response => response.json())
+    // request({ uri: 'https://api.hgbrasil.com/weather??woeid=449648'});
 };
