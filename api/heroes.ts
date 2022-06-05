@@ -1,14 +1,16 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import request from 'request';
-import { environment } from 'src/environments/environment';
+import { Hero } from './../src/app/_shared/interfaces/hero';
 
 export default async (req: VercelRequest, res: VercelResponse) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Origin', '*');
 
+    let heroes = Array<Hero>();
+
     if (req.method === 'GET') {
         request(
-            `${environment.url}catalyst/getHeroFirstSet`,
+            'https://epic7.smilegatemegaport.com/guide/catalyst/getHeroFirstSet',
             {
                 method: 'POST',
                 headers: {
@@ -20,7 +22,16 @@ export default async (req: VercelRequest, res: VercelResponse) => {
                 }
             }, (error, response, body) => {
                 if (response.statusCode == 200) {
-                    res.status(200).send(response.body);
+                    response.body.heroList.forEach((hero: { heroCd: string; heroNm: string; grade: number; jobCd: string; attributeCd: string; }) => {
+                        heroes.push({
+                            code: hero.heroCd,
+                            name: hero.heroNm,
+                            grade: hero.grade,
+                            jobCode: hero.jobCd = fixJobCode(hero.jobCd),
+                            attributeCode: hero.attributeCd = fixAttributeCode(hero.attributeCd),
+                        });
+                    });
+                    res.status(200).send(heroes);
                 } else {
                     res.status(response.statusCode).send(error.message);
                 }
@@ -28,3 +39,23 @@ export default async (req: VercelRequest, res: VercelResponse) => {
         );
     }
 };
+
+function fixJobCode(jobCode: string) {
+    switch (jobCode) {
+        case 'assassin':
+            return 'thief';
+        case 'manauser':
+            return 'soul-weaver';
+        default:
+            return jobCode;
+    }
+}
+
+function fixAttributeCode(attributeCode: string) {
+    switch (attributeCode) {
+        case 'wind':
+            return 'earth';
+        default:
+            return attributeCode;
+    }
+}
