@@ -34,7 +34,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
                             });
                         }
                     }
-                    res.status(200).send(heroes);
+                    res.status(200).send(response.body);
                 } else {
                     res.status(response.statusCode).send(error.message);
                 }
