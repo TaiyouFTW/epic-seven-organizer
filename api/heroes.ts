@@ -77,17 +77,19 @@ export default async (req: VercelRequest, res: VercelResponse) => {
                 }
             }, (error, response, body) => {
                 if (response.statusCode == 200) {
-                    let parsedBody = JSON.parse(response.body) as HeroList;
-                    if (parsedBody && parsedBody?.heroList?.length > 0) {
-                        for (let i = 0; i < response.body.heroList.length; i++) {
-                            let hero = response.body.heroList[i];
-                            heroes.push({
-                                code: hero.heroCd,
-                                name: hero.heroNm,
-                                grade: hero.grade,
-                                jobCode: fixJobCode(hero.jobCd),
-                                attributeCode: fixAttributeCode(hero.attributeCd),
-                            });
+                    if (response && response.body) {
+                        let parsedBody = JSON.parse(response?.body) as HeroList;
+                        if (parsedBody && parsedBody?.heroList?.length > 0) {
+                            for (let i = 0; i < response.body.heroList.length; i++) {
+                                let hero = response.body.heroList[i];
+                                heroes.push({
+                                    code: hero.heroCd,
+                                    name: hero.heroNm,
+                                    grade: hero.grade,
+                                    jobCode: fixJobCode(hero.jobCd),
+                                    attributeCode: fixAttributeCode(hero.attributeCd),
+                                });
+                            }
                         }
                     }
                     res.status(200).send(response.body);
