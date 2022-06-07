@@ -79,7 +79,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
                 if (response.statusCode == 200) {
                     if (response && response.body) {
                         let parsedBody = JSON.parse(response?.body) as HeroList;
-                        if (parsedBody && parsedBody?.heroList?.length > 0) {
+                        if (parsedBody && parsedBody.heroList && parsedBody.heroList.length > 0) {
                             for (let i = 0; i < response.body.heroList.length; i++) {
                                 let hero = response.body.heroList[i];
                                 heroes.push({
