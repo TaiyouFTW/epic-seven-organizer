@@ -1,67 +1,9 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import request from 'request';
-import { Hero } from './../src/app/_shared/interfaces/hero';
-
-export interface HeroList {
-    heroList: HeroListElement[];
-    isHeroYN: number;
-    continentList: ContinentList[];
-    returnCode: number;
-    returnMsg: string;
-    catalystList: CatalystList[];
-    world: string;
-    hero: string;
-    lang: string;
-    totalCount: number;
-    currentPage: number;
-    totCatalystByHeroCnt: number;
-}
-
-export interface CatalystList {
-    catalystCode: string;
-    langCode: null;
-    catalystName: string;
-    useType: number;
-    catalystType: string;
-}
-
-export interface ContinentList {
-    continentCode: string;
-    continentName: string;
-}
-
-export interface HeroListElement {
-    rowNum: number;
-    pageNo: number;
-    heroCd: string;
-    heroNm: string;
-    grade: number;
-    jobCd: JobCD;
-    attributeCd: AttributeCD;
-}
-
-export enum AttributeCD {
-    Dark = "dark",
-    Fire = "fire",
-    Ice = "ice",
-    Light = "light",
-    Wind = "wind",
-}
-
-export enum JobCD {
-    Assassin = "assassin",
-    Knight = "knight",
-    Mage = "mage",
-    Manauser = "manauser",
-    Ranger = "ranger",
-    Warrior = "warrior",
-}
 
 export default async (req: VercelRequest, res: VercelResponse) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Origin', '*');
-
-    let heroes = Array<Hero>();
 
     if (req.method === 'GET') {
         request(
@@ -77,21 +19,6 @@ export default async (req: VercelRequest, res: VercelResponse) => {
                 }
             }, (error, response, body) => {
                 if (response.statusCode == 200) {
-                    if (response && response.body) {
-                        let parsedBody = JSON.parse(response?.body) as HeroList;
-                        if (parsedBody && parsedBody.heroList && parsedBody.heroList.length > 0) {
-                            for (let i = 0; i < response.body.heroList.length; i++) {
-                                let hero = response.body.heroList[i];
-                                heroes.push({
-                                    code: hero.heroCd,
-                                    name: hero.heroNm,
-                                    grade: hero.grade,
-                                    jobCode: fixJobCode(hero.jobCd),
-                                    attributeCode: fixAttributeCode(hero.attributeCd),
-                                });
-                            }
-                        }
-                    }
                     res.status(200).send(response.body);
                 } else {
                     res.status(response.statusCode).send(error.message);
@@ -100,23 +27,3 @@ export default async (req: VercelRequest, res: VercelResponse) => {
         );
     }
 };
-
-function fixJobCode(jobCode: string) {
-    switch (jobCode) {
-        case 'assassin':
-            return 'thief';
-        case 'manauser':
-            return 'soul-weaver';
-        default:
-            return jobCode;
-    }
-}
-
-function fixAttributeCode(attributeCode: string) {
-    switch (attributeCode) {
-        case 'wind':
-            return 'earth';
-        default:
-            return attributeCode;
-    }
-}
