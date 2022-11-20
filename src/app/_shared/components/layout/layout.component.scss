@@ -1,0 +1,39 @@
+@import "./../../../../colors.scss";
+
+main {
+    min-height: calc(100vh - 56px);
+}
+
+.sidenav {
+    width: 240px;
+}
+
+.is-active {
+    color: $e7-text;
+    background-color: $e7-primary;
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: $e7-primary;
+    }
+}
+
+.mat-toolbar,
+.toolbar-single-row {
+    background-color: $e7-background-aside;
+    height: 56px;
+}
+
+.mat-drawer {
+    background-color: $e7-background-aside;
+    // color: $e7-text;
+}
+
+.mat-drawer-inner-container {
+    background-color: $e7-background-aside;
+}
+
+.mat-drawer-container {
+    min-height: calc(100vh - 56px);
+    background-color: $e7-background;
+}

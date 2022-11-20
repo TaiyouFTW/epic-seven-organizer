@@ -1,1 +1,46 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./colors.scss";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 12px;
+  background-color: $e7-background;
+  color: $e7-text;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $e7-text;
+  font-weight: bold;
+}
+
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #b4b4b4;
+  }
+  ::-webkit-scrollbar-thumb:window-inactive {
+    background: #b4b4b4;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.mat-drawer-backdrop.mat-drawer-shown {
+  background-color: rgba(0, 0, 0, 0.5);
+}
