@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
     <button mat-icon-button (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
     </button>
@@ -7,8 +7,8 @@
 <mat-sidenav-container>
     <mat-sidenav #drawer class="sidenav" [mode]="'over'" [fixedInViewport]="false" [fixedTopGap]="56" [opened]="false">
         <aside>
-            <mat-nav-list class="d-flex align-items-start flex-column h-100 p-0 nav-list">
-                <a mat-list-item routerLink="/heroes" [routerLinkActive]="['is-active']">
+            <mat-nav-list class="d-flex align-items-start flex-column h-100 p-0">
+                <a class="list-item" mat-list-item routerLink="/heroes" [routerLinkActive]="['is-active']">
                     <span class="ps-2">Heroes</span>
                 </a>
             </mat-nav-list>
