@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -13,13 +13,22 @@ import { FontawesomeModule } from './_shared/modules/fontawesome.module';
 import { MaterialModule } from './_shared/modules/material.module';
 import { ErrorInterceptor } from './_shared/interceptors/error.interceptor';
 import { LayoutComponent } from './_shared/components/layout/layout.component';
+import { OrganizerComponent } from './organizer/organizer.component';
+import { HeroFormComponent } from './_shared/components/hero-form/hero-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BasicPortraitComponent } from './_shared/components/portraits/basic-portrait/basic-portrait.component';
+import { DetailedPortraitComponent } from './_shared/components/portraits/detailed-portrait/detailed-portrait.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoadingComponent,
     ErrorComponent,
-    LayoutComponent
+    LayoutComponent,
+    OrganizerComponent,
+    HeroFormComponent,
+    BasicPortraitComponent,
+    DetailedPortraitComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +36,10 @@ import { LayoutComponent } from './_shared/components/layout/layout.component';
     FontAwesomeModule,
     BrowserAnimationsModule,
     FontawesomeModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
