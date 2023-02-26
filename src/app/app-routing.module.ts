@@ -7,7 +7,8 @@ import { LayoutComponent } from './_shared/components/layout/layout.component';
 const routes: Routes = [
   {
     path: '', component: LayoutComponent, children: [
-      { path: 'heroes', component: OrganizerComponent }
+      { path: 'heroes', component: OrganizerComponent },
+      { path: '', redirectTo: 'heroes', pathMatch: 'full' }
     ]
   },
   { path: '', redirectTo: '', pathMatch: 'full' },
