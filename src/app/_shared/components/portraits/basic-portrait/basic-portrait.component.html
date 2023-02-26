@@ -1,0 +1,4 @@
+<div class="position-relative hero-portrait" [class.mini-portrait]="mini">
+    <img class="portrait zero-absolute" [class.mini-portrait]="mini" [src]="source" alt="{{alt}}" (error)="error($event)" loading="lazy">
+    <img class="frame zero-absolute" src="./assets/images/frame.png" *ngIf="hasFrame">
+</div>
