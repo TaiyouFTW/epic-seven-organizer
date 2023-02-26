@@ -1,0 +1,95 @@
+<form [formGroup]="form" #formGroupDirective class="container" (ngSubmit)="save()">
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <app-basic-portrait [hero]="hero"></app-basic-portrait>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Heroes</mat-label>
+                <input type="text" matInput formControlName="hero" [matAutocomplete]="autoHero">
+                <mat-autocomplete #autoHero="matAutocomplete" [displayWith]="displayByName" (optionSelected)="selectedHero($event.option.value)">
+                    <mat-option *ngFor="let filteredHero of filteredHeroes | async" [value]="filteredHero">
+                        <div class="d-flex align-items-center gap-3">
+                            <app-basic-portrait [hero]="filteredHero" [mini]="true"></app-basic-portrait>
+                            <span>{{filteredHero.name}}</span>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="f['hero']?.errors?.['invalid']">{{f['hero'].errors?.['invalid']}}</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
+                <mat-label>Hero Stars</mat-label>
+                <mat-select formControlName="level">
+                    <mat-option [value]="heroStar * 10" *ngFor="let heroStar of [5, 6]">{{heroStar}} stars awakened</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Artifacts</mat-label>
+                <input type="text" matInput formControlName="artifact" [matAutocomplete]="autoArtifact">
+                <mat-autocomplete #autoArtifact="matAutocomplete" [displayWith]="displayByName" (optionSelected)="selectedArtifact($event.option.value)">
+                    <mat-option *ngFor="let artifact of filteredArtifacts | async" [value]="artifact">
+                        <div class="d-flex align-items-center gap-3">
+                            <app-basic-portrait [artifact]="artifact" [mini]="true"></app-basic-portrait>
+                            <span>{{artifact.name}}</span>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
+                <mat-label>Artifact Level</mat-label>
+                <mat-select formControlName="artifactLevel">
+                    <mat-option [value]="level" *ngFor="let level of artifactLevel">{{level}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-12 col-md-6">
+            <mat-form-field appearance="fill" class="w-100" color="accent">
+                <mat-label>Tags</mat-label>
+
+                <mat-select formControlName="tags" multiple>
+                    <mat-select-trigger>
+                        {{f['tags'].value?.[0] || ''}}
+                        <span *ngIf="f['tags'].value?.length > 1">
+                            (+{{f['tags'].value.length - 1}} {{f['tags'].value?.length === 2 ? 'other' : 'others'}})
+                        </span>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let tag of tags" [value]="tag">{{tag}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
+                <mat-label>Build status</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option [value]="buildStatus" *ngFor="let buildStatus of status">{{buildStatus}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row justify-content-around">
+        <div class="col-6 col-md-4 col-xl-3">
+            <button type="button" class="w-100" mat-button mat-dialog-close>Cancel</button>
+        </div>
+        <div class="col-6 col-md-4 col-xl-3">
+            <button type="submit" class="w-100" mat-flat-button color="primary">{{hero ? 'Save' : 'Add'}}</button>
+        </div>
+    </div>
+</form>
