@@ -1,0 +1,6 @@
+<div class="position-relative hero-portrait" [class.mini-portrait]="mini">
+    <img class="role" [src]="'./assets/images/role/' + hero.class + '.png'" alt="{{hero.class}}">
+    <img class="element" [src]="'./assets/images/element/' + hero.element + '.png'" alt="{{hero.element}}">
+    <img class="portrait zero-absolute" [class.mini-portrait]="mini" [src]="source" alt="{{hero != undefined ? hero.name : ''}}" (error)="error($event)" loading="lazy">
+    <img class="frame zero-absolute" src="./assets/images/frame.png">
+</div>
