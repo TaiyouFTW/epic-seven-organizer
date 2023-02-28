@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialogRef } from '@angular/material/dialog';
-import { map, Observable, skip, skipUntil, skipWhile, startWith, tap } from 'rxjs';
+import { map, Observable, startWith } from 'rxjs';
 import { Artifact } from '../../interfaces/artifact';
 import { Hero } from '../../interfaces/hero';
 import { ArtifactService } from '../../services/artifact.service';
@@ -31,7 +30,7 @@ export class HeroFormComponent implements OnInit {
   @ViewChild(FormGroupDirective) formRef!: FormGroupDirective;
 
   constructor(
-    public dialogRef: MatDialogRef<HeroFormComponent>,
+    private dialogRef: MatDialogRef<HeroFormComponent>,
     private formBuilder: FormBuilder,
     private helpersService: HelpersService,
     private heroService: HeroService,
@@ -107,7 +106,6 @@ export class HeroFormComponent implements OnInit {
     this.hero.level = this.form.controls['level'].value;
     this.hero.status = this.form.controls['status'].value;
     this.hero.tags = this.form.controls['tags'].value;
-    console.log(this.hero);
     if (ArtifactFound) {
       this.hero.artifact = this.form.controls['artifact'].value;
       if (this.hero.artifact != null && this.form.controls['artifactLevel'].value >= 0) {
