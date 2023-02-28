@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Hero } from '../interfaces/hero';
 import { HelpersService } from './helpers.service';
 
@@ -9,10 +9,20 @@ import { HelpersService } from './helpers.service';
 })
 export class HeroService {
 
+  private heroesSubject: BehaviorSubject<Hero[]>;
+  public heroes$: Observable<Hero[]>;
+
   constructor(
     private httpClient: HttpClient,
     private helpersService: HelpersService
-  ) { }
+  ) {
+    this.heroesSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('e7OrganizerHeroesList')!));
+    this.heroes$ = this.heroesSubject.asObservable();
+  }
+
+  public get heroesValue() {
+    return this.heroesSubject.value;
+  }
 
   private _headers(currentPage: number) {
     let httpOptions = {
@@ -32,6 +42,10 @@ export class HeroService {
   }
 
   getAll(currentPage: number = 0): Observable<Hero[]> {
+    let today = new Date();
+    if (today.getDay() != 4 && this.heroesValue) {
+      return this.heroes$;
+    }
     return this.httpClient.post('/guide/catalyst/getHeroFirstSet', {}, this._headers(currentPage))
       .pipe(map(response => <{ heroList: Array<{ attributeCd: string, heroNm: string, heroCd: string, jobCd: string }> }>response))
       .pipe(
@@ -55,6 +69,8 @@ export class HeroService {
               } as Hero)
             }
           }
+          localStorage.setItem('e7OrganizerHeroesList', JSON.stringify(heroes));
+          this.heroesSubject.next(heroes);
           return heroes;
         })
       );
