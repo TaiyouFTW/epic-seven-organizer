@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Artifact } from '../interfaces/artifact';
 import { HelpersService } from './helpers.service';
 
@@ -9,10 +9,20 @@ import { HelpersService } from './helpers.service';
 })
 export class ArtifactService {
 
+  private artifactsSubject: BehaviorSubject<Artifact[]>;
+  public artifacts$: Observable<Artifact[]>;
+
   constructor(
     private httpClient: HttpClient,
     private helpersService: HelpersService
-  ) { }
+  ) {
+    this.artifactsSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('e7OrganizerArtifactsList')!));
+    this.artifacts$ = this.artifactsSubject.asObservable();
+  }
+
+  public get artifactsValue() {
+    return this.artifactsSubject.value;
+  }
 
   private _headers(currentPage: number) {
     let httpOptions = {
@@ -32,6 +42,10 @@ export class ArtifactService {
   }
 
   getAll(currentPage: number = 0) {
+    let today = new Date();
+    if (today.getDay() != 4 && this.artifactsValue) {
+      return this.artifacts$;
+    }
     return this.httpClient.post('/guide/wearingStatus/getArtifactList', {}, this._headers(currentPage))
       .pipe(map(response => <{ artifactList: Array<{ artifactCode: string, artifactName: string, jobCode: string }> }>response))
       .pipe(
@@ -49,6 +63,8 @@ export class ArtifactService {
               } as Artifact)
             }
           }
+          localStorage.setItem('e7OrganizerArtifactsList', JSON.stringify(artifacts));
+          this.artifactsSubject.next(artifacts);
           return artifacts;
         })
       );
