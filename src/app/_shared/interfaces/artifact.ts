@@ -1,6 +1,6 @@
 export interface Artifact {
     code: string;
     name: string;
-    level: string | null;
+    level: number;
     class: string;
 }

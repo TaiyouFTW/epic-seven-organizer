@@ -58,7 +58,7 @@ export class ArtifactService {
               artifacts.push({
                 code: artifact.artifactCode,
                 name: artifact.artifactName,
-                level: null,
+                level: -1,
                 class: artifact.jobCode,
               } as Artifact)
             }
