@@ -20,6 +20,7 @@ export class DetailedPortraitComponent implements OnInit {
     this._hero = hero;
     this.alt = hero.name;
     this.source = this.portraitService.hero(hero.code);
+    this.hero.class = this.hero.class.replace(" ", "-").toLowerCase();
   }
 
   @Input() mini?: boolean;

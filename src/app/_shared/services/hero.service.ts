@@ -55,7 +55,7 @@ export class HeroService {
             if (Object.prototype.hasOwnProperty.call(response.heroList, heroKey)) {
               let hero = response.heroList[heroKey];
               hero.attributeCd = this.helpersService.changeElementName(hero.attributeCd);
-              hero.jobCd = this.helpersService.changeElementName(hero.jobCd);
+              hero.jobCd = this.helpersService.changeClassName(hero.jobCd);
               heroes.push({
                 id: null,
                 name: hero.heroNm,
