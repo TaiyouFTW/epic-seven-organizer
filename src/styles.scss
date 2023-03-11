@@ -60,3 +60,12 @@ h6 {
   width: 35px;
   height: auto;
 }
+
+.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
+  background: #bd282d80;
+}
+
+.mat-accent .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: $e7-text;
+  font-weight: bold;
+}
