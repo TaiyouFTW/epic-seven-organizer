@@ -20,22 +20,23 @@ main {
 
 .mat-toolbar,
 .toolbar-single-row {
-    background-color: $neutral-variant-color;
+    background-color: $accent-dark;
     height: 56px;
 }
 
 .mat-drawer {
-    background-color: $neutral-variant-color;
+    background-color: $accent-dark;
     // color: $e7-text;
 }
 
 .mat-drawer-inner-container {
-    background-color: $neutral-variant-color;
+    background-color: $accent-dark;
 }
 
 .mat-drawer-container {
     min-height: calc(100vh - 56px);
-    background-color: $neutral-color;
+    background-color: $primary-dark;
+    color: $e7-text;
 }
 
 .list-item {

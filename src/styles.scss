@@ -8,7 +8,7 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 12px;
-  background-color: $neutral-color;
+  background-color: $primary-dark;
   color: $e7-text;
 }
 
@@ -47,7 +47,7 @@ h6 {
 
 .custom-dialog {
   .mat-dialog-container {
-    background: $neutral-variant-color;
+    background: $accent-dark;
   }
 }
 
