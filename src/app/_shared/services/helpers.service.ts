@@ -40,6 +40,8 @@ export class HelpersService {
         return 'GENERIC';
       case 'manauser':
         return 'SOUL WEAVER';
+      case 'assassin':
+        return 'THIEF';
       case undefined:
       case null:
         return '';

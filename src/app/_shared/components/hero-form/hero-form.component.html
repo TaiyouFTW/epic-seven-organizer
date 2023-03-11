@@ -7,7 +7,7 @@
     <div class="row mb-2">
         <div class="col-12 col-md-6">
             <mat-form-field class="w-100" appearance="fill">
-                <mat-label>Heroes</mat-label>
+                <mat-label class="fw-bold">Heroes</mat-label>
                 <input type="text" matInput formControlName="hero" [matAutocomplete]="autoHero">
                 <mat-autocomplete #autoHero="matAutocomplete" [displayWith]="displayByName" (optionSelected)="selectedHero($event.option.value)">
                     <mat-option *ngFor="let filteredHero of filteredHeroes | async" [value]="filteredHero">
@@ -23,7 +23,7 @@
 
         <div class="col-12 col-md-6">
             <mat-form-field class="w-100" appearance="fill" color="accent">
-                <mat-label>Hero Stars</mat-label>
+                <mat-label class="fw-bold">Hero Stars</mat-label>
                 <mat-select formControlName="level">
                     <mat-option [value]="heroStar * 10" *ngFor="let heroStar of [5, 6]">{{heroStar}} stars awakened</mat-option>
                 </mat-select>
@@ -34,7 +34,7 @@
     <div class="row mb-2">
         <div class="col-12 col-md-6">
             <mat-form-field class="w-100" appearance="fill">
-                <mat-label>Artifacts</mat-label>
+                <mat-label class="fw-bold">Artifacts</mat-label>
                 <input type="text" matInput formControlName="artifact" [matAutocomplete]="autoArtifact">
                 <mat-autocomplete #autoArtifact="matAutocomplete" [displayWith]="displayByName" (optionSelected)="selectedArtifact($event.option.value)">
                     <mat-option *ngFor="let artifact of filteredArtifacts | async" [value]="artifact">
@@ -49,7 +49,7 @@
 
         <div class="col-12 col-md-6">
             <mat-form-field class="w-100" appearance="fill" color="accent">
-                <mat-label>Artifact Level</mat-label>
+                <mat-label class="fw-bold">Artifact Level</mat-label>
                 <mat-select formControlName="artifactLevel">
                     <mat-option [value]="level" *ngFor="let level of artifactLevel">{{level}}</mat-option>
                 </mat-select>
@@ -60,7 +60,7 @@
     <div class="row mb-2">
         <div class="col-12 col-md-6">
             <mat-form-field appearance="fill" class="w-100" color="accent">
-                <mat-label>Tags</mat-label>
+                <mat-label class="fw-bold">Tags</mat-label>
 
                 <mat-select formControlName="tags" multiple>
                     <mat-select-trigger>
@@ -69,14 +69,14 @@
                             (+{{f['tags'].value.length - 1}} {{f['tags'].value?.length === 2 ? 'other' : 'others'}})
                         </span>
                     </mat-select-trigger>
-                    <mat-option *ngFor="let tag of tags" [value]="tag">{{tag}}</mat-option>
+                    <mat-option *ngFor="let tag of tags" [value]="tag" class="text-uppercase">{{tag}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
 
         <div class="col-12 col-md-6">
             <mat-form-field class="w-100" appearance="fill" color="accent">
-                <mat-label>Build status</mat-label>
+                <mat-label class="fw-bold">Build status</mat-label>
                 <mat-select formControlName="status">
                     <mat-option [value]="buildStatus" *ngFor="let buildStatus of status">{{buildStatus}}</mat-option>
                 </mat-select>

@@ -39,8 +39,8 @@ export class HeroFormComponent implements OnInit {
     // FIXME: Need logic if is for edit a hero
     this.hero = {} as Hero;
 
-    this.tags = ['PVP', 'PVE', 'Wyvern', 'Golem', 'Banshee', 'Azimanak', 'Caides', 'Expedition', 'LAB'];
-    this.status = ['Not Builded', 'Need Fix', 'Ok', 'Best'];
+    this.tags = ['pvp', 'pve', 'wyvern', 'golem', 'banshee', 'azimanak', 'caides', 'expedition', 'lab'];
+    this.status = ['Worst', 'Need Fix', 'Ok', 'Best'];
     this.artifactLevel = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 
     this.form = this.formBuilder.group({
@@ -48,8 +48,8 @@ export class HeroFormComponent implements OnInit {
       level: [0],
       artifact: [null],
       artifactLevel: [-1],
-      status: ['Not builded'],
-      tags: [null]
+      status: [this.status[2]],
+      tags: [[]]
     });
     this.disableArtifactForm();
 
@@ -63,27 +63,30 @@ export class HeroFormComponent implements OnInit {
   get f() { return this.form.controls; }
 
   ngOnInit(): void {
-    this.filteredHeroes = this.form.controls['hero'].valueChanges
-      .pipe(
-        startWith(''),
-        map(value => (typeof value === 'string' ? value : '')),
-        map(name => this.helpersService.filterByName<Hero>(name, this.heroes)),
-      );
-
-    this.filteredArtifacts = this.form.controls['artifact'].valueChanges
-      .pipe(
-        startWith(''),
-        map(value => (typeof value === 'string' ? value : '')),
-        map(name => this.helpersService.filterByName<Artifact>(name || '', this.artifacts)),
-      );
   }
 
   getHeroes() {
-    this.heroService.getAll().subscribe(heroes => this.heroes = heroes);
+    this.heroService.getAll().subscribe(heroes => {
+      this.heroes = heroes;
+      this.filteredHeroes = this.form.controls['hero'].valueChanges
+        .pipe(
+          startWith(''),
+          map(value => (typeof value === 'string' ? value : '')),
+          map(name => this.helpersService.filterByName<Hero>(name, this.heroes)),
+        );
+    });
   }
 
   getArtifacts() {
-    this.artifactService.getAll().subscribe(artifacts => this.artifacts = artifacts);
+    this.artifactService.getAll().subscribe(artifacts => {
+      this.artifacts = artifacts;
+      this.filteredArtifacts = this.form.controls['artifact'].valueChanges
+        .pipe(
+          startWith(''),
+          map(value => (typeof value === 'string' ? value : '')),
+          map(name => this.helpersService.filterByName<Artifact>(name || '', this.artifacts)),
+        );
+    });
   }
 
   save() {
@@ -143,14 +146,16 @@ export class HeroFormComponent implements OnInit {
     this.form.controls['artifactLevel'].setValue(-1);
 
     this.filteredArtifacts = this.filteredArtifacts.pipe(
-      map(artifacts => artifacts.filter(artifact => artifact.class == this.hero.class.toUpperCase() || artifact.class == 'GENERIC')),
+      map(artifacts => artifacts.filter(artifact => {
+        let a = artifact.class == this.hero.class.toUpperCase() || artifact.class == 'GENERIC'
+        return artifact.class == this.hero.class.toUpperCase() || artifact.class == 'GENERIC';
+      })),
     );
   }
 
   selectedArtifact(eventArtifact: Artifact) {
     const lastIndex = this.artifactLevel.length - 1;
 
-    this.hero.artifact = eventArtifact;
     this.form.controls['artifact'].setValue(eventArtifact);
     this.form.controls['artifactLevel'].setValue(this.artifactLevel[lastIndex]);
   }
