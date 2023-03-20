@@ -37,6 +37,7 @@ export class HelpersService {
   changeClassName(className: string) {
     switch (className) {
       case '':
+      case 'NN':
         return 'GENERIC';
       case 'manauser':
         return 'SOUL WEAVER';

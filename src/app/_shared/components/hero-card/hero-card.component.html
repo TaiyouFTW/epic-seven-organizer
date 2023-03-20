@@ -1,0 +1,74 @@
+<div class="hero-card container-fluid p-3 position-relative">
+    <!-- <button mat-icon-button class="text-center position-absolute top-0 end-0"><fa-icon [icon]="['fas', 'edit']"></fa-icon></button> -->
+    <div class="row align-items-center">
+        <div class="col-4 d-flex justify-content-center">
+            <div class="position-relative">
+                <app-detailed-portrait [hero]="hero"></app-detailed-portrait>
+                <app-basic-portrait *ngIf="hero.artifact != null" [artifact]="hero.artifact" [mini]="true" class="position-absolute artifact-position"></app-basic-portrait>
+            </div>
+        </div>
+        <div class="col-8">
+            <p class="hero-name text-truncate">{{hero.name}}</p>
+            <p class="text-truncate" *ngIf="hero.artifact != null">{{hero.artifact.name}}</p>
+        </div>
+    </div>
+
+    <mat-divider class="my-3"></mat-divider>
+
+    <div class="row justify-content-center mb-3 text-center row-gap">
+        <div class="col-4">
+            <p>Level</p>
+            <p class="detail-value">{{hero.level}}</p>
+        </div>
+        <div class="col-4">
+            <p>Skills</p>
+            <p class="detail-value">+{{hero.skills}}</p>
+        </div>
+        <div class="col-4">
+            <p>Imprint</p>
+            <p class="detail-value">{{hero.imprint}}</p>
+        </div>
+
+        <div class="col-4">
+            <p>Awakening</p>
+            <p class="detail-value">{{hero.awakening}}<span *ngIf="hero.tree != null"> | +{{hero.tree}}</span></p>
+        </div>
+        <div class="col-4">
+            <p>Artifact</p>
+            <p class="detail-value" *ngIf="hero.artifact != null; else dontHaveArtifact">{{hero.artifact.level > 0 ? '+' : ''}}{{hero.artifact.level}}</p>
+            <ng-template #dontHaveArtifact>
+                <p class="detail-value">none</p>
+            </ng-template>
+        </div>
+        <div class="col-4">
+            <p>Status</p>
+            <p class="detail-value">{{hero.status}}</p>
+        </div>
+    </div>
+
+    <mat-divider class="my-3"></mat-divider>
+
+    <div class="tag-container d-flex flex-wrap justify-content-center gap-2">
+        <div class="h-100" *ngFor="let tag of hero.tags">
+            <p class="text-center w-100 tag text-uppercase" [ngClass]="tag">{{tag}}</p>
+        </div>
+        <div *ngIf="hero.tags.length == 0" class="align-self-center">
+            <p class="text-center w-100 text-uppercase">Don't have any tags</p>
+        </div>
+    </div>
+
+    <mat-divider class="my-3"></mat-divider>
+
+    <div class="row justify-content-around">
+        <div class="col-6 col-sm-4">
+            <button mat-button class="w-100 selected" (click)="edit(hero)">
+                <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+            </button>
+        </div>
+        <div class="col-6 col-sm-4">
+            <button mat-button class="w-100 selected" (click)="remove(hero.id!, hero.name)">
+                <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+            </button>
+        </div>
+    </div>
+</div>

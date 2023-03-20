@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h5>{{data.heading}}</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p [innerHTML]="data.body"></p>
+        </div>
+    </div>
+    <div class="row justify-content-around">
+        <div class="col-6">
+            <button class="w-100" mat-button mat-dialog-close cdkFocusInitial>Close</button>
+        </div>
+
+        <div class="col-6">
+            <button class="w-100" mat-button (click)="confirm()">{{data.action}}</button>
+        </div>
+    </div>
+</div>

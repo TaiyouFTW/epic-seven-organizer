@@ -18,6 +18,8 @@ import { HeroFormComponent } from './_shared/components/hero-form/hero-form.comp
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BasicPortraitComponent } from './_shared/components/portraits/basic-portrait/basic-portrait.component';
 import { DetailedPortraitComponent } from './_shared/components/portraits/detailed-portrait/detailed-portrait.component';
+import { HeroCardComponent } from './_shared/components/hero-card/hero-card.component';
+import { ConfirmDialogComponent } from './_shared/components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { DetailedPortraitComponent } from './_shared/components/portraits/detail
     OrganizerComponent,
     HeroFormComponent,
     BasicPortraitComponent,
-    DetailedPortraitComponent
+    DetailedPortraitComponent,
+    HeroCardComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,

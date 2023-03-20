@@ -10,4 +10,9 @@ export interface Hero {
     code: string;
     class: string;
     element: string;
+    grade: number;
+    skills: number | null;
+    awakening: number | null;
+    tree: number | null;
+    imprint: string | null;
 }

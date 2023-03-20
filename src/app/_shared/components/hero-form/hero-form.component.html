@@ -9,7 +9,7 @@
             <mat-form-field class="w-100" appearance="fill">
                 <mat-label class="fw-bold">Heroes</mat-label>
                 <input type="text" matInput formControlName="hero" [matAutocomplete]="autoHero">
-                <mat-autocomplete #autoHero="matAutocomplete" [displayWith]="displayByName" (optionSelected)="selectedHero($event.option.value)">
+                <mat-autocomplete #autoHero="matAutocomplete" [displayWith]="displayByName" (closed)="selectedHero()">
                     <mat-option *ngFor="let filteredHero of filteredHeroes | async" [value]="filteredHero">
                         <div class="d-flex align-items-center gap-3">
                             <app-basic-portrait [hero]="filteredHero" [mini]="true"></app-basic-portrait>
@@ -24,7 +24,7 @@
         <div class="col-12 col-md-6">
             <mat-form-field class="w-100" appearance="fill" color="accent">
                 <mat-label class="fw-bold">Hero Stars</mat-label>
-                <mat-select formControlName="level">
+                <mat-select formControlName="level" (selectionChange)="selectedHeroLevel()">
                     <mat-option [value]="heroStar * 10" *ngFor="let heroStar of [5, 6]">{{heroStar}} stars awakened</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -36,7 +36,7 @@
             <mat-form-field class="w-100" appearance="fill">
                 <mat-label class="fw-bold">Artifacts</mat-label>
                 <input type="text" matInput formControlName="artifact" [matAutocomplete]="autoArtifact">
-                <mat-autocomplete #autoArtifact="matAutocomplete" [displayWith]="displayByName" (optionSelected)="selectedArtifact($event.option.value)">
+                <mat-autocomplete #autoArtifact="matAutocomplete" [displayWith]="displayByName" (closed)="selectedArtifact()">
                     <mat-option *ngFor="let artifact of filteredArtifacts | async" [value]="artifact">
                         <div class="d-flex align-items-center gap-3">
                             <app-basic-portrait [artifact]="artifact" [mini]="true"></app-basic-portrait>
@@ -59,6 +59,56 @@
 
     <div class="row mb-2">
         <div class="col-12 col-md-6">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
+                <mat-label class="fw-bold">Skills level</mat-label>
+                <mat-select formControlName="skills">
+                    <mat-option [value]="skill" *ngFor="let skill of skills">+{{skill}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
+                <mat-label class="fw-bold">Imprint</mat-label>
+                <mat-select formControlName="imprint">
+                    <mat-option [value]="'none'">None</mat-option>
+                    <mat-option [value]="imprint" *ngFor="let imprint of imprints">{{imprint}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
+                <mat-label class="fw-bold">Awakening</mat-label>
+                <mat-select formControlName="awakening">
+                    <mat-option [value]="awakening" *ngFor="let awakening of awakenings">{{awakening}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-6" *ngIf="showTree">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
+                <mat-label class="fw-bold">Awakening tree</mat-label>
+                <mat-select formControlName="tree">
+                    <mat-option [value]="tree" *ngFor="let tree of trees">+{{tree}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100" appearance="fill" color="accent">
+                <mat-label class="fw-bold">Build status</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option [value]="buildStatus" *ngFor="let buildStatus of status">{{buildStatus}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-6">
             <mat-form-field appearance="fill" class="w-100" color="accent">
                 <mat-label class="fw-bold">Tags</mat-label>
 
@@ -73,15 +123,6 @@
                 </mat-select>
             </mat-form-field>
         </div>
-
-        <div class="col-12 col-md-6">
-            <mat-form-field class="w-100" appearance="fill" color="accent">
-                <mat-label class="fw-bold">Build status</mat-label>
-                <mat-select formControlName="status">
-                    <mat-option [value]="buildStatus" *ngFor="let buildStatus of status">{{buildStatus}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
     </div>
 
     <div class="row justify-content-around">
@@ -89,7 +130,7 @@
             <button type="button" class="w-100" mat-button mat-dialog-close>Cancel</button>
         </div>
         <div class="col-6 col-md-4 col-xl-3">
-            <button type="submit" class="w-100" mat-flat-button color="primary">{{hero ? 'Save' : 'Add'}}</button>
+            <button type="submit" class="w-100" mat-flat-button color="primary">{{data ? 'Update' : 'Add'}}</button>
         </div>
     </div>
 </form>

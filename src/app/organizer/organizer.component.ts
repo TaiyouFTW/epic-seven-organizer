@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { filter, map } from 'rxjs';
 import { HeroFormComponent } from '../_shared/components/hero-form/hero-form.component';
+import { Hero } from '../_shared/interfaces/hero';
 import { HelpersService } from '../_shared/services/helpers.service';
+import { HeroService } from '../_shared/services/hero.service';
 
 @Component({
   selector: 'app-organizer',
@@ -10,10 +13,14 @@ import { HelpersService } from '../_shared/services/helpers.service';
 })
 export class OrganizerComponent implements OnInit {
 
+  heroes: Hero[] = [];
+
   constructor(
     public dialog: MatDialog,
-    private helpersService: HelpersService,
-  ) { }
+    private heroService: HeroService
+  ) {
+    this.heroes = this.heroService.myHeroesValue != null ? this.heroService.myHeroesValue : [];
+  }
 
   ngOnInit(): void {
   }
@@ -23,21 +30,18 @@ export class OrganizerComponent implements OnInit {
       autoFocus: false,
       restoreFocus: false,
       panelClass: 'custom-dialog',
-      minWidth: '30vw'
+      minWidth: '30vw',
+      data: null
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
-        if (result.id) {
-          // TODO: search by id and update
-          console.log(result, 'edit');
-        } else {
-          // TODO: add new
-          console.log(result, 'new');
-          //  = this.helpersService.createUuid();
+    dialogRef.afterClosed()
+      .pipe(map((hero: Hero) => hero || null))
+      .subscribe((hero: Hero) => {
+        if (hero != null) {
+          this.heroService.add(hero);
+          this.heroes = this.heroService.myHeroesValue;
         }
-      }
-    })
+      })
   }
 
 }

@@ -12,16 +12,26 @@ export class HeroService {
   private heroesSubject: BehaviorSubject<Hero[]>;
   public heroes$: Observable<Hero[]>;
 
+  private myHeroesSubject: BehaviorSubject<Hero[]>;
+  public myHeroes$: Observable<Hero[]>;
+
   constructor(
     private httpClient: HttpClient,
     private helpersService: HelpersService
   ) {
     this.heroesSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('e7OrganizerHeroesList')!));
     this.heroes$ = this.heroesSubject.asObservable();
+
+    this.myHeroesSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('e7OrganizerMyHeroes')!));
+    this.myHeroes$ = this.myHeroesSubject.asObservable();
   }
 
   public get heroesValue() {
     return this.heroesSubject.value;
+  }
+
+  public get myHeroesValue() {
+    return this.myHeroesSubject.value;
   }
 
   private _headers(currentPage: number) {
@@ -47,7 +57,7 @@ export class HeroService {
       return this.heroes$;
     }
     return this.httpClient.post('/guide/catalyst/getHeroFirstSet', {}, this._headers(currentPage))
-      .pipe(map(response => <{ heroList: Array<{ attributeCd: string, heroNm: string, heroCd: string, jobCd: string }> }>response))
+      .pipe(map(response => <{ heroList: Array<{ attributeCd: string, heroNm: string, heroCd: string, jobCd: string, grade: number }> }>response))
       .pipe(
         map(response => {
           let heroes: Hero[] = [];
@@ -66,6 +76,11 @@ export class HeroService {
                 code: hero.heroCd,
                 class: hero.jobCd,
                 element: hero.attributeCd,
+                grade: hero.grade,
+                skills: null,
+                awakening: null,
+                imprint: null,
+                tree: null
               } as Hero)
             }
           }
@@ -74,5 +89,35 @@ export class HeroService {
           return heroes;
         })
       );
+  }
+
+  add(hero: Hero) {
+    let heroes = this.myHeroesValue;
+
+    if (heroes != null && heroes.length > 0) {
+      let index = heroes.findIndex(x => x.id == hero.id);
+      if (index != -1) {
+        heroes[index] = hero;
+      } else {
+        heroes.push({ ...hero });
+      }
+    } else {
+      heroes = [];
+      heroes.push({ ...hero });
+    }
+    localStorage.setItem('e7OrganizerMyHeroes', JSON.stringify(heroes));
+    this.myHeroesSubject.next(heroes);
+  }
+
+  delete(heroId: string) {
+    let heroes = this.myHeroesValue;
+    if (heroes != null && heroes.length > 0) {
+      let index = heroes.findIndex(x => x.id == heroId);
+      if (index != -1) {
+        heroes.splice(index, 1);
+        localStorage.setItem('e7OrganizerMyHeroes', JSON.stringify(heroes));
+        this.myHeroesSubject.next(heroes);
+      }
+    }
   }
 }
