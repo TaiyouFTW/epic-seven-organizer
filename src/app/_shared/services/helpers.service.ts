@@ -8,9 +8,30 @@ import { Hero } from '../interfaces/hero';
 })
 export class HelpersService {
 
+  private _tags: string[] = ['all', 'pvp', 'pve', 'wyvern', 'golem', 'banshee', 'azimanak', 'caides', 'expedition', 'lab'];
+  private _status: string[] = ['Worst', 'Need Fix', 'Ok', 'Best'];
+  private _array30: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+  private _imprints: string[] = ['D', 'C', 'B', 'A', 'S', 'SS', 'SSS'];
+
   constructor() { }
 
   createUuid = () => uuid();
+
+  public get tags(): string[] {
+    return this._tags;
+  }
+
+  public get status(): string[] {
+    return this._status;
+  }
+
+  public get imprints(): string[] {
+    return this._imprints;
+  }
+
+  public get fromZeroToThirty(): number[] {
+    return this._array30;
+  }
 
   removeOneItem<Type>(array: Type[], toRemove: Type) {
     const index = array.indexOf(toRemove);
