@@ -45,12 +45,12 @@ export class HeroFormComponent implements OnInit {
   ) {
     this.hero = {} as Hero;
 
-    this.tags = ['pvp', 'pve', 'wyvern', 'golem', 'banshee', 'azimanak', 'caides', 'expedition', 'lab'];
-    this.status = ['Worst', 'Need Fix', 'Ok', 'Best'];
-    this.artifactLevel = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
-    this.skills = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-    this.awakenings = [0, 1, 2, 3, 4, 5, 6];
-    this.trees = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+    this.tags = this.helpersService.tags.slice(1);
+    this.status = this.helpersService.status;
+    this.artifactLevel = this.helpersService.fromZeroToThirty;
+    this.skills = this.helpersService.fromZeroToThirty.slice(0, 16);
+    this.awakenings = this.helpersService.fromZeroToThirty.slice(0, 7);
+    this.trees = this.helpersService.fromZeroToThirty;
     this.imprints = [];
 
     this.form = this.formBuilder.group({
@@ -72,6 +72,8 @@ export class HeroFormComponent implements OnInit {
 
 
     if (data != null) {
+      this.hero = data;
+      this.form.patchValue(data);
       this.form.controls['hero'].disable();
       this.f['hero'].setValue(data);
       this.f['level'].setValue(data.level);
@@ -90,6 +92,8 @@ export class HeroFormComponent implements OnInit {
 
       this.selectedHero();
       if (data.artifact != null) {
+        this.f['artifact'].setValue(data.artifact);
+        this.f['artifactLevel'].setValue(data.artifact.level);
         this.selectedArtifact();
       }
     }
@@ -197,8 +201,6 @@ export class HeroFormComponent implements OnInit {
 
     if (formHero.name == undefined) {
       formHero = this.heroes.find(hero => hero.name.toLowerCase() == formHero.toLowerCase());
-    } else {
-      formHero = this.heroes.find(hero => hero.name.toLowerCase() == formHero.name.toLowerCase());
     }
 
     if (!formHero) {
@@ -207,6 +209,12 @@ export class HeroFormComponent implements OnInit {
       this.showTree = false;
       this.disableArtifactForm();
       return;
+    }
+
+    if (this.hero.code != formHero.code) {
+      this.form.controls['artifact'].setValue(null);
+      this.form.controls['artifactLevel'].setValue(-1);
+      this.form.controls['tree'].setValue(null);
     }
     this.hero = formHero;
 
@@ -221,21 +229,17 @@ export class HeroFormComponent implements OnInit {
 
     switch (this.hero.grade) {
       case 5:
-        this.imprints = ['B', 'A', 'S', 'SS', 'SSS'];
+        this.imprints = this.helpersService.imprints.slice(2);
         break;
       case 4:
-        this.imprints = ['C', 'B', 'A', 'S', 'SS', 'SSS'];
+        this.imprints = this.helpersService.imprints.slice(1);
         break;
       default:
-        this.imprints = ['D', 'C', 'B', 'A', 'S', 'SS', 'SSS'];
+        this.imprints = this.helpersService.imprints;
         break;
     }
 
     this.enableArtifactForm();
-    this.form.controls['artifact'].setValue(null);
-    this.form.controls['artifactLevel'].setValue(-1);
-    this.form.controls['imprint'].setValue('none');
-    this.form.controls['tree'].setValue(null);
 
     this.filteredArtifacts = this.filteredArtifacts.pipe(
       map(artifacts => {
@@ -285,7 +289,9 @@ export class HeroFormComponent implements OnInit {
     this.hero.artifact = formArtifact;
 
     this.form.controls['artifact'].setValue(this.hero.artifact);
-    this.form.controls['artifactLevel'].setValue(this.artifactLevel[lastIndex]);
+    if (this.hero.artifact && this.hero.artifact.level == -1) {
+      this.form.controls['artifactLevel'].setValue(this.artifactLevel[lastIndex]);
+    }
   }
 
   enableArtifactForm() {
