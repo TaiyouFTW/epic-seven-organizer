@@ -62,7 +62,7 @@
             <mat-form-field class="w-100" appearance="fill" color="accent">
                 <mat-label class="fw-bold">Skills level</mat-label>
                 <mat-select formControlName="skills">
-                    <mat-option [value]="skill" *ngFor="let skill of skills">+{{skill}}</mat-option>
+                    <mat-option [value]="skill" *ngFor="let skill of skills">{{skill == 0 ? '' : '+'}}{{skill}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
