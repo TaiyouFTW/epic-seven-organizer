@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Hero } from '../interfaces/hero';
 import { HelpersService } from './helpers.service';
 
@@ -56,7 +57,11 @@ export class HeroService {
     if (today.getDay() != 4 && this.heroesValue) {
       return this.heroes$;
     }
-    return this.httpClient.post('/guide/catalyst/getHeroFirstSet', {}, this._headers(currentPage))
+    let url = '/guide/catalyst/getHeroFirstSet';
+    if (environment.production) {
+      url = '/api/heroes';
+    }
+    return this.httpClient.post(url, {}, this._headers(currentPage))
       .pipe(map(response => <{ heroList: Array<{ attributeCd: string, heroNm: string, heroCd: string, jobCd: string, grade: number }> }>response))
       .pipe(
         map(response => {
