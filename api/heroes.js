@@ -15,5 +15,6 @@ module.exports = async (req, res) => {
         headers: headersList
     });
 
-    res.status(200).json(response);
+    let data = await response.json();
+    res.status(200).json(data);
 };
