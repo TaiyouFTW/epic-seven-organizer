@@ -1,0 +1,8 @@
+<ul class="d-flex flex-wrap justify-content-center gap-2">
+    <ng-container *ngIf="hero; else canFilter">
+        <li *ngFor="let tag of tags" class="text-center tag text-uppercase mb-0" [ngClass]="tag">{{tag}}</li>
+    </ng-container>
+    <ng-template #canFilter>
+        <li *ngFor="let tag of tags" class="text-center tag text-uppercase mb-0 pointer" [ngClass]="tag" (click)="filterBy(tag)">{{tag}}</li>
+    </ng-template>
+</ul>

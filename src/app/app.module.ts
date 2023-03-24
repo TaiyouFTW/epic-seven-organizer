@@ -20,6 +20,7 @@ import { BasicPortraitComponent } from './_shared/components/portraits/basic-por
 import { DetailedPortraitComponent } from './_shared/components/portraits/detailed-portrait/detailed-portrait.component';
 import { HeroCardComponent } from './_shared/components/hero-card/hero-card.component';
 import { ConfirmDialogComponent } from './_shared/components/confirm-dialog/confirm-dialog.component';
+import { TagsComponent } from './_shared/components/tags/tags.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ConfirmDialogComponent } from './_shared/components/confirm-dialog/conf
     BasicPortraitComponent,
     DetailedPortraitComponent,
     HeroCardComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    TagsComponent
   ],
   imports: [
     BrowserModule,

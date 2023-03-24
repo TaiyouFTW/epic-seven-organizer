@@ -1,0 +1,67 @@
+@import "./../../../../colors.scss";
+
+.tag {
+    background: $e7-primary;
+    padding-right: 0.5rem !important;
+    padding-left: 0.5rem !important;
+}
+
+.all {
+    background: #e7e7e7;
+    color: #28292a;
+    font-weight: bold;
+}
+
+.pvp {
+    background: #e7e7e7;
+    color: #c62828;
+    font-weight: bold;
+}
+
+.pve {
+    background: #e7e7e7;
+    color: #0277bd;
+    font-weight: bold;
+}
+
+.expedition {
+    background: #e7e7e7;
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+.lab {
+    background: #e7e7e7;
+    color: #6a1b9a;
+    font-weight: bold;
+}
+
+.wyvern {
+    background: #c62828;
+    color: $e7-text;
+    font-weight: bold;
+}
+
+.golem {
+    background: #2e7d32;
+    color: $e7-text;
+    font-weight: bold;
+}
+
+.banshee {
+    background: #0277bd;
+    color: $e7-text;
+    font-weight: bold;
+}
+
+.azimanak {
+    background: #9e8129;
+    color: $e7-text;
+    font-weight: bold;
+}
+
+.caides {
+    background: #6a1b9a;
+    color: $e7-text;
+    font-weight: bold;
+}
