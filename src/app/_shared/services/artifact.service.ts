@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Artifact } from '../interfaces/artifact';
 import { HelpersService } from './helpers.service';
 
@@ -46,7 +47,11 @@ export class ArtifactService {
     if (today.getDay() != 4 && this.artifactsValue) {
       return this.artifacts$;
     }
-    return this.httpClient.post('/guide/wearingStatus/getArtifactList', {}, this._headers(currentPage))
+    let url = '/guide/wearingStatus/getArtifactList';
+    if (environment.production) {
+      url = '/api/artifacts';
+    }
+    return this.httpClient.post(url, {}, this._headers(currentPage))
       .pipe(map(response => <{ artifactList: Array<{ artifactCode: string, artifactName: string, jobCode: string }> }>response))
       .pipe(
         map(response => {
