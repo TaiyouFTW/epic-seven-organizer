@@ -1,4 +1,4 @@
-# Epic Seven Organizer
+# Epic Seven Organizer - [LIVE](https://epic-seven-organizer.vercel.app)
 
 This is a fan-made project to organize your heroes.
 
