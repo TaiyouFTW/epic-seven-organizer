@@ -44,16 +44,10 @@ export class OrganizerComponent implements OnInit {
       })
   }
 
-  clickedFilter(tag: string) {
+  filterByTag(tag: string) {
     this.heroes = this.heroService.myHeroesValue;
     if (tag != 'all') {
-      this.heroes = this.heroes.filter(hero => {
-        if (hero.tags.includes(tag)) {
-          return hero;
-        }
-        return;
-      })
+      this.heroes = this.heroes.filter(hero => hero.tags.includes(tag));
     }
   }
-
 }
