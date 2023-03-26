@@ -85,7 +85,8 @@ export class HeroService {
                 skills: null,
                 awakening: null,
                 imprint: null,
-                tree: null
+                tree: null,
+                priority: null
               } as Hero)
             }
           }
@@ -124,5 +125,10 @@ export class HeroService {
         this.myHeroesSubject.next(heroes);
       }
     }
+  }
+
+  updateHeroPool(heroes: Hero[]) {
+    localStorage.setItem('e7OrganizerMyHeroes', JSON.stringify(heroes));
+    this.myHeroesSubject.next(heroes);
   }
 }

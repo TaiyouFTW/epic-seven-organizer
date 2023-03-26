@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h5>Change Priority</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div cdkDropList class="priority-list" (cdkDropListDropped)="drop($event)">
+                <div class="d-inline-flex align-items-center gap-3 w-100 p-3 priority-box" *ngFor="let hero of heroes; let index = index" cdkDrag>
+                    <fa-icon class="move p-2" [icon]="['fas', 'up-down-left-right']" [fixedWidth]="true" cdkDragHandle></fa-icon>
+                    <p class="mb-0 d-inline-flex align-items-center gap-3">
+                        <span>{{index + 1}}</span>
+                        <app-basic-portrait [hero]="hero" [mini]="true"></app-basic-portrait>
+                        <span>{{hero.name}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-around">
+        <div class="col-6 col-md-4 col-lg-3">
+            <button class="w-100" mat-button mat-dialog-close>Cancel</button>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-3">
+            <button class="w-100" mat-flat-button color="primary" (click)="save()">Save</button>
+        </div>
+    </div>
+</div>

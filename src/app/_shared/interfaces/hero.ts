@@ -15,4 +15,5 @@ export interface Hero {
     awakening: number | null;
     tree: number | null;
     imprint: string | null;
+    priority: number | null;
 }
