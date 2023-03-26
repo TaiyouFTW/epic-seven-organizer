@@ -1,7 +1,10 @@
 @import "./../../../../colors.scss";
 
+$header-height: 56px;
+$footer-height: 85px;
+
 main {
-    min-height: calc(100vh - 56px);
+    min-height: calc(100vh - $header-height - $footer-height);
 }
 
 .sidenav {
@@ -21,7 +24,7 @@ main {
 .mat-toolbar,
 .toolbar-single-row {
     background-color: $accent-dark;
-    height: 56px;
+    height: $header-height;
 }
 
 .mat-drawer {
@@ -34,7 +37,7 @@ main {
 }
 
 .mat-drawer-container {
-    min-height: calc(100vh - 56px);
+    min-height: calc(100vh - $header-height - $footer-height);
     background-color: $primary-dark;
     color: $e7-text;
 }
