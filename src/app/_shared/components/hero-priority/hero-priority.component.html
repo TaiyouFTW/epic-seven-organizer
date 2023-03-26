@@ -7,7 +7,7 @@
 
     <div class="row">
         <div class="col-12">
-            <div cdkDropList class="priority-list" (cdkDropListDropped)="drop($event)">
+            <div cdkDropList class="priority-list" (cdkDropListDropped)="drop($event)" *ngIf="heroes.length > 0; else emptyPriorityList">
                 <div class="d-flex align-items-center p-3 priority-box" *ngFor="let hero of heroes; let index = index" cdkDrag>
                     <fa-icon class="move p-2" [icon]="['fas', 'up-down-left-right']" [fixedWidth]="true" cdkDragHandle></fa-icon>
                     <p class="mb-0 d-inline-flex align-items-center gap-3">
@@ -17,6 +17,9 @@
                     </p>
                 </div>
             </div>
+            <ng-template #emptyPriorityList>
+                <p>You don't have any heroes in your hero pool until now.</p>
+            </ng-template>
         </div>
     </div>
 
@@ -26,7 +29,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <button class="w-100" mat-flat-button color="primary" (click)="save()">Save</button>
+            <button class="w-100" mat-flat-button color="primary" [disabled]="heroes.length == 0" (click)="save()">Save</button>
         </div>
     </div>
 </div>
