@@ -13,12 +13,19 @@ export class ArtifactService {
   private artifactsSubject: BehaviorSubject<Artifact[]>;
   public artifacts$: Observable<Artifact[]>;
 
+  private lastUpdate: Date = new Date();
+
   constructor(
     private httpClient: HttpClient,
     private helpersService: HelpersService
   ) {
     this.artifactsSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('e7OrganizerArtifactsList')!));
     this.artifacts$ = this.artifactsSubject.asObservable();
+
+    let lastUpdateAux = localStorage.getItem('e7OrganizerLastUpdate');
+    if (lastUpdateAux != null) {
+      this.lastUpdate = new Date(JSON.parse(lastUpdateAux));
+    }
   }
 
   public get artifactsValue() {
@@ -44,9 +51,15 @@ export class ArtifactService {
 
   getAll(currentPage: number = 0) {
     let today = new Date();
-    if (today.getDay() != 4 && this.artifactsValue) {
+    let lastUpdateNextThursday = new Date(this.lastUpdate.setDate(this.lastUpdate.getDate() + (4 - this.lastUpdate.getDay() + 7) % 7 + 7));
+
+    today.setUTCHours(0, 0, 0, 0);
+    lastUpdateNextThursday.setUTCHours(0, 0, 0, 0);
+
+    if (today.getTime() < lastUpdateNextThursday.getTime() && today.getDay() != 4 && this.artifactsValue) {
       return this.artifacts$;
     }
+
     let url = '/guide/wearingStatus/getArtifactList';
     if (environment.production) {
       url = '/api/artifacts';
@@ -68,8 +81,10 @@ export class ArtifactService {
               } as Artifact)
             }
           }
-          localStorage.setItem('e7OrganizerArtifactsList', JSON.stringify(artifacts));
           this.artifactsSubject.next(artifacts);
+          this.lastUpdate = new Date();
+          localStorage.setItem('e7OrganizerLastUpdate', JSON.stringify(this.lastUpdate));
+          localStorage.setItem('e7OrganizerArtifactsList', JSON.stringify(artifacts));
           return artifacts;
         })
       );

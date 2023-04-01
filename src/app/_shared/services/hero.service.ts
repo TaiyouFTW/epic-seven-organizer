@@ -16,6 +16,8 @@ export class HeroService {
   private myHeroesSubject: BehaviorSubject<Hero[]>;
   public myHeroes$: Observable<Hero[]>;
 
+  private lastUpdate: Date = new Date();
+
   constructor(
     private httpClient: HttpClient,
     private helpersService: HelpersService
@@ -25,6 +27,11 @@ export class HeroService {
 
     this.myHeroesSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('e7OrganizerMyHeroes')!));
     this.myHeroes$ = this.myHeroesSubject.asObservable();
+
+    let lastUpdateAux = localStorage.getItem('e7OrganizerLastUpdate');
+    if (lastUpdateAux != null) {
+      this.lastUpdate = new Date(JSON.parse(lastUpdateAux));
+    }
   }
 
   public get heroesValue() {
@@ -54,13 +61,20 @@ export class HeroService {
 
   getAll(currentPage: number = 0): Observable<Hero[]> {
     let today = new Date();
-    if (today.getDay() != 4 && this.heroesValue) {
+    let lastUpdateNextThursday = new Date(this.lastUpdate.setDate(this.lastUpdate.getDate() + (4 - this.lastUpdate.getDay() + 7) % 7 + 7));
+
+    today.setUTCHours(0, 0, 0, 0);
+    lastUpdateNextThursday.setUTCHours(0, 0, 0, 0);
+
+    if (today.getTime() < lastUpdateNextThursday.getTime() && today.getDay() != 2 && this.heroesValue) {
       return this.heroes$;
     }
+
     let url = '/guide/catalyst/getHeroFirstSet';
     if (environment.production) {
       url = '/api/heroes';
     }
+
     return this.httpClient.post(url, {}, this._headers(currentPage))
       .pipe(map(response => <{ heroList: Array<{ attributeCd: string, heroNm: string, heroCd: string, jobCd: string, grade: number }> }>response))
       .pipe(
@@ -90,8 +104,10 @@ export class HeroService {
               } as Hero)
             }
           }
-          localStorage.setItem('e7OrganizerHeroesList', JSON.stringify(heroes));
           this.heroesSubject.next(heroes);
+          this.lastUpdate = new Date();
+          localStorage.setItem('e7OrganizerLastUpdate', JSON.stringify(this.lastUpdate));
+          localStorage.setItem('e7OrganizerHeroesList', JSON.stringify(heroes));
           return heroes;
         })
       );
