@@ -3,7 +3,8 @@
 .priority-list {
     display: block;
     background: $accent-dark;
-    overflow: hidden;
+    max-height: 65vh;
+    overflow-y: auto;
 }
 
 .priority-box {

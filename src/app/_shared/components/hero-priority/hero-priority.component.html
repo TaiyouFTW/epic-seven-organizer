@@ -5,22 +5,20 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12">
-            <div cdkDropList class="priority-list" (cdkDropListDropped)="drop($event)" *ngIf="heroes.length > 0; else emptyPriorityList">
-                <div class="d-flex align-items-center p-3 priority-box" *ngFor="let hero of heroes; let index = index" cdkDrag>
-                    <fa-icon class="move p-2" [icon]="['fas', 'up-down-left-right']" [fixedWidth]="true" cdkDragHandle></fa-icon>
-                    <p class="mb-0 d-inline-flex align-items-center gap-3">
-                        <span>{{index + 1}}</span>
-                        <app-basic-portrait [hero]="hero" [mini]="true"></app-basic-portrait>
-                        <span>{{hero.name}}</span>
-                    </p>
-                </div>
-            </div>
-            <ng-template #emptyPriorityList>
-                <p>You don't have any heroes in your hero pool until now.</p>
-            </ng-template>
-        </div>
+    <div class="row mb-3">
+        <ul cdkDropList class="col-12 priority-list" (cdkDropListDropped)="drop($event)" *ngIf="heroes.length > 0; else emptyPriorityList">
+            <li class="d-flex align-items-center p-3 priority-box" *ngFor="let hero of heroes; let index = index" cdkDrag>
+                <fa-icon class="move p-2" [icon]="['fas', 'up-down-left-right']" [fixedWidth]="true" cdkDragHandle></fa-icon>
+                <p class="mb-0 d-inline-flex align-items-center gap-3">
+                    <span>{{index + 1}}</span>
+                    <app-basic-portrait [hero]="hero" [mini]="true"></app-basic-portrait>
+                    <span>{{hero.name}}</span>
+                </p>
+            </li>
+        </ul>
+        <ng-template #emptyPriorityList>
+            <p>You don't have any heroes in your hero pool until now.</p>
+        </ng-template>
     </div>
 
     <div class="row justify-content-around">
