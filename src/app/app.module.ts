@@ -22,6 +22,7 @@ import { HeroCardComponent } from './_shared/components/hero-card/hero-card.comp
 import { ConfirmDialogComponent } from './_shared/components/confirm-dialog/confirm-dialog.component';
 import { TagsComponent } from './_shared/components/tags/tags.component';
 import { HeroPriorityComponent } from './_shared/components/hero-priority/hero-priority.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { HeroPriorityComponent } from './_shared/components/hero-priority/hero-p
     HeroCardComponent,
     ConfirmDialogComponent,
     TagsComponent,
-    HeroPriorityComponent
+    HeroPriorityComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

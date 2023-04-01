@@ -8,8 +8,11 @@
     <mat-sidenav #drawer class="sidenav" [mode]="'over'" [fixedInViewport]="false" [fixedTopGap]="56" [opened]="false">
         <aside>
             <mat-nav-list class="d-flex align-items-start flex-column h-100 p-0">
-                <a class="list-item" mat-list-item routerLink="/heroes" [routerLinkActive]="['is-active']">
-                    <span class="ps-2">Heroes</span>
+                <a class="list-item" mat-list-item routerLink="/dashboard" [routerLinkActive]="['is-active']" (click)="drawer.toggle()">
+                    <span class="ps-2">Dashboard</span>
+                </a>
+                <a class="list-item" mat-list-item routerLink="/heroes" [routerLinkActive]="['is-active']" (click)="drawer.toggle()">
+                    <span class="ps-2">Heroes</span>toggle
                 </a>
             </mat-nav-list>
         </aside>
