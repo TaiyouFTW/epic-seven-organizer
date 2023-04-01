@@ -35,6 +35,9 @@ h6 {
   ::-webkit-scrollbar-thumb:window-inactive {
     background: #b4b4b4;
   }
+  ::-webkit-scrollbar-track {
+    background: #b4b4b440;
+  }
 }
 
 .pointer {
