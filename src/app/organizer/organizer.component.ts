@@ -58,7 +58,7 @@ export class OrganizerComponent implements OnInit {
       restoreFocus: false,
       panelClass: 'custom-dialog',
       minWidth: '30vw',
-      data: [...this.heroes]
+      data: [...this.heroService.myHeroesValue]
     });
 
     dialogRef.afterClosed()
