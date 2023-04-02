@@ -87,3 +87,11 @@ ul {
 .move {
   cursor: move;
 }
+
+.mat-chip.mat-standard-chip:focus::after {
+  opacity: 0;
+}
+
+.mat-chip-list-wrapper {
+  justify-content: center;
+}

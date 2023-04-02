@@ -9,7 +9,7 @@
     </div>
     <div class="row justify-content-center mb-4">
         <div class="col-12">
-            <app-tags (clickedFilter)="filterByTag($event)"></app-tags>
+            <app-tags (clickedFilter)="filterByTag($event)" [(tag)]="tag"></app-tags>
         </div>
     </div>
 
