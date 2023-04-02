@@ -15,6 +15,7 @@ import { HeroService } from '../_shared/services/hero.service';
 export class OrganizerComponent implements OnInit {
 
   heroes: Hero[] = [];
+  tag: string = 'all';
 
   constructor(
     public dialog: MatDialog,
@@ -24,6 +25,13 @@ export class OrganizerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.heroService.myHeroes$.subscribe(updatedPool => {
+      this.heroes = updatedPool;
+
+      if (this.tag != 'all') {
+        this.filterByTag(this.tag);
+      }
+    });
   }
 
   addHero() {
@@ -41,14 +49,16 @@ export class OrganizerComponent implements OnInit {
         if (hero != null) {
           this.heroService.add(hero);
           this.heroes = this.heroService.myHeroesValue;
+          this.tag = 'all';
         }
       })
   }
 
-  filterByTag(tag: string) {
+  filterByTag(selectedTag: string) {
+    this.tag = selectedTag;
     this.heroes = this.heroService.myHeroesValue;
-    if (tag != 'all') {
-      this.heroes = this.heroes.filter(hero => hero.tags.includes(tag));
+    if (selectedTag != 'all') {
+      this.heroes = this.heroes.filter(hero => hero.tags.includes(selectedTag));
     }
   }
 
@@ -58,14 +68,13 @@ export class OrganizerComponent implements OnInit {
       restoreFocus: false,
       panelClass: 'custom-dialog',
       minWidth: '30vw',
-      data: [...this.heroes]
+      data: [...this.heroService.myHeroesValue]
     });
 
     dialogRef.afterClosed()
       .pipe(map((heroes: Hero[]) => heroes || null))
       .subscribe((heroes: Hero[]) => {
         if (heroes != null) {
-          this.heroes = heroes;
           this.heroService.updateHeroPool(heroes);
         }
       })

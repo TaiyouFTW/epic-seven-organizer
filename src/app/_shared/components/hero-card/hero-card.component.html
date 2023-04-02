@@ -49,10 +49,15 @@
     <mat-divider class="my-3"></mat-divider>
 
     <div class="tag-container">
-        <app-tags [hero]="hero"></app-tags>
-        <div *ngIf="hero.tags.length == 0" class="align-self-center">
+        <div *ngIf="hero.tags.length == 0; else showTags" class="align-self-center">
             <p class="text-center w-100 text-uppercase">Don't have any tags</p>
         </div>
+        <ng-template #showTags>
+            <ul class="d-flex flex-wrap justify-content-center gap-2">
+                <li *ngFor="let tag of hero.tags" class="text-center tag text-uppercase mb-0" [ngClass]="tag">{{tag}}</li>
+            </ul>
+        </ng-template>
+
     </div>
 
     <mat-divider class="my-3"></mat-divider>

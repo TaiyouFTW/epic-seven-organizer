@@ -1,8 +1,3 @@
-<ul class="d-flex flex-wrap justify-content-center gap-2">
-    <ng-container *ngIf="hero; else canFilter">
-        <li *ngFor="let tag of tags" class="text-center tag text-uppercase mb-0" [ngClass]="tag">{{tag}}</li>
-    </ng-container>
-    <ng-template #canFilter>
-        <li *ngFor="let tag of tags" class="text-center tag text-uppercase mb-0 pointer" [ngClass]="tag" (click)="filterBy(tag)">{{tag}}</li>
-    </ng-template>
-</ul>
+<mat-chip-list class="d-flex flex-wrap justify-content-center" aria-label="Filter by tags" (focused)="false">
+    <mat-chip class="text-uppercase chip" *ngFor="let chip of tags" (click)="filterBy(chip)" [selected]="tag == chip">{{chip}}</mat-chip>
+</mat-chip-list>

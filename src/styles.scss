@@ -91,3 +91,11 @@ ul {
 .mat-tab-label-active {
   color: $e7-text;
 }
+
+.mat-chip.mat-standard-chip:focus::after {
+  opacity: 0;
+}
+
+.mat-chip-list-wrapper {
+  justify-content: center;
+}

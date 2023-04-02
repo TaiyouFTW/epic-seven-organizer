@@ -9,7 +9,8 @@ import { HelpersService } from '../../services/helpers.service';
 })
 export class TagsComponent implements OnInit {
 
-  @Input() hero?: Hero;
+  @Input() tag: string = 'all';
+  @Output() tagChange: EventEmitter<string> = new EventEmitter<string>();
 
   @Output() clickedFilter: EventEmitter<string> = new EventEmitter<string>();
 
@@ -21,14 +22,11 @@ export class TagsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.hero) {
-      this.tags = this.hero.tags;
-    } else {
-      this.tags = this.helpersService.tags;
-    }
+    this.tags = this.helpersService.tags;
   }
 
   filterBy(tag: string) {
+    this.tagChange.emit(tag);
     this.clickedFilter.emit(tag);
   }
 }

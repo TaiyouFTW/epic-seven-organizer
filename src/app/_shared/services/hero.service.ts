@@ -121,6 +121,7 @@ export class HeroService {
       if (index != -1) {
         heroes[index] = hero;
       } else {
+        hero.priority = heroes.length;
         heroes.push({ ...hero });
       }
     } else {
