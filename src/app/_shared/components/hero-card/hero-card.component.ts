@@ -32,10 +32,11 @@ export class HeroCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed()
-      .pipe(map((hero: Hero) => hero || null))
-      .subscribe((hero: Hero) => {
-        if (hero != null) {
-          this.heroService.add(hero);
+      .pipe(map((editedHero: Hero) => editedHero || null))
+      .subscribe((editedHero: Hero) => {
+        if (editedHero != null) {
+          this.hero = editedHero;
+          this.heroService.add(this.hero);
         }
       })
   }
