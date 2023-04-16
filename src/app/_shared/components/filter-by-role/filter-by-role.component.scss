@@ -1,0 +1,18 @@
+@import "./../../../../colors.scss";
+
+.selected-chip {
+    background-color: $e7-primary;
+}
+
+.chip {
+    font-size: 1em;
+}
+
+.mat-standard-chip {
+    min-height: 25px;
+}
+
+.role-icon {
+    height: 20px;
+    width: auto;
+}

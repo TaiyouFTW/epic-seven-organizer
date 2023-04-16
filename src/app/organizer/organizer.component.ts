@@ -17,6 +17,8 @@ export class OrganizerComponent implements OnInit {
   heroes: Hero[] = [];
   tag: string = 'all';
 
+  showFilter: boolean = false;
+
   constructor(
     public dialog: MatDialog,
     private heroService: HeroService
@@ -60,6 +62,10 @@ export class OrganizerComponent implements OnInit {
     if (selectedTag != 'all') {
       this.heroes = this.heroes.filter(hero => hero.tags.includes(selectedTag));
     }
+  }
+
+  filterByRole(selectedRole: string) {
+    this.heroes = selectedRole != '' ? this.heroService.myHeroesValue.filter(hero => hero.class == selectedRole) : this.heroService.myHeroesValue;
   }
 
   changePriority() {

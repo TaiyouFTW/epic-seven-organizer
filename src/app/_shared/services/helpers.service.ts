@@ -12,6 +12,7 @@ export class HelpersService {
   private _status: string[] = ['Worst', 'Need Fix', 'Ok', 'Best'];
   private _array30: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
   private _imprints: string[] = ['D', 'C', 'B', 'A', 'S', 'SS', 'SSS'];
+  private _roles: string[] = ['warrior', 'knight', 'thief', 'ranger', 'mage', 'soul-weaver'];
 
   constructor() { }
 
@@ -27,6 +28,10 @@ export class HelpersService {
 
   public get imprints(): string[] {
     return this._imprints;
+  }
+
+  public get roles(): string[] {
+    return this._roles;
   }
 
   public get fromZeroToThirty(): number[] {
