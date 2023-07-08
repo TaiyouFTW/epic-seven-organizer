@@ -1,34 +1,44 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { map, Observable, startWith } from 'rxjs';
-import { Artifact } from '../../interfaces/artifact';
+import { Component, Inject, ViewChild, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Hero } from '../../interfaces/hero';
-import { ArtifactService } from '../../services/artifact.service';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, FormGroupDirective, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HelpersService } from '../../services/helpers.service';
 import { HeroService } from '../../services/hero.service';
+import { ArtifactService } from '../../services/artifact.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { Artifact } from '../../interfaces/artifact';
+import { HeroPoolService } from '../../services/hero-pool.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { map, startWith } from 'rxjs';
+import { BasicPortraitComponent } from "../portraits/basic-portrait/basic-portrait.component";
 
 @Component({
   selector: 'app-hero-form',
+  standalone: true,
   templateUrl: './hero-form.component.html',
-  styleUrls: ['./hero-form.component.scss']
+  styleUrls: ['./hero-form.component.scss'],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatAutocompleteModule, MatSelectModule, MatButtonModule, MatInputModule, BasicPortraitComponent, MatDialogModule]
 })
-export class HeroFormComponent implements OnInit {
+export class HeroFormComponent {
 
-  hero: Hero;
-  heroes: Hero[] = [];
-  filteredHeroes!: Observable<Hero[]>;
+  helpersService = inject(HelpersService);
+  heroService = inject(HeroService);
+  artifactService = inject(ArtifactService);
+  heroPoolService = inject(HeroPoolService);
 
-  artifacts: Artifact[] = [];
-  filteredArtifacts!: Observable<Artifact[]>;
+  tags: string[] = this.helpersService.tags().slice(1);
+  status: string[] = this.helpersService.status();
+  artifactLevel: number[] = this.helpersService.thirtyNumbers();
+  skills: number[] = this.helpersService.thirtyNumbers().slice(0, 16);
+  awakenings: number[] = this.helpersService.thirtyNumbers().slice(0, 7);
+  trees: number[] = this.helpersService.thirtyNumbers();
+  imprints: string[] = [];
 
-  tags: string[];
-  status: string[];
-  artifactLevel: number[];
-  skills: number[];
-  awakenings: number[];
-  trees: number[];
-  imprints: string[];
+  hero: Hero = {} as Hero;
 
   form!: FormGroup;
   @ViewChild(FormGroupDirective) formRef!: FormGroupDirective;
@@ -36,22 +46,10 @@ export class HeroFormComponent implements OnInit {
   showTree: boolean = false;
 
   constructor(
-    private dialogRef: MatDialogRef<HeroFormComponent>,
     private formBuilder: FormBuilder,
-    private helpersService: HelpersService,
-    private heroService: HeroService,
-    private artifactService: ArtifactService,
+    private dialogRef: MatDialogRef<HeroFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Hero
   ) {
-    this.hero = {} as Hero;
-
-    this.tags = this.helpersService.tags.slice(1);
-    this.status = this.helpersService.status;
-    this.artifactLevel = this.helpersService.fromZeroToThirty;
-    this.skills = this.helpersService.fromZeroToThirty.slice(0, 16);
-    this.awakenings = this.helpersService.fromZeroToThirty.slice(0, 7);
-    this.trees = this.helpersService.fromZeroToThirty;
-    this.imprints = [];
 
     this.form = this.formBuilder.group({
       hero: [null, Validators.required],
@@ -65,6 +63,7 @@ export class HeroFormComponent implements OnInit {
       status: [this.status[2]],
       tags: [[]]
     });
+
     this.disableArtifactForm();
 
     this.getHeroes();
@@ -101,42 +100,39 @@ export class HeroFormComponent implements OnInit {
 
   get f() { return this.form.controls; }
 
-  ngOnInit(): void {
-  }
-
   getHeroes() {
-    this.heroService.getAll().subscribe(heroes => {
-      this.heroes = heroes;
-      this.filteredHeroes = this.form.controls['hero'].valueChanges
-        .pipe(
-          startWith(''),
-          map(value => (typeof value === 'string' ? value : '')),
-          map(name => this.helpersService.filterByName<Hero>(name, this.heroes)),
-        );
-    });
+    this.heroService.getAll();
+    let heroName = this.form.controls['hero'].valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const name = typeof value === 'string' ? value : value?.name;
+        return name ? name : '';
+      })
+    );
+    heroName.subscribe(value => this.heroService.filterByName.set(value));
   }
 
   getArtifacts() {
-    this.artifactService.getAll().subscribe(artifacts => {
-      this.artifacts = artifacts;
-      this.filteredArtifacts = this.form.controls['artifact'].valueChanges
-        .pipe(
-          startWith(''),
-          map(value => (typeof value === 'string' ? value : '')),
-          map(name => this.helpersService.filterByName<Artifact>(name || '', this.artifacts)),
-        );
-    });
+    this.artifactService.getAll();
+    let artifactName = this.form.controls['artifact'].valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const name = typeof value === 'string' ? value : value?.name;
+        return name ? name : '';
+      })
+    );
+    artifactName.subscribe(value => this.artifactService.filterByName.set(value));
   }
 
   save() {
     let heroFound = false;
     if (this.f['hero'].value && this.f['hero'].value.name) {
-      heroFound = this.heroes.find(hero => hero.name.toLowerCase() == this.f['hero'].value.name.toLowerCase()) != undefined;
+      heroFound = this.heroService.list().find(hero => hero.name.toLowerCase() == this.f['hero'].value.name.toLowerCase()) != undefined;
     }
 
-    let ArtifactFound = false;
+    let artifactFound = false;
     if (this.f['artifact'].value && this.f['artifact'].value.name) {
-      ArtifactFound = this.artifacts.find(artifact => artifact.name.toLowerCase() == this.f['artifact'].value.name.toLowerCase()) != undefined;
+      artifactFound = this.artifactService.list().find(artifact => artifact.name.toLowerCase() == this.f['artifact'].value.name.toLowerCase()) != undefined;
     }
 
     if (!heroFound || this.form.invalid) {
@@ -144,7 +140,7 @@ export class HeroFormComponent implements OnInit {
       return;
     }
 
-    if (!ArtifactFound) {
+    if (!artifactFound) {
       this.f['artifact'].setValue(null);
       this.f['artifactLevel'].setValue(-1);
     }
@@ -169,27 +165,20 @@ export class HeroFormComponent implements OnInit {
     } else {
       this.hero.tree = null;
     }
-    if (ArtifactFound) {
+    if (artifactFound) {
       this.hero.artifact = this.form.controls['artifact'].value;
       if (this.hero.artifact != null && this.form.controls['artifactLevel'].value >= 0) {
         this.hero.artifact.level = this.form.controls['artifactLevel'].value;
       }
     }
 
-    this.dialogRef.close(this.hero);
-  }
-
-  onTagRemoved(tag: string) {
-    const tags = this.f['tags'].value as string[];
-    this.helpersService.removeOneItem(tags, tag);
-    this.f['tags'].setValue(tags);
-  }
-
-  displayByName(option: Hero | Artifact) {
-    if (option != null) {
-      return option.name;
+    if (this.heroPoolService.find(this.hero) != undefined) {
+      this.heroPoolService.update(this.hero);
+    } else {
+      this.heroPoolService.add(this.hero);
     }
-    return '';
+
+    this.dialogRef.close(true);
   }
 
   selectedHero() {
@@ -200,7 +189,7 @@ export class HeroFormComponent implements OnInit {
     }
 
     if (formHero.name == undefined) {
-      formHero = this.heroes.find(hero => hero.name.toLowerCase() == formHero.toLowerCase());
+      formHero = this.heroService.list().find(hero => hero.name.toLowerCase() == formHero.toLowerCase());
     }
 
     if (!formHero) {
@@ -229,30 +218,19 @@ export class HeroFormComponent implements OnInit {
 
     switch (this.hero.grade) {
       case 5:
-        this.imprints = this.helpersService.imprints.slice(2);
+        this.imprints = this.helpersService.imprints().slice(2);
         break;
       case 4:
-        this.imprints = this.helpersService.imprints.slice(1);
+        this.imprints = this.helpersService.imprints().slice(1);
         break;
       default:
-        this.imprints = this.helpersService.imprints;
+        this.imprints = this.helpersService.imprints();
         break;
     }
 
     this.enableArtifactForm();
 
-    this.filteredArtifacts = this.filteredArtifacts.pipe(
-      map(artifacts => {
-        let auxArtifacts = [] as Artifact[];
-        if (this.hero.class) {
-          auxArtifacts = artifacts.filter(artifact => artifact.class == this.hero.class.toUpperCase());
-        }
-
-        auxArtifacts = auxArtifacts.concat(artifacts.filter(artifact => artifact.class == 'GENERIC'));
-        auxArtifacts.sort((a, b) => a.name.localeCompare(b.name));
-        return auxArtifacts;
-      }),
-    );
+    this.artifactService.filterByClass.set(this.hero.class);
   }
 
   selectedHeroLevel() {
@@ -275,9 +253,9 @@ export class HeroFormComponent implements OnInit {
     if (formArtifact == null) return;
 
     if (formArtifact.name == undefined) {
-      formArtifact = this.artifacts.find(artifact => artifact.name.toLowerCase() == formArtifact.toLowerCase());
+      formArtifact = this.artifactService.list().find(artifact => artifact.name.toLowerCase() == formArtifact.toLowerCase());
     } else {
-      formArtifact = this.artifacts.find(artifact => artifact.name.toLowerCase() == formArtifact.name.toLowerCase());
+      formArtifact = this.artifactService.list().find(artifact => artifact.name.toLowerCase() == formArtifact.name.toLowerCase());
     }
 
     if (!formArtifact) {
@@ -304,6 +282,13 @@ export class HeroFormComponent implements OnInit {
     this.form.controls['artifactLevel'].setValue(-1);
     this.form.controls['artifact'].disable();
     this.form.controls['artifactLevel'].disable();
+  }
+
+  displayByName(option: Hero | Artifact) {
+    if (option != null) {
+      return option.name;
+    }
+    return '';
   }
 
   private _hasSpecialtyChange(hero: Hero) {

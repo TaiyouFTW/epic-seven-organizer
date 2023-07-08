@@ -29,7 +29,6 @@ main {
 
 .mat-drawer {
     background-color: $accent-dark;
-    // color: $e7-text;
 }
 
 .mat-drawer-inner-container {
@@ -44,4 +43,9 @@ main {
 
 .list-item {
     color: $e7-text;
+}
+
+.icon {
+    height: 24px;
+    width: auto;
 }

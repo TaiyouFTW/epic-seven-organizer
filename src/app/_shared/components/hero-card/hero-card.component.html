@@ -8,8 +8,8 @@
             </div>
         </div>
         <div class="col-8">
-            <p class="hero-name text-truncate">{{hero.name}}</p>
-            <p class="text-truncate" *ngIf="hero.artifact != null">{{hero.artifact.name}}</p>
+            <p class="hero-name text-truncate" title="{{hero.name.length > 15 ? hero.name : null}}">{{hero.name}}</p>
+            <p class="text-truncate small" title="{{hero.artifact.name.length > 15 ? hero.artifact.name : null}}" *ngIf="hero.artifact != null">{{hero.artifact.name}}</p>
         </div>
     </div>
 
@@ -18,31 +18,31 @@
     <div class="row justify-content-center mb-3 text-center row-gap">
         <div class="col-4">
             <p>Level</p>
-            <p class="detail-value">{{hero.level}}</p>
+            <p class="detail-value small">{{hero.level}}</p>
         </div>
         <div class="col-4">
             <p>Skills</p>
-            <p class="detail-value">+{{hero.skills}}</p>
+            <p class="detail-value small">+{{hero.skills}}</p>
         </div>
         <div class="col-4">
             <p>Imprint</p>
-            <p class="detail-value">{{hero.imprint}}</p>
+            <p class="detail-value small">{{hero.imprint}}</p>
         </div>
 
         <div class="col-4">
             <p>Awakening</p>
-            <p class="detail-value">{{hero.awakening}}<span *ngIf="hero.tree != null"> | +{{hero.tree}}</span></p>
+            <p class="detail-value small">{{hero.awakening}}<span *ngIf="hero.tree != null"> | +{{hero.tree}}</span></p>
         </div>
         <div class="col-4">
             <p>Artifact</p>
-            <p class="detail-value" *ngIf="hero.artifact != null; else dontHaveArtifact">{{hero.artifact.level > 0 ? '+' : ''}}{{hero.artifact.level}}</p>
+            <p class="detail-value small" *ngIf="hero.artifact != null; else dontHaveArtifact">{{hero.artifact.level > 0 ? '+' : ''}}{{hero.artifact.level}}</p>
             <ng-template #dontHaveArtifact>
-                <p class="detail-value">none</p>
+                <p class="detail-value small">none</p>
             </ng-template>
         </div>
         <div class="col-4">
             <p>Status</p>
-            <p class="detail-value">{{hero.status}}</p>
+            <p class="detail-value small">{{hero.status}}</p>
         </div>
     </div>
 
@@ -54,7 +54,7 @@
         </div>
         <ng-template #showTags>
             <ul class="d-flex flex-wrap justify-content-center gap-2">
-                <li *ngFor="let tag of hero.tags" class="text-center tag text-uppercase mb-0" [ngClass]="tag">{{tag}}</li>
+                <li *ngFor="let tag of hero.tags" class="text-center tag text-uppercase mb-0 small pointer" [ngClass]="tag" (click)="setTag(tag)">{{tag}}</li>
             </ul>
         </ng-template>
 
@@ -65,12 +65,12 @@
     <div class="row justify-content-around">
         <div class="col-6 col-sm-4">
             <button mat-button class="w-100 selected" (click)="edit(hero)">
-                <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+                <fa-icon [icon]="faEdit"></fa-icon>
             </button>
         </div>
         <div class="col-6 col-sm-4">
             <button mat-button class="w-100 selected" (click)="remove(hero.id!, hero.name)">
-                <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+                <fa-icon [icon]="faTrash"></fa-icon>
             </button>
         </div>
     </div>

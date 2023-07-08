@@ -1,19 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Signal, WritableSignal, computed, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoadingService {
 
-  constructor() { }
+  private canLoad: WritableSignal<boolean> = signal(false);
+  loading: Signal<boolean> = computed(() => this.canLoad());
 
-  show() {
-    const loading = document.getElementById('loading');
-    loading?.classList.add('showLoading');
-  }
+  show = () => this.canLoad.set(true);
 
-  hide() {
-    const loading = document.getElementById('loading');
-    loading?.classList.remove('showLoading');
-  }
+  hide = () => this.canLoad.set(false);
 }

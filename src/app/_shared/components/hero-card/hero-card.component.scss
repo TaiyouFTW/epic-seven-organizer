@@ -1,4 +1,5 @@
 @import "./../../../../colors.scss";
+
 p {
     margin: 0;
 }
@@ -34,13 +35,15 @@ p {
 }
 
 .tag-container {
-    min-height: 70px;
+    height: 70px;
+    overflow: auto;
 }
 
 .tag {
     background: $e7-primary;
     padding-right: 0.5rem !important;
     padding-left: 0.5rem !important;
+    font-size: 0.75rem;
 }
 
 .all {

@@ -1,9 +1,13 @@
-@import "./../../../../colors.scss";
+@import "../../../../colors.scss";
+
+.container-priority {
+    min-width: 20vw;
+}
 
 .priority-list {
     display: block;
     background: $accent-dark;
-    max-height: 65vh;
+    height: 50vh;
     overflow-y: auto;
 }
 

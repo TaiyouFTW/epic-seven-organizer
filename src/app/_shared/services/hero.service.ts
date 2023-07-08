@@ -1,45 +1,33 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { Hero } from '../interfaces/hero';
-import { HelpersService } from './helpers.service';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable, inject, signal, computed, effect } from "@angular/core";
+import { map } from "rxjs";
+import { environment } from "src/environments/environment";
+import { Hero } from "../interfaces/hero";
+import { HelpersService } from "./helpers.service";
+
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HeroService {
 
-  private heroesSubject: BehaviorSubject<Hero[]>;
-  public heroes$: Observable<Hero[]>;
-
-  private myHeroesSubject: BehaviorSubject<Hero[]>;
-  public myHeroes$: Observable<Hero[]>;
-
   private lastUpdate: Date = new Date();
 
-  constructor(
-    private httpClient: HttpClient,
-    private helpersService: HelpersService
-  ) {
-    this.heroesSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('e7OrganizerHeroesList')!));
-    this.heroes$ = this.heroesSubject.asObservable();
+  helpersService = inject(HelpersService);
 
-    this.myHeroesSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('e7OrganizerMyHeroes')!));
-    this.myHeroes$ = this.myHeroesSubject.asObservable();
+  list = signal<Hero[]>(new Array<Hero>());
+  heroes = computed(() => this.list().filter(hero => hero.name.toLowerCase().includes(this.filterByName())));
+  filterByName = signal<string>('');
 
+  constructor(private httpClient: HttpClient) {
     let lastUpdateAux = localStorage.getItem('e7OrganizerLastUpdate');
     if (lastUpdateAux != null) {
       this.lastUpdate = new Date(JSON.parse(lastUpdateAux));
     }
-  }
 
-  public get heroesValue() {
-    return this.heroesSubject.value;
-  }
-
-  public get myHeroesValue() {
-    return this.myHeroesSubject.value;
+    effect(() => {
+      localStorage.setItem('e7OrganizerHeroesList', JSON.stringify(this.list()));
+    });
   }
 
   private _headers(currentPage: number) {
@@ -59,23 +47,23 @@ export class HeroService {
     return httpOptions;
   }
 
-  getAll(currentPage: number = 0): Observable<Hero[]> {
+  async getAll(currentPage: number = 0) {
     let today = new Date();
     let lastUpdateNextThursday = new Date(this.lastUpdate.setDate(this.lastUpdate.getDate() + (4 - this.lastUpdate.getDay() + 7) % 7 + 7));
 
     today.setUTCHours(0, 0, 0, 0);
     lastUpdateNextThursday.setUTCHours(0, 0, 0, 0);
 
-    if (today.getTime() < lastUpdateNextThursday.getTime() && today.getDay() != 2 && this.heroesValue) {
-      return this.heroes$;
+
+    let fromStorage = localStorage.getItem('e7OrganizerHeroesList');
+    this.list.set(fromStorage && fromStorage.length > 0 ? JSON.parse(fromStorage) : []);
+    if (today.getTime() < lastUpdateNextThursday.getTime() && today.getDay() != 4 && this.list().length > 0) {
+      return;
     }
 
-    let url = '/guide/catalyst/getHeroFirstSet';
-    if (environment.production) {
-      url = '/api/heroes';
-    }
+    let url = environment.production ? '/api/heroes' : '/guide/catalyst/getHeroFirstSet';
 
-    return this.httpClient.post(url, {}, this._headers(currentPage))
+    this.httpClient.post(url, {}, this._headers(currentPage))
       .pipe(map(response => <{ heroList: Array<{ attributeCd: string, heroNm: string, heroCd: string, jobCd: string, grade: number }> }>response))
       .pipe(
         map(response => {
@@ -104,48 +92,11 @@ export class HeroService {
               } as Hero)
             }
           }
-          this.heroesSubject.next(heroes);
+          this.list.set(heroes);
           this.lastUpdate = new Date();
           localStorage.setItem('e7OrganizerLastUpdate', JSON.stringify(this.lastUpdate));
-          localStorage.setItem('e7OrganizerHeroesList', JSON.stringify(heroes));
-          return heroes;
         })
-      );
+      ).subscribe();
   }
 
-  add(hero: Hero) {
-    let heroes = this.myHeroesValue;
-
-    if (heroes != null && heroes.length > 0) {
-      let index = heroes.findIndex(x => x.id == hero.id);
-      if (index != -1) {
-        heroes[index] = hero;
-      } else {
-        hero.priority = heroes.length;
-        heroes.push({ ...hero });
-      }
-    } else {
-      heroes = [];
-      heroes.push({ ...hero });
-    }
-    localStorage.setItem('e7OrganizerMyHeroes', JSON.stringify(heroes));
-    this.myHeroesSubject.next(heroes);
-  }
-
-  delete(heroId: string) {
-    let heroes = this.myHeroesValue;
-    if (heroes != null && heroes.length > 0) {
-      let index = heroes.findIndex(x => x.id == heroId);
-      if (index != -1) {
-        heroes.splice(index, 1);
-        localStorage.setItem('e7OrganizerMyHeroes', JSON.stringify(heroes));
-        this.myHeroesSubject.next(heroes);
-      }
-    }
-  }
-
-  updateHeroPool(heroes: Hero[]) {
-    localStorage.setItem('e7OrganizerMyHeroes', JSON.stringify(heroes));
-    this.myHeroesSubject.next(heroes);
-  }
 }

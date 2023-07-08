@@ -1,5 +1,5 @@
 export interface ConfirmDialog {
     heading: string;
-    body: string;
+    body: string[];
     action: string;
 }

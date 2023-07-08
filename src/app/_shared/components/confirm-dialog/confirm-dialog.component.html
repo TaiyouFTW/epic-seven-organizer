@@ -1,5 +1,9 @@
-<div class="container">
-    <div class="row">
+<section class="m-4">
+    <h5 mat-dialog-title>{{data.heading}}</h5>
+    <div mat-dialog-content>
+        <p *ngFor="let paragraph of data.body" [innerHtml]="paragraph"></p>
+    </div>
+    <!-- <div class="row">
         <div class="col-12">
             <h5>{{data.heading}}</h5>
         </div>
@@ -8,14 +12,9 @@
         <div class="col-12">
             <p [innerHTML]="data.body"></p>
         </div>
+    </div> -->
+    <div class="d-flex justify-content-around gap-3">
+        <button class="w-100" mat-button mat-dialog-close cdkFocusInitial>Close</button>
+        <button class="w-100" mat-button (click)="confirm()">{{data.action}}</button>
     </div>
-    <div class="row justify-content-around">
-        <div class="col-6">
-            <button class="w-100" mat-button mat-dialog-close cdkFocusInitial>Close</button>
-        </div>
-
-        <div class="col-6">
-            <button class="w-100" mat-button (click)="confirm()">{{data.action}}</button>
-        </div>
-    </div>
-</div>
+</section>

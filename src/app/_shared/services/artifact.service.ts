@@ -1,8 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { Artifact } from '../interfaces/artifact';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { map } from 'rxjs';
 import { HelpersService } from './helpers.service';
 
 @Injectable({
@@ -10,26 +10,31 @@ import { HelpersService } from './helpers.service';
 })
 export class ArtifactService {
 
-  private artifactsSubject: BehaviorSubject<Artifact[]>;
-  public artifacts$: Observable<Artifact[]>;
-
   private lastUpdate: Date = new Date();
 
-  constructor(
-    private httpClient: HttpClient,
-    private helpersService: HelpersService
-  ) {
-    this.artifactsSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('e7OrganizerArtifactsList')!));
-    this.artifacts$ = this.artifactsSubject.asObservable();
+  helpersService = inject(HelpersService);
 
+  list = signal<Artifact[]>(new Array<Artifact>());
+
+  artifacts = computed(() => {
+
+    let artifactList = this.list().filter(artifact => artifact.class.toLowerCase() == 'generic').concat(this.list().filter(artifact => artifact.class.toLowerCase() == this.filterByClass().toLowerCase()));
+
+    return artifactList.filter(artifact => artifact.name.toLowerCase().includes(this.filterByName().toLowerCase()));
+
+  });
+  filterByName = signal<string>('');
+  filterByClass = signal<string>('');
+
+  constructor(private httpClient: HttpClient) {
     let lastUpdateAux = localStorage.getItem('e7OrganizerLastUpdate');
     if (lastUpdateAux != null) {
       this.lastUpdate = new Date(JSON.parse(lastUpdateAux));
     }
-  }
 
-  public get artifactsValue() {
-    return this.artifactsSubject.value;
+    effect(() => {
+      localStorage.setItem('e7OrganizerArtifactsList', JSON.stringify(this.list()));
+    });
   }
 
   private _headers(currentPage: number) {
@@ -56,15 +61,16 @@ export class ArtifactService {
     today.setUTCHours(0, 0, 0, 0);
     lastUpdateNextThursday.setUTCHours(0, 0, 0, 0);
 
-    if (today.getTime() < lastUpdateNextThursday.getTime() && today.getDay() != 4 && this.artifactsValue) {
-      return this.artifacts$;
+    let fromStorage = localStorage.getItem('e7OrganizerArtifactsList');
+    this.list.set(fromStorage && fromStorage.length > 0 ? JSON.parse(fromStorage) : []);
+
+    if (today.getTime() < lastUpdateNextThursday.getTime() && today.getDay() != 4 && this.list().length > 0) {
+      return;
     }
 
-    let url = '/guide/wearingStatus/getArtifactList';
-    if (environment.production) {
-      url = '/api/artifacts';
-    }
-    return this.httpClient.post(url, {}, this._headers(currentPage))
+    let url = environment.production ? '/api/artifacts' : '/guide/wearingStatus/getArtifactList';
+
+    this.httpClient.post(url, {}, this._headers(currentPage))
       .pipe(map(response => <{ artifactList: Array<{ artifactCode: string, artifactName: string, jobCode: string }> }>response))
       .pipe(
         map(response => {
@@ -81,12 +87,10 @@ export class ArtifactService {
               } as Artifact)
             }
           }
-          this.artifactsSubject.next(artifacts);
+          this.list.set(artifacts);
           this.lastUpdate = new Date();
           localStorage.setItem('e7OrganizerLastUpdate', JSON.stringify(this.lastUpdate));
-          localStorage.setItem('e7OrganizerArtifactsList', JSON.stringify(artifacts));
-          return artifacts;
         })
-      );
+      ).subscribe();
   }
 }

@@ -1,0 +1,16 @@
+<div class="container my-3">
+    <div class="row">
+        <div class="col-12">
+            <h5><fa-icon [icon]="faFilter"></fa-icon> Advanced Filters</h5>
+        </div>
+    </div>
+
+    <div class="row justify-content-between">
+        <div class="col-auto">
+            <app-filters [filter]="heroPoolService.filterByElement" [filterFields]="helpersService.elements" />
+        </div>
+        <div class="col-auto">
+            <app-filters [filter]="heroPoolService.filterByRole" [filterFields]="helpersService.roles" />
+        </div>
+    </div>
+</div>

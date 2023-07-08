@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Artifact } from '../interfaces/artifact';
 import { Hero } from '../interfaces/hero';
 
 @Injectable({

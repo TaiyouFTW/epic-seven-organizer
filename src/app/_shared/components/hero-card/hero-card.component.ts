@@ -1,50 +1,54 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { map } from 'rxjs';
-import { ConfirmDialog } from '../../interfaces/confirm-dialog';
+import { Component, Input, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Hero } from '../../interfaces/hero';
-import { HeroService } from '../../services/hero.service';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { DetailedPortraitComponent } from "../portraits/detailed-portrait/detailed-portrait.component";
+import { BasicPortraitComponent } from "../portraits/basic-portrait/basic-portrait.component";
+import { MatDividerModule } from '@angular/material/divider';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IconDefinition, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { HeroPoolService } from '../../services/hero-pool.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { HeroFormComponent } from '../hero-form/hero-form.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { MatButtonModule } from '@angular/material/button';
+import { ConfirmDialog } from '../../interfaces/confirm-dialog';
 
 @Component({
   selector: 'app-hero-card',
+  standalone: true,
   templateUrl: './hero-card.component.html',
-  styleUrls: ['./hero-card.component.scss']
+  styleUrls: ['./hero-card.component.scss'],
+  imports: [CommonModule, DetailedPortraitComponent, BasicPortraitComponent, MatDividerModule, FontAwesomeModule, MatSnackBarModule, MatButtonModule]
 })
-export class HeroCardComponent implements OnInit {
+export class HeroCardComponent {
 
-  @Input() hero!: Hero;
+  @Input({ required: true }) hero!: Hero;
 
-  constructor(public dialog: MatDialog, private heroService: HeroService, private _snackBar: MatSnackBar) { }
+  heroPoolService = inject(HeroPoolService);
 
-  ngOnInit(): void {
-  }
+  faEdit: IconDefinition = faEdit;
+  faTrash: IconDefinition = faTrash;
+
+  constructor(
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
+  ) { }
 
   edit(hero: Hero) {
-    const dialogRef = this.dialog.open(HeroFormComponent, {
+    this.dialog.open(HeroFormComponent, {
       autoFocus: false,
       restoreFocus: false,
       panelClass: 'custom-dialog',
       minWidth: '30vw',
       data: { ...hero }
     });
-
-    dialogRef.afterClosed()
-      .pipe(map((editedHero: Hero) => editedHero || null))
-      .subscribe((editedHero: Hero) => {
-        if (editedHero != null) {
-          this.hero = editedHero;
-          this.heroService.add(this.hero);
-        }
-      })
   }
 
   remove(id: string, heroName: string) {
     let confirmDialog = {
       heading: `Delete ${heroName}?`,
-      body: `Are sure you want to delete <strong>${heroName}</strong>?<br>You can't undo this action.`,
+      body: [`Are sure you want to delete <strong>${heroName}</strong>?`, `You can't undo this action.`],
       action: 'Delete'
     } as ConfirmDialog;
 
@@ -59,14 +63,18 @@ export class HeroCardComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe((canRemove: boolean) => {
         if (canRemove) {
-          this.heroService.delete(id);
+          this.heroPoolService.remove(id);
           this._snackBar.open(`${heroName} has been removed`, 'Ok', {
             panelClass: 'custom-snackbar',
-            duration: 3000,
+
+            duration: 3000000000,
           });
         }
       })
+  }
 
+  setTag(tag: string) {
+    this.heroPoolService.filterByTag.set(tag);
   }
 
 }

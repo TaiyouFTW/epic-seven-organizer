@@ -1,30 +1,28 @@
 <div class="container">
-    <div class="row mb-4">
-        <div class="col-6 col-md-auto">
+    <div class="row mb-3">
+        <div class="col-auto">
             <button mat-flat-button color="primary" (click)="addHero()">Add Hero</button>
         </div>
-        <div class="col-6 col-md-auto">
-            <button mat-button (click)="changePriority()">Hero priority</button>
+        <span class="flex-grow-1 d-flex d-sm-none mb-3"></span>
+        <div class="col-auto">
+            <button mat-button (click)="changePriority()"><fa-icon [icon]="faSort"></fa-icon> Priority</button>
         </div>
-        <div class="col-6 col-md-auto">
-            <button mat-button (click)="showFilter = !showFilter"><fa-icon [icon]="['fas', 'filter']"></fa-icon> Filters</button>
+        <div class="col-auto">
+            <button mat-button (click)="showFilter()"><fa-icon [icon]="faFilter"></fa-icon> Filters</button>
         </div>
-    </div>
-
-    <div class="row justify-content-center align-items-center filters" [class.active]="showFilter">
-        <div class="col-12 col-md-auto">
-            <app-filter-by-role (clickedFilter)="filterByRole($event)"></app-filter-by-role>
+        <div class="col-auto">
+            <button mat-button (click)="clearFilters()">Clear Filters</button>
         </div>
     </div>
 
-    <div class="row justify-content-center my-4">
-        <div class="col-12">
-            <app-tags (clickedFilter)="filterByTag($event)" [(tag)]="tag"></app-tags>
+    <div class="row justify-content-center mb-3">
+        <div class="col-auto">
+            <app-tags />
         </div>
     </div>
 
     <ul class="row">
-        <li class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-3" *ngFor="let hero of heroes">
+        <li class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-3" *ngFor="let hero of heroPoolService.heroes()">
             <app-hero-card [hero]="hero"></app-hero-card>
         </li>
     </ul>

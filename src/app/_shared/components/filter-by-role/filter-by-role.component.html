@@ -1,4 +1,0 @@
-<mat-chip-list class="d-flex flex-wrap justify-content-center align-items-center" aria-label="Filter by tags" (focused)="false">
-    <mat-chip class="text-uppercase chip" (click)="filter('')" [selected]="selected == ''">ALL</mat-chip>
-    <mat-chip class="text-uppercase chip" *ngFor="let role of roles" (click)="filter(role)" [selected]="role == selected"><img [src]="'assets/images/role/' + role + '.png'" class="role-icon" alt="role"></mat-chip>
-</mat-chip-list>

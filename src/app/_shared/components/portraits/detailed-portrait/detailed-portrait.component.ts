@@ -1,14 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Artifact } from 'src/app/_shared/interfaces/artifact';
+import { Component, Input, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Hero } from 'src/app/_shared/interfaces/hero';
 import { PortraitService } from 'src/app/_shared/services/portrait.service';
 
 @Component({
   selector: 'app-detailed-portrait',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './detailed-portrait.component.html',
   styleUrls: ['./detailed-portrait.component.scss']
 })
-export class DetailedPortraitComponent implements OnInit {
+export class DetailedPortraitComponent {
+
+  portraitService = inject(PortraitService);
 
   source: string = '';
   alt: string = '';
@@ -25,7 +29,7 @@ export class DetailedPortraitComponent implements OnInit {
 
   @Input() mini?: boolean;
 
-  constructor(private portraitService: PortraitService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

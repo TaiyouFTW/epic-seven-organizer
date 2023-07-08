@@ -1,88 +1,75 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { filter, map } from 'rxjs';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { HeroPoolService } from '../_shared/services/hero-pool.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { HeroFormComponent } from '../_shared/components/hero-form/hero-form.component';
-import { HeroPriorityComponent } from '../_shared/components/hero-priority/hero-priority.component';
-import { Hero } from '../_shared/interfaces/hero';
+import { HeroCardComponent } from "../_shared/components/hero-card/hero-card.component";
+import { TagsComponent } from "../_shared/components/tags/tags.component";
+import { IconDefinition, faFilter, faSort } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HelpersService } from '../_shared/services/helpers.service';
-import { HeroService } from '../_shared/services/hero.service';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { AdvancedFilterComponent } from '../_shared/components/advanced-filter/advanced-filter.component';
+import { ChangePriorityComponent } from '../_shared/components/change-priority/change-priority.component';
 
 @Component({
   selector: 'app-organizer',
+  standalone: true,
   templateUrl: './organizer.component.html',
-  styleUrls: ['./organizer.component.scss']
+  styleUrls: ['./organizer.component.scss'],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    HeroCardComponent,
+    TagsComponent,
+    FontAwesomeModule,
+    MatSidenavModule
+  ]
 })
-export class OrganizerComponent implements OnInit {
+export class OrganizerComponent {
 
-  heroes: Hero[] = [];
-  tag: string = 'all';
+  dialog = inject(MatDialog);
+  heroPoolService = inject(HeroPoolService);
+  helpersService = inject(HelpersService);
 
-  showFilter: boolean = false;
+  faFilter: IconDefinition = faFilter;
+  faSort: IconDefinition = faSort;
 
-  constructor(
-    public dialog: MatDialog,
-    private heroService: HeroService
-  ) {
-    this.heroes = this.heroService.myHeroesValue != null ? this.heroService.myHeroesValue : [];
-  }
-
-  ngOnInit(): void {
-    this.heroService.myHeroes$.subscribe(updatedPool => {
-      this.heroes = updatedPool;
-
-      if (this.tag != 'all') {
-        this.filterByTag(this.tag);
-      }
-    });
-  }
+  constructor() { }
 
   addHero() {
-    const dialogRef = this.dialog.open(HeroFormComponent, {
+    let dialogRef = this.dialog.open(HeroFormComponent, {
       autoFocus: false,
       restoreFocus: false,
       panelClass: 'custom-dialog',
-      minWidth: '30vw',
       data: null
     });
 
-    dialogRef.afterClosed()
-      .pipe(map((hero: Hero) => hero || null))
-      .subscribe((hero: Hero) => {
-        if (hero != null) {
-          this.heroService.add(hero);
-          this.heroes = this.heroService.myHeroesValue;
-          this.tag = 'all';
-        }
-      })
+    dialogRef.afterClosed().subscribe((canClear: boolean) => canClear ? this.clearFilters() : null);
   }
 
-  filterByTag(selectedTag: string) {
-    this.tag = selectedTag;
-    this.heroes = this.heroService.myHeroesValue;
-    if (selectedTag != 'all') {
-      this.heroes = this.heroes.filter(hero => hero.tags.includes(selectedTag));
-    }
-  }
-
-  filterByRole(selectedRole: string) {
-    this.heroes = selectedRole != '' ? this.heroService.myHeroesValue.filter(hero => hero.class == selectedRole) : this.heroService.myHeroesValue;
+  showFilter() {
+    this.dialog.open(AdvancedFilterComponent, {
+      autoFocus: false,
+      restoreFocus: false,
+      panelClass: 'custom-dialog'
+    });
   }
 
   changePriority() {
-    const dialogRef = this.dialog.open(HeroPriorityComponent, {
+    this.dialog.open(ChangePriorityComponent, {
       autoFocus: false,
       restoreFocus: false,
-      panelClass: 'custom-dialog',
-      minWidth: '30vw',
-      data: [...this.heroService.myHeroesValue]
+      panelClass: 'custom-dialog'
     });
-
-    dialogRef.afterClosed()
-      .pipe(map((heroes: Hero[]) => heroes || null))
-      .subscribe((heroes: Hero[]) => {
-        if (heroes != null) {
-          this.heroService.updateHeroPool(heroes);
-        }
-      })
   }
+
+  clearFilters() {
+    this.heroPoolService.filterByElement.set([]);
+    this.heroPoolService.filterByRole.set([]);
+    this.heroPoolService.filterByTag.set('');
+  }
+
 }

@@ -1,0 +1,16 @@
+<div [formGroup]="filterForm">
+    <ul>
+        <li>
+            <mat-checkbox formControlName="all" (change)="setAll()">
+                <span class="text-capitalize">all</span>
+            </mat-checkbox>
+        </li>
+        <ng-container formArrayName="fields">
+            <li *ngFor="let element of fields.controls; let index = index">
+                <mat-checkbox [formControlName]="index" (change)="updateAllField()">
+                    <span class="text-capitalize">{{filterFields()[index].replace('-', ' ')}}</span>
+                </mat-checkbox>
+            </li>
+        </ng-container>
+    </ul>
+</div>

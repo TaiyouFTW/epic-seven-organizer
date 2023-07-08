@@ -1,11 +1,13 @@
 <mat-toolbar color="primary">
+    <button mat-icon-button class="d-flex justify-content-center align-items-center"><img class="rounded-circle" src="favicon.ico" alt="icon"></button>
+    <span class="flex-grow-1"></span>
     <button mat-icon-button (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
     </button>
 </mat-toolbar>
 
 <mat-sidenav-container>
-    <mat-sidenav #drawer class="sidenav" [mode]="'over'" [fixedInViewport]="false" [fixedTopGap]="56" [opened]="false">
+    <mat-sidenav #drawer class="sidenav" [mode]="'over'" [fixedInViewport]="false" [fixedTopGap]="56" [opened]="false" [position]="'end'">
         <aside>
             <mat-nav-list class="d-flex align-items-start flex-column h-100 p-0">
                 <a class="list-item" mat-list-item routerLink="/heroes" [routerLinkActive]="['is-active']">

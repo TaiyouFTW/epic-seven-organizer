@@ -3,7 +3,18 @@
     width: 100%;
 }
 
-h1 {
+.error-status,
+.error-description {
+    color: #dee2e6;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.error-status {
     font-size: 10rem;
     margin: 0;
+}
+
+.error-description {
+    font-size: 1.75rem;
 }

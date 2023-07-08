@@ -1,32 +1,33 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Hero } from '../../interfaces/hero';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatChipsModule } from '@angular/material/chips';
 import { HelpersService } from '../../services/helpers.service';
+import { HeroPoolService } from '../../services/hero-pool.service';
 
 @Component({
   selector: 'app-tags',
+  standalone: true,
+  imports: [CommonModule, MatChipsModule],
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.scss']
 })
-export class TagsComponent implements OnInit {
+export class TagsComponent {
 
-  @Input() tag: string = 'all';
-  @Output() tagChange: EventEmitter<string> = new EventEmitter<string>();
-
-  @Output() clickedFilter: EventEmitter<string> = new EventEmitter<string>();
+  helpersService = inject(HelpersService);
+  heroPoolService = inject(HeroPoolService);
 
   tags: string[] = [];
 
-  constructor(
-    private helpersService: HelpersService
-  ) {
-  }
-
   ngOnInit(): void {
-    this.tags = this.helpersService.tags;
+    this.tags = this.helpersService.tags();
   }
 
-  filterBy(tag: string) {
-    this.tagChange.emit(tag);
-    this.clickedFilter.emit(tag);
+  filter(chip: string) {
+    if (chip == this.heroPoolService.filterByTag()) {
+      this.heroPoolService.filterByTag.set('');
+    } else {
+      this.heroPoolService.filterByTag.set(chip);
+    }
   }
 }
+

@@ -1,5 +1,8 @@
 @import "./colors.scss";
 
+* {
+  box-sizing: border-box;
+}
 html,
 body {
   height: 100%;
@@ -7,7 +10,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-size: 12px;
+  font-size: 16px;
   background-color: $primary-dark;
   color: $e7-text;
 }
@@ -49,14 +52,16 @@ h6 {
 }
 
 .custom-dialog {
-  .mat-dialog-container {
+  .mat-mdc-dialog-container .mdc-dialog__surface {
     background: $accent-dark;
   }
 }
 
 .custom-snackbar {
-  color: $e7-text;
-  background: $accent-dark;
+  .mat-mdc-snack-bar-container .mdc-snackbar__surface {
+    color: $e7-text;
+    background: $accent-dark;
+  }
 }
 
 .icon {
@@ -69,11 +74,11 @@ h6 {
   height: auto;
 }
 
-.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
+.mat-mdc-option.mat-mdc-option-active.mdc-list-item,
+.mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
   background: #bd282d80;
 }
-
-.mat-accent .mat-option.mat-selected:not(.mat-option-disabled) {
+.mat-accent .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
   color: $e7-text;
   font-weight: bold;
 }
