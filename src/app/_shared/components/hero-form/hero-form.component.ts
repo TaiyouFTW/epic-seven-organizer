@@ -46,12 +46,12 @@ export class HeroFormComponent {
   showTree: boolean = false;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private dialogRef: MatDialogRef<HeroFormComponent>,
+    private _formBuilder: FormBuilder,
+    private _dialogRef: MatDialogRef<HeroFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Hero
   ) {
 
-    this.form = this.formBuilder.group({
+    this.form = this._formBuilder.group({
       hero: [null, Validators.required],
       level: [0],
       artifact: [null],
@@ -178,7 +178,7 @@ export class HeroFormComponent {
       this.heroPoolService.add(this.hero);
     }
 
-    this.dialogRef.close(true);
+    this._dialogRef.close(true);
   }
 
   selectedHero() {

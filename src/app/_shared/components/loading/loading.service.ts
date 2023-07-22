@@ -5,10 +5,10 @@ import { Injectable, Signal, WritableSignal, computed, signal } from '@angular/c
 })
 export class LoadingService {
 
-  private canLoad: WritableSignal<boolean> = signal(false);
-  loading: Signal<boolean> = computed(() => this.canLoad());
+  private _canLoad: WritableSignal<boolean> = signal(false);
+  loading: Signal<boolean> = computed(() => this._canLoad());
 
-  show = () => this.canLoad.set(true);
+  show = () => this._canLoad.set(true);
 
-  hide = () => this.canLoad.set(false);
+  hide = () => this._canLoad.set(false);
 }

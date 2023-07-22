@@ -6,22 +6,22 @@ import { Hero } from '../interfaces/hero';
 })
 export class PortraitService {
 
-  private heroUrl: string = 'https://static.smilegatemegaport.com/event/live/epic7/guide/images/hero/';
-  private artifactUrl: string = 'https://static.smilegatemegaport.com/event/live/epic7/guide/wearingStatus/images/artifact/';
-  private unknownHeroPortrait = './assets/images/unknown.png';
+  private _heroUrl: string = 'https://static.smilegatemegaport.com/event/live/epic7/guide/images/hero/';
+  private _artifactUrl: string = 'https://static.smilegatemegaport.com/event/live/epic7/guide/wearingStatus/images/artifact/';
+  private _unknownHeroPortrait = './assets/images/unknown.png';
 
   constructor() { }
 
   hero(code: string) {
-    if (code == null || code.length == 0) return this.unknownHeroPortrait;
+    if (code == null || code.length == 0) return this._unknownHeroPortrait;
 
-    return `${this.heroUrl}${code}_s.png`;
+    return `${this._heroUrl}${code}_s.png`;
   }
 
   artifact(code: string) {
     if (code == null || code.length == 0) return '';
 
-    return `${this.artifactUrl}${code}_ico.png`;
+    return `${this._artifactUrl}${code}_ico.png`;
   }
 
   error(hero: Hero) {

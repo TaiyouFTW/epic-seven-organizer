@@ -15,13 +15,13 @@ import { ConfirmDialog } from '../../interfaces/confirm-dialog';
 export class ConfirmDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ConfirmDialog,
-    private dialogRef: MatDialogRef<ConfirmDialogComponent>,
+    private _dialogRef: MatDialogRef<ConfirmDialogComponent>,
   ) { }
 
   ngOnInit(): void {
   }
 
   confirm() {
-    this.dialogRef.close(true);
+    this._dialogRef.close(true);
   }
 }
