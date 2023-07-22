@@ -15,7 +15,7 @@ export class HeroService {
   private _dateService = inject(DateService);
 
   list = signal<Hero[]>(new Array<Hero>());
-  heroes = computed(() => this.list().filter(hero => hero.name.toLowerCase().includes(this.filterByName())));
+  heroes = computed(() => this.list().filter(hero => hero.name.toLowerCase().includes(this.filterByName().toLowerCase())));
   filterByName = signal<string>('');
 
   constructor(private _httpClient: HttpClient) {
