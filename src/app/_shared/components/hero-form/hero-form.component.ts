@@ -30,7 +30,7 @@ export class HeroFormComponent {
   artifactService = inject(ArtifactService);
   heroPoolService = inject(HeroPoolService);
 
-  tags: string[] = this.helpersService.tags().slice(1);
+  tags: string[] = this.helpersService.tags();
   status: string[] = this.helpersService.status();
   artifactLevel: number[] = this.helpersService.thirtyNumbers();
   skills: number[] = this.helpersService.thirtyNumbers().slice(0, 16);
