@@ -12,6 +12,7 @@ import { HelpersService } from '../_shared/services/helpers.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AdvancedFilterComponent } from '../_shared/components/advanced-filter/advanced-filter.component';
 import { ChangePriorityComponent } from '../_shared/components/change-priority/change-priority.component';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
   selector: 'app-organizer',
@@ -25,7 +26,8 @@ import { ChangePriorityComponent } from '../_shared/components/change-priority/c
     HeroCardComponent,
     TagsComponent,
     FontAwesomeModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatBadgeModule
   ]
 })
 export class OrganizerComponent {

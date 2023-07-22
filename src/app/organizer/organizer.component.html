@@ -8,7 +8,7 @@
             <button mat-button (click)="changePriority()"><fa-icon [icon]="faSort"></fa-icon> Priority</button>
         </div>
         <div class="col-auto">
-            <button mat-button (click)="showFilter()"><fa-icon [icon]="faFilter"></fa-icon> Filters</button>
+            <button mat-button (click)="showFilter()" [matBadge]="heroPoolService.filterByElement().length + heroPoolService.filterByRole().length" [matBadgeHidden]="heroPoolService.filterByElement().length + heroPoolService.filterByRole().length == 0" matBadgePosition="after" matBadgeColor="primary"><fa-icon [icon]="faFilter"></fa-icon> Filters</button>
         </div>
         <div class="col-auto">
             <button mat-button (click)="clearFilters()">Clear Filters</button>
