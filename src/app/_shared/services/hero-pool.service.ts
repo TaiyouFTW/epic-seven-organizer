@@ -1,10 +1,13 @@
-import { Injectable, computed, effect, signal } from '@angular/core';
+import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { Hero } from '../interfaces/hero';
+import { HelpersService } from './helpers.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeroPoolService {
+
+  private _helpersService = inject(HelpersService);
 
   private _list = signal<Hero[]>(new Array<Hero>());
   heroes = computed(() => this._filter());
@@ -51,8 +54,12 @@ export class HeroPoolService {
 
   private _filter() {
     let filtered = this._list();
-    filtered = this._filterElements(filtered);
-    filtered = this._filterRoles(filtered);
+    if (this.filterByElement().length > 0 && this.filterByElement().length < this._helpersService.elements().length) {
+      filtered = this._filterElements(filtered);
+    }
+    if (this.filterByRole().length > 0 && this.filterByRole().length < this._helpersService.roles().length) {
+      filtered = this._filterRoles(filtered);
+    }
     if (this.filterByTag() != '') {
       filtered = filtered.filter(hero => hero.tags.includes(this.filterByTag().toLowerCase()));
     }
@@ -64,7 +71,7 @@ export class HeroPoolService {
     this.filterByElement().forEach(element => {
       auxFiltered = [...auxFiltered, ...heroFilter.filter(hero => hero.element.toLowerCase().includes(element.toLowerCase()))];
     });
-    return auxFiltered.length > 0 ? auxFiltered : heroFilter;
+    return auxFiltered;
   }
 
   private _filterRoles(heroFilter: Hero[]) {
@@ -72,6 +79,6 @@ export class HeroPoolService {
     this.filterByRole().forEach(roles => {
       auxFiltered = [...auxFiltered, ...heroFilter.filter(hero => hero.class.toLowerCase().includes(roles.toLowerCase()))];
     });
-    return auxFiltered.length > 0 ? auxFiltered : heroFilter;
+    return auxFiltered;
   }
 }
