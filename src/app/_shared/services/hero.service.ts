@@ -50,9 +50,7 @@ export class HeroService {
       return;
     }
 
-    let url = environment.production ? '/api/heroes' : '/guide/catalyst/getHeroFirstSet';
-
-    this._httpClient.post(url, {}, this._headers(currentPage))
+    this._httpClient.post('/api/heroes', {}, this._headers(currentPage))
       .pipe(map(response => <{ heroList: Array<{ attributeCd: string, heroNm: string, heroCd: string, jobCd: string, grade: number }> }>response))
       .pipe(
         map(response => {

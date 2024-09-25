@@ -58,9 +58,7 @@ export class ArtifactService {
       return;
     }
 
-    let url = environment.production ? '/api/artifacts' : '/guide/wearingStatus/getArtifactList';
-
-    this._httpClient.post(url, {}, this._headers(currentPage))
+    this._httpClient.post('/api/artifacts', {}, this._headers(currentPage))
       .pipe(map(response => <{ artifactList: Array<{ artifactCode: string, artifactName: string, jobCode: string }> }>response))
       .pipe(
         map(response => {

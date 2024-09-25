@@ -1,7 +1,0 @@
-{
-    "/guide": {
-        "target": "https://epic7.smilegatemegaport.com/",
-        "secure": true,
-        "changeOrigin": true
-    }
-}
